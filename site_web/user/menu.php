@@ -2,13 +2,16 @@
     $pages = array(
         'acceuil' => array(
             'title'=>'Accueil',
-            'include'=> 'acceuil.inc.php'),
+            'include'=> 'acceuil.inc.php',
+            'printMenu' => TRUE),
         'catalogue' => array(
             'title'=>'Catalogue',
-            'include'=> 'catalogue.inc.php'),
+            'include'=> 'catalogue.inc.php',
+            'printMenu' => TRUE),
         'contact' => array(
             'title'=>'Contact',
-            'include'=> 'contact.inc.php'),
+            'include'=> 'contact.inc.php',
+            'printMenu' => TRUE),
         );
     if(empty($_GET['page']==TRUE)){
         $content = $pages['acceuil']['include'];
