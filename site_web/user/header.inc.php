@@ -11,15 +11,16 @@
     <body>
         <header>
             <!-- Fixed navbar -->
+            
             <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
                 <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <a class="navbar-brand text-center">
-                            <h1>Bibliothèque</h1>
-                    </a>
+                    <span class="navbar-brand text-center text-white">
+                            <h2>BIBLIOTHEQUE</h2>
+                    </span>
                     <ul class="navbar-nav mr-auto">
                         <?php foreach($pages as $menu=>$info){ ?>
                         <li class="nav-item active">
-                            <a  class="nav-link" href="?page=<?php echo $menu?>"><?= $info['title']?></a>
+                            <a href="?page=<?php echo $menu?>"><?= $info['title']?></a>
                         </li>
                         <?php } ?>
                     </ul>
