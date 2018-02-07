@@ -28,3 +28,5 @@
                 </div>
             </nav>
         </header>
+
+<!--TODO: ajouter test de connection avec nom de session -->
