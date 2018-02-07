@@ -1,9 +1,7 @@
-<html lang="fr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
+<html lang="fr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
     <title>Bibliothèque - Service d'authentification</title>
 
     <!-- Bootstrap core CSS -->
@@ -13,7 +11,7 @@
   </head>
 
   <body class="text-center" style="background-image: url(/image/background_signin.jpg);">
-    <form class="form-signin" action="connexion.php" method="post">
+    <form class="form-signin" action="connexion.php" method="POST">
       <img class="mb-4" src="/image/icone_signin.png" alt="" width="100" height="100">
       <h1 class="h3 mb-3 font-weight-normal">Authentification</h1>
       <label for="inputId" class="sr-only">Identifiant</label>
@@ -25,7 +23,10 @@
           <input type="checkbox" value="remember-me"> Se souvenir de moi</input>
         </label>
       </div>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Connexion</button>
+      <?php if($err==TRUE) { ?>
+       <?php echo '<div class= "alert alert-danger" role="alert" >Utilisateur et/ou Mot de passe </div>'; $err=FALSE;?>
+      <?php } ?>
+      <button class="btn btn-lg btn-primary btn-block" type="submit" name="connexion">Connexion</button>
       <p class="mt-5 mb-3">© 2017-2018</p>
       <a href="/admin/signin_admin.php">Accés Admin</a>
     </form>

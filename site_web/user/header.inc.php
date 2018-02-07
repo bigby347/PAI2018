@@ -2,7 +2,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <?php include 'menu.php';?>
+        <?php include './fonctions/menu.php';?>
         <title><?php echo $title;?></title>
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -24,7 +24,7 @@
                         </li>
                         <?php } ?>
                     </ul>
-                    <button class="btn my-2 my-sm-0" type="button" href="../index.php">Déconnexion</button>
+                    <button class="btn my-2 my-sm-0" type="button" action="">Déconnexion</button>
                 </div>
             </nav>
         </header>

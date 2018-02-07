@@ -10,4 +10,5 @@ $result->execute();
 $test=$result->fetch();
 
 echo $test['MDP'];
+echo $test['Nom'];
 ?>
