@@ -1,6 +1,6 @@
 <?php
     include 'config_bdd.php';
-/* TODO: catalogue
+// TODO: catalogue
     function printCatalogue(){
         global $bdd;
         global $data;
@@ -15,7 +15,14 @@
                     <td>'.$catalogue[''].'</td>
                     <td>'.$catalogue[''].'</td>
                     <td>'.$catalogue[''].'</td>
+                    <td>'.$catalogue[''].'</td>
+                    <td>'.$catalogue[''].'</td>
+                    <td>'.makeRequest().'</td>
                  </tr>';
         }
     }
-*/
+// TODO: makeRequest()
+
+    function makeRequest(){
+
+    }
