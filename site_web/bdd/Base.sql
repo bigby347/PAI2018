@@ -2,10 +2,10 @@ Create table Oeuvre (
 	IdLivre integer
 	PRIMARY KEY
 	AUTO_INCREMENT,
-	Nom varchar(100)
+	Titre varchar(100)
 	NOT NULL,
 	Cote varchar(100),
-	Publication date
+	Publication number
 ); 
 
 Create table Auteur (
@@ -46,7 +46,7 @@ Create table Definition (
 );
 
 
-Create table Livre (
+Create table Exemplaire (
 	IdExemplaire integer
 	PRIMARY KEY
 	AUTO_INCREMENT,
@@ -61,6 +61,7 @@ Create table Adherant (
 	IdAdherant integer
 	PRIMARY KEY
 	AUTO_INCREMENT,
+	Mail VARCHAR(320) Unique;
 	MDP varchar(100)
 	NOT NULL,
 	Nom varchar(100)
@@ -104,6 +105,7 @@ Create table Notif (
 	NOT NULL,
 	FkTypeNotif integer
 	NOT NULL,
+	Commentaire TEXT,
 	FOREIGN KEY (FkTypeNotif) REFERENCES TypeNotif(IdTypeNotif) ON UPDATE CASCADE,
 	FOREIGN KEY (FkAdherant) REFERENCES Adherant(IdAdherant) ON UPDATE CASCADE
 );
@@ -120,7 +122,7 @@ Create table Emprun (
 	DateRetour date,
 	Renouvelement integer,
 	FOREIGN KEY (FkAdherant) REFERENCES Adherant(IdAdherant) ON UPDATE CASCADE,
-	FOREIGN KEY (FkExemplaire) REFERENCES Livre(IdExemplaire) ON UPDATE CASCADE
+	FOREIGN KEY (FkExemplaire) REFERENCES Exemplaire(IdExemplaire) ON UPDATE CASCADE
 );
 
 
@@ -156,17 +158,10 @@ Create table Reservation (
 	FkLivre integer
 	NOT NULL,
 	DateRequete date NOT NULL,
-	DateAcceptation date NOT NULL,
+	DateAcceptation date,
 	FOREIGN KEY (FkAdherant) REFERENCES Adherant(IdAdherant) ON UPDATE CASCADE,
 	FOREIGN KEY (FkLivre) REFERENCES Oeuvre(IdLivre) ON UPDATE CASCADE
 );
-
-
-
-
-
-
-
 
 
 
