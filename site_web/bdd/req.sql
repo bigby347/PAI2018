@@ -43,7 +43,7 @@ And Adherant.IdAdherant = '???'
 And Emprun.DateRetour IS NULL;
 /*	*/
 
-
+ 
 /* reservation */
 Select * 
 From Reservation, Oeuvre, Adherant 
