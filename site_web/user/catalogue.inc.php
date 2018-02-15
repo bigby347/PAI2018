@@ -8,6 +8,8 @@
                 <th>Oeuvres</th>
                 <th>Auteur</th>
                 <th>Publication</th>
+                <th>Id Livre</th>
+                <th>Côte</th>
                 <th>Emprunter</th>
             </tr>
             <?php printCatalogue(); ?>
