@@ -5,13 +5,13 @@
     <title>Bibliothèque - Service d'authentification</title>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/signin.css">
   
   </head>
 
   <body class="text-center" style="background-image: url(/image/background_signin.jpg);">
-    <form class="form-signin" action="connexion.php" method="POST">
+    <form class="form-signin" action="fonctions/connexion_user.php" method="POST">
       <img class="mb-4" src="/image/icone_signin.png" alt="" width="100" height="100">
       <h1 class="h3 mb-3 font-weight-normal">Authentification</h1>
       <label for="inputId" class="sr-only">Identifiant</label>
@@ -23,12 +23,18 @@
           <input type="checkbox" value="remember-me"> Se souvenir de moi</input>
         </label>
       </div>
-      <?php if($err==TRUE) { ?>
-       <?php echo '<div class= "alert alert-danger" role="alert" >Utilisateur et/ou Mot de passe </div>'; $err=FALSE;?>
-      <?php } ?>
       <button class="btn btn-lg btn-primary btn-block" type="submit" name="connexion">Connexion</button>
       <p class="mt-5 mb-3">© 2017-2018</p>
       <a href="/admin/signin_admin.php">Accés Admin</a>
     </form>
+<?php if($_GET['err'] == "user_err"){ 
+      echo '<script  language="javascript">alert("Erreur mdp");</script>';
+      } 
+?>
   </body>
+  
+  
+
+
 </html>
+

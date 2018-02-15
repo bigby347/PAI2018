@@ -8,7 +8,6 @@ session_start(); // à mettre tout en haut du fichier .php, cette fonction propr
 if(isset($_POST['connexion'])) { // si le bouton "Connexion" est appuyé
     // on vérifie que le champ "login" n'est pas vide
     // empty vérifie à la fois si le champ est vide et si le champ existe belle et bien (is set)
-    echo "a";
     if(empty($_POST['login'])) {
         echo "Le champ login est vide.";
     } else {
@@ -29,16 +28,17 @@ if(isset($_POST['connexion'])) { // si le bouton "Connexion" est appuyé
 
             if($data['MDP'] == $password && $data['Nom'] == $login){
 
-                $_SESSION['Nom'] = $data['Nom'];
-                $_SESSION['Prenom'] = $data['Prenom'];
+                $_SESSION['Nom'] = ucfirst($data['Nom']);
+                $_SESSION['Prenom'] = ucfirst($data['Prenom']);
                 $_SESSION['MDP'] = $data['MDP'];
                 $_SESSION['Adresse'] = $data['Adresse'];
-                header('Location: /user/portail_ad.php');
+                $_SESSION['connect']=1;
+                header('Location: /user/portail_user.php');
             }
             else{
                 session_destroy();
                 $err=TRUE;
-                header('Location: index.php');
+                header('Location: ../index.php?err=user_err');
             }
         }
     }
