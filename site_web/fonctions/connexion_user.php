@@ -19,15 +19,16 @@ if(isset($_POST['connexion'])) { // si le bouton "Connexion" est appuyé
             $login = htmlentities($_POST['login'], ENT_QUOTES, "ISO-8859-1"); // le htmlentities() passera les guillemets en entités HTML, ce qui empêchera les injections SQL
             $password = htmlentities($_POST['password'], ENT_QUOTES, "ISO-8859-1");
             //on se connecte à la base de données:
-            $req="SELECT * FROM Adherant WHERE Nom = :login AND MDP= :password ";
+            $req="SELECT * FROM Adherant WHERE Mail = :login AND MDP= :password ";
 
             $result=$bdd->prepare($req);
             $result->execute(['login'=> $login , 'password'=>$password]);
 
             $data=$result->fetch();
 
-            if($data['MDP'] == $password && $data['Nom'] == $login){
+            if($data['MDP'] == $password && $data['Mail'] == $login){
 
+                $_SESSION['Mail'] = $data['Nom'];
                 $_SESSION['Nom'] = ucfirst($data['Nom']);
                 $_SESSION['Prenom'] = ucfirst($data['Prenom']);
                 $_SESSION['MDP'] = $data['MDP'];

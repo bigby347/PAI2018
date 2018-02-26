@@ -2,8 +2,8 @@
     include '../fonctions/access.php';
     $access=setAccess();
     if($access=="ok") {
-        $title = 'Acceuil';
-        $content = 'acceuil.inc.php';
+        $title = 'Portail admin';
+        $content = 'portail.inc.php';
         include 'header.inc.php';
         include 'menu.inc.php';
         include $content;

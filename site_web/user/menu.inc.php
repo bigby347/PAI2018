@@ -19,15 +19,12 @@
     </nav>-->
     <nav class="navbar navbar-expand-md navbar-dark navbar-fixed-top bg-dark">
         <div class="container-fluid">
-            <div class="navbar-header">
-                <a id="logoAcceuil"  class="navbar-brand" href="?page=acceuil"><span class="glyphicon glyphicon-home"></a>
-            </div>
-
-            <ul class="navbar-nav navbar-left ml-auto">
-                <?php printMenu() ?>
+            <ul class="nav navbar-nav navbar-left ml-auto">
+                <li><a id="logoAcceuil"  class="navbar-brand" href="?page=acceuil"><span class="glyphicon glyphicon-home"></a></li>
+                <?php printMenu('user'); ?>
             </ul>
             <ul class="nav navbar-nav navbar-right mr-auto">
-                <li><a href="?page=compte"><span class="glyphicon glyphicon-user"></span> <?= $_SESSION['Nom']; ?> </a></li>
+                <li ><a href="?page=compte"><span class="glyphicon glyphicon-user"></span> <?= $_SESSION['Nom']; ?> </a></li>
                 <li>
                     <a href="/fonctions/deconnexion.php"><span class="glyphicon glyphicon-log-out"></span> Déconnexion </a>
                 </li>

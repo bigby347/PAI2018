@@ -1,6 +1,6 @@
 <div class="container" >
 
-    <h2>Catalogue</h2>
+    <h2 class="page-header">Catalogue</h2>
     <?php include '/fonctions/user.php'; ?>
     <div class="text-center">
         <table style="width: 100%;">
@@ -10,6 +10,7 @@
                 <th>Publication</th>
                 <th>Id Livre</th>
                 <th>Côte</th>
+                <th>Mots-clef</th>
                 <th>Emprunter</th>
             </tr>
             <?php printCatalogue(); ?>

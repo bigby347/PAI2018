@@ -25,7 +25,7 @@
       </div>
       <button class="btn btn-lg btn-primary btn-block" type="submit" name="connexion">Connexion</button>
       <p class="mt-5 mb-3">© 2017-2018</p>
-      <a href="/admin/signin_admin.php">Accés Admin</a>
+      <a href="signin_admin.php">Accés Admin</a>
     </form>
 <?php if($_GET['err'] == "user_err"){ 
       echo '<script  language="javascript">alert("Erreur mdp");</script>';

@@ -5,7 +5,7 @@ Create table Oeuvre (
 	Titre varchar(100)
 	NOT NULL,
 	Cote varchar(100),
-	Publication number
+	Publication integer
 ); 
 
 Create table Auteur (
@@ -61,7 +61,7 @@ Create table Adherant (
 	IdAdherant integer
 	PRIMARY KEY
 	AUTO_INCREMENT,
-	Mail VARCHAR(320) Unique;
+	Mail VARCHAR(320) Unique,
 	MDP varchar(100)
 	NOT NULL,
 	Nom varchar(100)
