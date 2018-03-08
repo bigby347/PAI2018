@@ -52,7 +52,7 @@ function addBook(){
 
     if(isset($_POST['addBook'])){
         $titre = strtolower(htmlentities($_POST['titre'], ENT_QUOTES, "ISO-8859-1"));
-        $datePub = strtolower(htmlentities($_POST['datePub'], ENT_QUOTES, "ISO-8859-1"));
+        $datePub = htmlentities($_POST['datePub'], ENT_QUOTES, "ISO-8859-1");
         $cote = htmlentities($_POST['cote'], ENT_QUOTES, "ISO-8859-1");
         for($i=1;$i=$_POST['nbAuteur'];$i++){
             if($i==1){

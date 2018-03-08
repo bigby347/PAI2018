@@ -5,7 +5,8 @@ Create table Oeuvre (
 	Titre varchar(100)
 	NOT NULL,
 	Cote varchar(100),
-	Publication integer
+	Publication integer,
+	Description TEXT
 ); 
 
 Create table Auteur (
@@ -78,6 +79,7 @@ Create table Admin (
 	IdAdmin integer
 	PRIMARY KEY
 	AUTO_INCREMENT,
+	Mail VARCHAR(320) Unique,
 	MDP varchar(100)
 	NOT NULL,
 	Nom varchar(100)

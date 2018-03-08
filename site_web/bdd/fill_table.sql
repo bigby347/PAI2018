@@ -9,8 +9,30 @@ VALUES ('falques@outlook.com', 'Falquès', 'Théo','falquèsthéo','2 Avenue de 
 INSERT INTO Adherant(Mail,Nom,Prenom,MDP,Adresse,adhesion,cotisation)
 VALUES ('finch@machin.com', 'Finch', 'Harold','samaritan','East 30th St and Lexington Ave.',STR_TO_DATE('24-02-2005', '%d-%m-%Y'),STR_TO_DATE('17-11-2015', '%d-%m-%Y'));
 /* Ajout d'Admin */
-INSERT INTO Admin(Nom,Prenom,MDP,Adresse)
-VALUES ('Admin', 'god','azerty123','1 rue du test 00000 Testville');
+
+
+INSERT INTO Admin(Mail,Nom,Prenom,MDP,Adresse)
+VALUES ('admin@master.com','Admin', 'god','azerty123','1 rue du test 00000 Testville');
+
+INSERT INTO Admin(Mail,Nom,Prenom,MDP,Adresse)
+VALUES ('ad@min.bg','ad', 'bg','min','46 rue de la boustifialle');
+
+
 /*Ajout Ouevre */
 INSERT INTO Oeuvre(Titre, Cote, Publication)
 VALUES ('Le sorceleur','LAS1996','1996');
+
+INSERT INTO Oeuvre(Titre, Cote, Publication, Description)
+VALUES ('Boris au brésil','Bor2018','2018', 'Mmmm sympa');
+
+/*Ajout auteur */
+INSERT INTO Auteur(Nom, Prenom)
+    Values('Putzu','alex');
+INSERT INTO Auteur(Nom,Prenom)
+    VALUES('auteur1','test');
+
+/*Ajout Ecrit*/
+INSERT INTO Ecrit(FkAuteur, FkLivre)
+Values(1,1);
+INSERT INTO Ecrit(FkAuteur, FkLivre)
+Values(2,1);

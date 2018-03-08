@@ -2,6 +2,9 @@
     include '../fonctions/admin.php';
     addBook();
 ?>
+
+
+
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <h2 class="page-header">Ajout de Livre</h2>
     <div class="container">
@@ -54,4 +57,14 @@
         </div>
     </div>
 </div>
+/*
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+    <?php
+    /*if(isset($_POST['addBook'])){
+        var_dump($_POST);
+    }*/
+    ?>
+</div>
+
 <script src="/js/script.js"></script>

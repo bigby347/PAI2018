@@ -1,15 +1,22 @@
 /* Adherant */
 
-/* Catalogue */ 
-Select Oeuvre.IdLivre, Oeuvre.Nom, Oeuvre.Cote, Year(Oeuvre.Publication), group_concat(Auteur.Nom, Auteur.Prenom , ','),  group_concat(MotClef.Nom, ',')
-From Oeuvre, Ecrit, Auteur , Definition, Motclef
-Where Oeuvre.IdLivre = Ecrit.FkLivre
-And Ecrit.FkAuteur = Auteur.IdAuteur 
-And Definition.FkLivre = Oeuvre.IdLivre
-And Definition.FkMotClef = MotClef.IdMotClef 
-And Auteur.IdAuteur = '???'
+/* Catalogue */
+SELECT Oeuvre.IdLivre,
+    Oeuvre.Titre,
+    Oeuvre.Cote,
+    Oeuvre.Publication,
+    group_concat(Auteur.Nom, ' ',Auteur.Prenom , ' ') AS Auteurs,
+    group_concat(MotClef.Nom, ' ') AS MotClefs,
+    Oeuvre.Description
+FROM Oeuvre
+    LEFT JOIN Ecrit ON Oeuvre.IdLivre = Ecrit.FkLivre
+    LEFT JOIN Auteur ON Ecrit.FkAuteur = Auteur.IdAuteur
+    LEFT JOIN Definition ON Oeuvre.IdLivre = Definition.FkLivre
+    LEFT JOIN MotClef ON Definition.FkMotClef = MotClef.IdMotClef
+GROUP BY Oeuvre.IdLivre;
+/*And Auteur.IdAuteur = '???'
 And MotClef.IdMotClef = '???'
-LIMIT 20 OFSET '???' ;
+LIMIT 20 OFSET '???' ;*/
 /*	*/
 
 
@@ -78,14 +85,30 @@ Select * from Admin;
 /*	*/
 
 
+/******//******//******//******//******//******//******//******//******//******//******/
+/******//******//******//******//******//******//******//******//******//******//******/
+/******//******//******//******//******//******//******//******//******//******//******/
 /* Admin */
+/* Ajout de livre */
+INSERT INTO '???'('???', '???', '???')
+VALUES ('???', '???', '???');
+
+
+
+
+
 /* Visualisé les tables  */
 Select * from '???'; 
 /*	*/
 
 /* Ajoue valeur */
-INSERT INTO '???'('???', '???', '???')
-VALUES ('???', '???', '???');
+INSERT INTO Oeuvre(Titre, Cote, Publication, Description)
+VALUES ('???', '???', '???', '???');
+/* commande pour recuperer le dernier id créer : $db->lastInsertId(); */
+
+INSERT INTO Ecrit(FkAuteur,FkLivre)
+    Values (1,1);
+
 /*	*/
 
 
