@@ -38,7 +38,7 @@ if(isset($_POST['connexion'])) { // si le bouton "Connexion" est appuyé
             else{
                 session_destroy();
                 $err=TRUE;
-                header('Location: ../index.php?err=user_err');
+                header('Location: ../signin_admin.php?err=user_err');
             }
         }
     }

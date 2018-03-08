@@ -26,6 +26,22 @@ $pagesAd = array(
     'catalogue' => array(
         'title'=>'Catalogue',
         'include'=> 'catalogue.inc.php',
+        'printMenu' => TRUE),
+    'inscription' => array(
+        'title'=>'Inscriptions Utilisateurs',
+        'include'=> 'inscription.inc.php',
+        'printMenu' => TRUE),
+    'utilisateurs' => array(
+        'title'=>'Utilisateurs',
+        'include'=> 'user_panel.inc.php',
+        'printMenu' => TRUE),
+    'liste' => array(
+        'title'=>'Liste utilisateurs',
+        'include'=> 'user_list.inc.php',
+        'printMenu' => FALSE),
+    'addbook' => array(
+        'title' => 'Ajout Livre',
+        'include' => 'add_book.inc.php',
         'printMenu' => TRUE)
 );
 

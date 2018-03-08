@@ -18,7 +18,7 @@ function printCatalogue(){
         $result->execute();
 
         $data->fetch();
-       /* foreach ($data as $catalogue){
+       foreach ($data as $catalogue){
             echo '<tr>
                     <td>'.$catalogue['Nom'].'</td>
                     <td>'.$catalogue['Auteurs'].'</td>
@@ -28,7 +28,7 @@ function printCatalogue(){
                     <td>'.$catalogue['Mots'].'</td>
                     <td>test</td>
                  </tr>';
-        } */
+       }
 
        var_dump($data);
     }

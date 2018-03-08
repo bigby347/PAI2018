@@ -2,7 +2,7 @@
         <h2 class="page-header">Catalogue</h2>
         <?php include '/fonctions/user.php'; ?>
         <div class="text-center">
-            <table style="width: 100%;">
+            <table class="table table-bordered">
                 <tr>
                     <th>Oeuvres</th>
                     <th>Auteur</th>

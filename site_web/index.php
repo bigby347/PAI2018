@@ -6,8 +6,10 @@
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/signin.css">
-  
+    <link rel="stylesheet" href="/css/signin.css" >
+    <link rel="icon" type="image/png" href="image/favicon.ico" >
+
+
   </head>
 
   <body class="text-center" style="background-image: url(/image/background_signin.jpg);">
@@ -28,13 +30,9 @@
       <a href="signin_admin.php">Accés Admin</a>
     </form>
 <?php if($_GET['err'] == "user_err"){ 
-      echo '<script  language="javascript">alert("Erreur mdp");</script>';
+        echo '<script  language="javascript">alert("Erreur mdp");</script>';
       } 
 ?>
   </body>
-  
-  
-
 
 </html>
-

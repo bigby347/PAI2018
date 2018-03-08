@@ -29,5 +29,9 @@
       <p class="mt-5 mb-3">© 2017-2018</p>
       <a href="index.php">Accés Adhérants</a>
     </form>
+    <?php if($_GET['err'] == "user_err"){
+        echo '<script  language="javascript">alert("Erreur mdp");</script>';
+    }
+    ?>
   </body>
 </html>
