@@ -16,6 +16,11 @@ $pagesUser = array(
         'title'=>'Mon compte',
         'include'=> 'compte.inc.php',
         'printMenu' => FALSE),
+    'notification' => array(
+        'title'=>'Mes notification',
+        'include'=> 'notification.inc.php',
+        'printMenu' => TRUE)
+
 );
 
 $pagesAd = array(
@@ -42,6 +47,18 @@ $pagesAd = array(
     'addbook' => array(
         'title' => 'Ajout Livre',
         'include' => 'add_book.inc.php',
+        'printMenu' => TRUE),
+    'addpret' => array(
+        'title' => 'Enregistrement pret',
+        'include' => 'add_pret.inc.php',
+        'printMenu' => TRUE),
+    'renouvelement' => array(
+        'title' => 'Renouvement',
+        'include' => 'renouvelement.inc.php',
+        'printMenu' => TRUE),
+    'notification' => array(
+        'title' => 'Notification',
+        'include' => 'add_notif.inc.php',
         'printMenu' => TRUE)
 );
 
