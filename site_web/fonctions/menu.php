@@ -17,10 +17,13 @@ $pagesUser = array(
         'include'=> 'compte.inc.php',
         'printMenu' => FALSE),
     'notification' => array(
-        'title'=>'Mes notification',
+        'title'=>'Mes notifications',
         'include'=> 'notification.inc.php',
+        'printMenu' => TRUE),
+    'renouvelement' => array(
+        'title' => 'Demande de Renouvelement',
+        'include' => 'renouvelement.inc.php',
         'printMenu' => TRUE)
-
 );
 
 $pagesAd = array(
@@ -52,9 +55,9 @@ $pagesAd = array(
         'title' => 'Enregistrement pret',
         'include' => 'add_pret.inc.php',
         'printMenu' => TRUE),
-    'renouvelement' => array(
-        'title' => 'Renouvement',
-        'include' => 'renouvelement.inc.php',
+    'demande' => array(
+        'title' => 'Demandes Prêt/Réservation',
+        'include' => 'demande.inc.php',
         'printMenu' => TRUE),
     'notification' => array(
         'title' => 'Notification',
