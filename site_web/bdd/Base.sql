@@ -168,4 +168,14 @@ Create table Reservation (
 
 
  
+INSERT INTO TypeNotif(Nom)
+VALUES ('Requète acceptée');
 
+INSERT INTO TypeNotif(Nom)
+VALUES ('Message Admin');
+
+INSERT INTO TypeNotif(Nom)
+VALUES ('Requète enregistrée');
+
+INSERT INTO TypeNotif(Nom)
+VALUES ('Requète Suprimmée');

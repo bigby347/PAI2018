@@ -3,12 +3,12 @@
 
     <?php
     if (isset($_POST['AjoutRequete'])){
-        AjoutRequete($_POST['AjoutRequete']);
+        AjoutRequete($_POST['AjoutRequete'],$_SESSION['IdAdherant']);
     }
     ?>
 
 
-    <h2 class="page-header">Catalogue</h2>
+    <h2 class="page-header">Catalogue :</h2>
 
     <div class="text-center">
         <table class="table table-bordered">

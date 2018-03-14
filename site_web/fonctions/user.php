@@ -64,7 +64,11 @@ function printRequete($IdAdherant){
                     <td>'.$Requete['IdRequete'].'</td>
                     <td>'.$Requete['Titre'].'</td>
                     <td>'.$Requete['Requete'].'</td>
-                    <td>A faire</td>
+                    <td>
+                        <form action = "" method="post">
+                        <button type="submit" class="btn btn-primary" name="SupprimeRequete" value='.$Requete['IdRequete'].' >Suprimmer</button>
+                        </form>
+                    </td>
               </tr>';
     }
 
@@ -97,7 +101,11 @@ function printReservation($IdAdherant){
                     <td>'.$Reservation['IdReservation'].'</td>
                     <td>'.$Reservation['Titre'].'</td>
                     <td>'.$Reservation['DateRequete'].'</td>
-                    <td>A faire</td>
+                    <td>
+                        <form action = "" method="post">
+                        <button type="submit" class="btn btn-primary" name="SupprimeReservation" value='.$Reservation['IdReservation'].' >Suprimmer</button>
+                        </form>
+                    </td>
               </tr>';
     }
 
@@ -128,14 +136,18 @@ function printEmprun($IdAdherant){
     $result->execute([$IdAdherant]);
 
     $data=$result->fetchAll();
-    foreach ($data as $Emprum){
+    foreach ($data as $Emprun){
         echo '<tr>
-                    <td>'.$Emprum['IdEmprun'].'</td>
-                    <td>'.$Emprum['IdExemplaire'].'</td>
-                    <td>'.$Emprum['Titre'].'</td>
-                    <td>'.$Emprum['DatePret'].'</td>
-                    <td>'.$Emprum['date_Retour'].'</td>
-                    <td>A faire</td>
+                    <td>'.$Emprun['IdEmprun'].'</td>
+                    <td>'.$Emprun['IdExemplaire'].'</td>
+                    <td>'.$Emprun['Titre'].'</td>
+                    <td>'.$Emprun['DatePret'].'</td>
+                    <td>'.$Emprun['date_Retour'].'</td>
+                    <td>
+                        <form action = "" method="post">
+                        <button type="submit" class="btn btn-primary" name="RenouvEmprun" value='.$Emprun['IdEmprun'].' >Renouveller</button>
+                        </form>
+                    </td>
               </tr>';
     }
 
@@ -167,7 +179,11 @@ AND IdTypeNotif = Notif.FkTypeNotif; ";
                     <td>'.$Notif['IdNotif'].'</td>
                     <td>'.$Notif['Type'].'</td>
                     <td>'.$Notif['Commentaire'].'</td>
-                    <td>A faire</td>
+                    <td>
+                        <form action = "" method="post">
+                        <button type="submit" class="btn btn-primary" name="SupprimeNotif" value='.$Notif['IdNotif'].' >Suprimmer</button>
+                        </form>
+                    </td>
               </tr>';
     }
 
@@ -178,7 +194,54 @@ AND IdTypeNotif = Notif.FkTypeNotif; ";
 
 
 
-function AjoutRequete($IdLivre){
-    echo 'Livre : '.$IdLivre;
-    $req = '';
+function AjoutRequete($IdLivre,$IdAdherant){
+    global $bdd;
+    $req1 = "INSERT INTO Requete(FkLivre,FkAdherant,Requete)
+    Values(?,?,STR_TO_DATE(?, '%d-%m-%Y'));";
+
+    $result=$bdd->prepare($req1);
+    $result->execute([$IdLivre,$IdAdherant,date('d-m-Y')]);
+
+    $req = 'INSERT INTO Notif(FkAdherant,FkTypeNotif,Commentaire)
+    Values(?,?,?)';
+    $result=$bdd->prepare($req);
+    $result->execute([$IdAdherant,3,'Requete enregistrée pour le livre '.$IdLivre]);
+
+}
+
+
+
+function SupprimeRequete($IdRequete){
+    global $bdd;
+    $req = "DELETE FROM Requete 
+      Where IdRequete = ?";
+
+    $result=$bdd->prepare($req);
+    $result->execute([$IdRequete]);
+
+    echo '<br> La requète a bien été suprimmé';
+}
+
+function SupprimeReservation($IdReservation){
+    global $bdd;
+    $req = "DELETE FROM Reservation
+      Where IdReservation = ?";
+
+    $result=$bdd->prepare($req);
+    $result->execute([$IdReservation]);
+}
+
+//TODO : Renouvelement 
+function RenouvEmprun($IdNotif){
+
+}
+
+
+function SupprimeNotif($IdNotif){
+    global $bdd;
+    $req = "DELETE FROM Notif
+      Where IdNotif = ?";
+
+    $result=$bdd->prepare($req);
+    $result->execute([$IdNotif]);
 }
