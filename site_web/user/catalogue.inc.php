@@ -1,7 +1,15 @@
 <div class="container" >
+    <?php require '../fonctions/user.php'; ?>
+
+    <?php
+    if (isset($_POST['AjoutRequete'])){
+        AjoutRequete($_POST['AjoutRequete']);
+    }
+    ?>
+
 
     <h2 class="page-header">Catalogue</h2>
-    <?php include '../fonctions/user.php'; ?>
+
     <div class="text-center">
         <table class="table table-bordered">
             <tr>

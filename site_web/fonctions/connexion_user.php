@@ -27,7 +27,7 @@ if(isset($_POST['connexion'])) { // si le bouton "Connexion" est appuyé
             $data=$result->fetch();
 
             if($data['MDP'] == $password && $data['Mail'] == $login){
-
+                $_SESSION['IdAdherant'] = $data['IdAdherant'];
                 $_SESSION['Mail'] = $data['Nom'];
                 $_SESSION['Nom'] = ucfirst($data['Nom']);
                 $_SESSION['Prenom'] = ucfirst($data['Prenom']);
