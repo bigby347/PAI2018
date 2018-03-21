@@ -7,7 +7,7 @@
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/signin.css" >
-    <link rel="icon" type="image/png" href="image/favicon.ico" >
+    <link rel="icon" type="image/png" href="images/favicon.ico" >
 
 
   </head>
