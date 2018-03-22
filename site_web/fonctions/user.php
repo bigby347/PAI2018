@@ -1,22 +1,83 @@
 <?php
     include 'config_bdd.php';
+function printAuteur(){
+    global $bdd;
 
-function printCatalogue(){
+    echo '<table class="table table-bordered">
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Ses oeuvres</th>
+            </tr>';
+    $req = "Select * From Auteur";
+
+    $result=$bdd->prepare($req);
+    $result->execute();
+
+    $data=$result->fetchAll();
+    foreach ($data as $Auteur){
+        echo '<tr>
+                    <td>'.$Auteur['Nom'].'</td>
+                    <td>'.$Auteur['Prenom'].'</td>
+                    <td>'.'<form action = "?page=catalogue" method="post">
+                        <button type="submit" class="btn btn-primary" name="RechAvAuteur" value='.$Auteur['IdAuteur'].' >Voir</button>
+                        </form>'.'</td></tr>';
+    }
+
+    echo '</table>';
+}
+
+function printMotsClef(){
+    global $bdd;
+
+    echo '
+            <select multiple size="10" class="form-control" name="MC[]">';
+
+    $req = "Select * From MotClef";
+
+    $result=$bdd->prepare($req);
+    $result->execute();
+
+    $data=$result->fetchAll();
+    foreach ($data as $MotClef){
+        echo '<option value='.$MotClef['IdMotClef'].' >'.$MotClef['Nom'].'</option>';
+    }
+
+    echo '</select>';
+}
+
+
+function printCatalogue($where,$whereMC){
+
+        echo '<table class="table table-bordered">
+            <tr>
+                <th>Oeuvres</th>
+                <th>Auteur</th>
+                <th>Mots-clef</th>
+                <th>Description</th>
+                <th>Publication</th>
+                <th>Id Livre</th>
+                <th>Côte</th>
+                <th>Emprunter</th>
+            </tr>';
         global $bdd;
 
-        $req = "SELECT Oeuvre.IdLivre, 
-                  Oeuvre.Titre, 
-                  Oeuvre.Cote, 
-                  Oeuvre.Publication, 
-                  group_concat(Auteur.Nom, ' ',Auteur.Prenom , ' ') AS Auteurs,  
-                  group_concat(MotClef.Nom, ' ') AS MotClefs,
-                  Oeuvre.Description
-                FROM Oeuvre
-                    LEFT JOIN Ecrit ON Oeuvre.IdLivre = Ecrit.FkLivre
-                    LEFT JOIN Auteur ON Ecrit.FkAuteur = Auteur.IdAuteur
-                    LEFT JOIN Definition ON Oeuvre.IdLivre = Definition.FkLivre
-                    LEFT JOIN MotClef ON Definition.FkMotClef = MotClef.IdMotClef
-                GROUP BY Oeuvre.IdLivre";
+        $req = "SELECT IdLivre,Titre,Cote,Publication,Auteurs,group_concat(MotClef.Nom, ' ') AS MotClefs,Description
+FROM (SELECT Oeuvre.IdLivre,
+Oeuvre.Titre,
+Oeuvre.Cote,
+Oeuvre.Publication,
+group_concat(Auteur.Nom, ' ' , Auteur.Prenom , ' ') AS Auteurs,
+Oeuvre.Description
+FROM Oeuvre
+LEFT JOIN Ecrit ON Oeuvre.IdLivre = Ecrit.FkLivre
+LEFT JOIN Auteur ON Ecrit.FkAuteur = Auteur.IdAuteur 
+".$where."
+GROUP BY Oeuvre.IdLivre) AS TMP
+LEFT JOIN Definition ON TMP.IdLivre = Definition.FkLivre
+LEFT JOIN MotClef ON Definition.FkMotClef = MotClef.IdMotClef 
+".$whereMC."
+GROUP BY TMP.IdLivre";
         $result=$bdd->prepare($req);
         $result->execute();
 
@@ -36,7 +97,9 @@ function printCatalogue(){
                         </form>
                     </td>
                  </tr>';
+
        }
+       echo '</table>';
     }
 
 function printRequete($IdAdherant){
@@ -81,16 +144,17 @@ function printReservation($IdAdherant){
     echo '<table class="table table-bordered">
             <tr>
                 <th>IdReservation</th>
-                <th>Oeuvres</th>
+                <th>Oeuvre</th>
+                <th>IdExemplaire</th>
                 <th>Date Reservation</th>
                 <th>Annuler</th>
             </tr>';
-    $req = "Select Titre,DateRequete, IdLivre, IdReservation
-    From Reservation, Oeuvre, Adherant 
-    Where Oeuvre.IdLivre = Reservation.FkLivre
+    $req = "Select Titre, DateAcceptation, IdExemplaire, IdReservation
+    From Reservation, Oeuvre, Adherant, Exemplaire
+    Where Oeuvre.IdLivre = Exemplaire.FkLivre
+    And Exemplaire.IdExemplaire = Reservation.FkExemplaire
     And Reservation.FkAdherant = Adherant.IdAdherant
-    And Adherant.IdAdherant = ?
-    And Reservation.DateAcceptation is null;";
+    And Adherant.IdAdherant = ?";
 
     $result=$bdd->prepare($req);
     $result->execute([$IdAdherant]);
@@ -100,7 +164,9 @@ function printReservation($IdAdherant){
         echo '<tr>
                     <td>'.$Reservation['IdReservation'].'</td>
                     <td>'.$Reservation['Titre'].'</td>
-                    <td>'.$Reservation['DateRequete'].'</td>
+                    <td>'.$Reservation['Titre'].'</td>
+                    <td>'.$Reservation['IdExemplaire'].'</td>
+                    
                     <td>
                         <form action = "" method="post">
                         <button type="submit" class="btn btn-primary" name="SupprimeReservation" value='.$Reservation['IdReservation'].' >Suprimmer</button>
@@ -154,6 +220,42 @@ function printEmprun($IdAdherant){
     echo '</table>';
 }
 
+function printHistorique($IdAdherant){
+    global $bdd;
+
+    echo '<table class="table table-bordered">
+            <tr>
+                <th>IdEmprun</th>
+                <th>IdExemplaire</th>
+                <th>Oeuvres</th>
+                <th>Date Debut</th>
+                <th>Date Fin</th>
+            </tr>';
+    $req = "Select IdEmprun, IdExemplaire, Titre, DatePret,DATE_ADD(DatePret, INTERVAL 1 MONTH) AS date_Retour
+    From Emprun, Exemplaire, Oeuvre, Adherant 
+    Where Oeuvre.IdLivre = Exemplaire.FkLivre
+    And Exemplaire.IdExemplaire = Emprun.FkExemplaire
+    And Emprun.FkAdherant = Adherant.IdAdherant
+    And Adherant.IdAdherant = ?
+    And Emprun.DateRetour IS NOT NULL;";
+
+    $result=$bdd->prepare($req);
+    $result->execute([$IdAdherant]);
+
+    $data=$result->fetchAll();
+    foreach ($data as $Emprun){
+        echo '<tr>
+                    <td>'.$Emprun['IdEmprun'].'</td>
+                    <td>'.$Emprun['IdExemplaire'].'</td>
+                    <td>'.$Emprun['Titre'].'</td>
+                    <td>'.$Emprun['DatePret'].'</td>
+                    <td>'.$Emprun['date_Retour'].'</td>
+              </tr>';
+    }
+
+    echo '</table>';
+}
+
 function printNotif($IdAdherant){
     global $bdd;
 
@@ -190,7 +292,31 @@ AND IdTypeNotif = Notif.FkTypeNotif; ";
     echo '</table>';
 }
 
+function printAdmin(){
+    global $bdd;
 
+    echo '<table class="table table-bordered">
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Mail</th>
+            </tr>';
+    $req = "Select Nom, Prenom, Mail From Admin";
+
+    $result=$bdd->prepare($req);
+    $result->execute();
+
+    $data=$result->fetchAll();
+    foreach ($data as $Notif){
+        echo '<tr>
+                    <td>'.$Notif['Nom'].'</td>
+                    <td>'.$Notif['Prenom'].'</td>
+                    <td>'.$Notif['Mail'].'</td>
+              </tr>';
+    }
+
+    echo '</table>';
+}
 
 
 
@@ -231,8 +357,15 @@ function SupprimeReservation($IdReservation){
     $result->execute([$IdReservation]);
 }
 
-//TODO : Renouvelement 
-function RenouvEmprun($IdNotif){
+
+function RenouvEmprun($IdEmprun){
+    global $bdd;
+    $req1 = "INSERT INTO Renouvelement(FkEmprun,DateDemande)
+    Values(?,STR_TO_DATE(?, '%d-%m-%Y'));";
+
+    $result=$bdd->prepare($req1);
+    $result->execute([$IdEmprun,date('d-m-Y')]);
+
 
 }
 

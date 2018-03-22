@@ -13,7 +13,8 @@ FROM Oeuvre
     LEFT JOIN Auteur ON Ecrit.FkAuteur = Auteur.IdAuteur
     LEFT JOIN Definition ON Oeuvre.IdLivre = Definition.FkLivre
     LEFT JOIN MotClef ON Definition.FkMotClef = MotClef.IdMotClef
-GROUP BY Oeuvre.IdLivre;
+GROUP BY Oeuvre.IdLivre
+HAVING Auteurs LIKE '%teur%' ;
 /*And Auteur.IdAuteur = '???'
 And MotClef.IdMotClef = '???'
 LIMIT 20 OFSET '???' ;*/
@@ -52,17 +53,33 @@ And Emprun.DateRetour IS NULL;
 
  
 /* reservation */
-Select Titre,DateRequete
-From Reservation, Oeuvre, Adherant 
-Where Oeuvre.IdLivre = Reservation.FkLivre
+Select Titre, DateAcceptation, IdExemplaire, IdReservation
+From Reservation, Oeuvre, Adherant, Exemplaire
+Where Oeuvre.IdLivre = Exemplaire.FkLivre
+And Exemplaire.IdExemplaire = Reservation.FkExemplaire
 And Reservation.FkAdherant = Adherant.IdAdherant
-And Adherant.IdAdherant = 2
-And Reservation.DateAcceptation is null;
-/*	*/
+And Adherant.IdAdherant = 2;
 
+
+
+SELECT IdLivre,Cote,Publication,Auteurs,group_concat(MotClef.Nom, ' ') AS MotClefs,Description
+FROM (SELECT Oeuvre.IdLivre,
+Oeuvre.Titre,
+Oeuvre.Cote,
+Oeuvre.Publication,
+group_concat(Auteur.Nom, ' ' , Auteur.Prenom , ' ') AS Auteurs,
+Oeuvre.Description
+FROM Oeuvre
+LEFT JOIN Ecrit ON Oeuvre.IdLivre = Ecrit.FkLivre
+LEFT JOIN Auteur ON Ecrit.FkAuteur = Auteur.IdAuteur
+GROUP BY Oeuvre.IdLivre) AS TMP
+LEFT JOIN Definition ON TMP.IdLivre = Definition.FkLivre
+LEFT JOIN MotClef ON Definition.FkMotClef = MotClef.IdMotClef
+GROUP BY TMP.IdLivre
+;
 
 /* Requete/demande */
-/* Visualisation */ 
+/* Visualisation */
 Select Titre, Requete
 From Requete, Oeuvre, Adherant 
 Where Oeuvre.IdLivre = Requete.FkLivre
