@@ -78,6 +78,11 @@ LEFT JOIN MotClef ON Definition.FkMotClef = MotClef.IdMotClef
 GROUP BY TMP.IdLivre
 ;
 
+
+
+Select IdAuteur, Nom, Prenom, CONCAT(Nom,' ',Prenom) as R1, CONCAT(Prenom,' ',Nom) as R2
+    From Auteur
+    HAVING R1 Like '%pu%';
 /* Requete/demande */
 /* Visualisation */
 Select Titre, Requete

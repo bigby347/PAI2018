@@ -1,15 +1,16 @@
 <?php
     include 'config_bdd.php';
-function printAuteur(){
+function printAuteur($recherche){
     global $bdd;
 
     echo '<table class="table table-bordered">
             <tr>
                 <th>Nom</th>
                 <th>Prénom</th>
-                <th>Ses oeuvres</th>
+                <th></th>
             </tr>';
-    $req = "Select * From Auteur";
+    $req = "Select IdAuteur, Nom, Prenom, CONCAT(Nom,' ',Prenom) as R1, CONCAT(Prenom,' ',Nom) as R2
+    From Auteur ".$recherche;
 
     $result=$bdd->prepare($req);
     $result->execute();
@@ -20,7 +21,7 @@ function printAuteur(){
                     <td>'.$Auteur['Nom'].'</td>
                     <td>'.$Auteur['Prenom'].'</td>
                     <td>'.'<form action = "?page=catalogue" method="post">
-                        <button type="submit" class="btn btn-primary" name="RechAvAuteur" value='.$Auteur['IdAuteur'].' >Voir</button>
+                        <button type="submit" class="btn btn-primary" name="RechAvAuteur" value='.$Auteur['IdAuteur'].' >Voir ses oeuvres</button>
                         </form>'.'</td></tr>';
     }
 
