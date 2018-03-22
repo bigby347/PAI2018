@@ -104,3 +104,44 @@ function addBook(){
         }
     }
 }
+
+
+function addAutor()
+{
+    global $bdd;
+
+    if (isset($_POST['addAutor'])) {
+        $cmp = $_POST['nbAuteur'];
+        $req = 'INSERT INTO Auteur(Nom,Prenom) VALUES(?,?)';
+        $result = $bdd->prepare($req);
+        if ($cmp > 1) {
+            for ($i = 1; $i < $cmp+1; $i++) {
+                $nom = $_POST['nomAuteur' . $i];
+                $prenom = $_POST['prenomAuteur' . $i];
+                $result->execute([$nom, $prenom]);
+            }
+            var_dump($cmp);
+
+        } else {
+            $nom = $_POST['nomAuteur1'];
+            $prenom = $_POST['prenomAuteur1'];
+            $result->execute([$nom, $prenom]);
+        }
+        header("location : portail_admin.php?page=addbook");
+    }
+}
+
+function listAutor()
+{
+    global $bdd;
+    $req = "SELECT Nom,Prenom,IdAuteur FROM Auteur";
+
+    $result = $bdd->prepare($req);
+    $result->execute();
+
+    $data = $result->fetchAll();
+    foreach ($data as $list) {
+        echo '<option data-subtext="'. $list['Prenom'] .'" value="'.$list['IdAuteur'].'">' . $list['Nom'] . '</option>';
+    }
+
+}

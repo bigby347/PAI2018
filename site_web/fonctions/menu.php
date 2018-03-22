@@ -39,7 +39,6 @@ $pagesUser = array(
 
 
 );
-
 $pagesAd = array(
     'acceuil' => array(
         'title'=>'Accueil',

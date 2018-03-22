@@ -41,10 +41,10 @@
                             <label>N°Téléphone</label>
                             <input type="text" name="tel" placeholder="N°" class="form-control" required="">
                         </div>
-                        <div class="form-group">
+                        <div id="dateCot" class="form-group">
                             <label>Payement Cotisation</label>
                             <input type="checkbox" id="check" value="Cotisation" onclick="toggle('check', 'dateCot')">
-                            <input type="text" id="dateCot" name="cotisation" placeholder="Date de cotisation (Format: jour-mois-année)" class="form-control" disabled>
+                            <input type="text" name="cotisation" placeholder="Date de cotisation (Format: jour-mois-année)" class="form-control" disabled>
                         </div>
                         <button type="submit" name="inscription" class="btn btn-lg btn-success">Inscrire</button>
                         <button type="reset" class="btn btn-lg btn-danger">Réinitialiser</button>
