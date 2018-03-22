@@ -90,7 +90,6 @@ Create table Admin (
 	NOT NULL
 );
 
-
 Create table TypeNotif (
 	IdTypeNotif integer
 	PRIMARY KEY
@@ -169,16 +168,17 @@ ALTER TABLE biblio.Reservation DROP DateRequete;
 
  
 INSERT INTO TypeNotif(Nom)
-VALUES ('Requète acceptée');
+VALUES ('Message Admin'),
+	('Requète enregistrée'),
+	('Requète Suprimmée'),
+	('Requète acceptée'),
+	('Reservation anulée'),
+	('Limite temps reservation dépassée'),
+	('Renouvelement du pret accepter'),
+	('Date de fin de pret atteinte'),
+	('Renouvelement de pret refuser'),
+	('Renouvelement de pret enregistrée');
 
-INSERT INTO TypeNotif(Nom)
-VALUES ('Message Admin');
-
-INSERT INTO TypeNotif(Nom)
-VALUES ('Requète enregistrée');
-
-INSERT INTO TypeNotif(Nom)
-VALUES ('Requète Suprimmée');
 
 INSERT INTO MotClef(Nom)
 		VALUES ('Bande dessinée'),

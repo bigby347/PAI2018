@@ -42,7 +42,7 @@
         <div class="col-sm-8" >
             <?php
             if (isset($_POST['RenouvEmprun'])){
-                RenouvEmprun($_POST['RenouvEmprun']);
+                RenouvEmprun($_POST['RenouvEmprun'],$_SESSION['IdAdherant']);
             }
             printEmprun($_SESSION['IdAdherant']);
             ?>

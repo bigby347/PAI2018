@@ -331,7 +331,7 @@ function AjoutRequete($IdLivre,$IdAdherant){
     $req = 'INSERT INTO Notif(FkAdherant,FkTypeNotif,Commentaire)
     Values(?,?,?)';
     $result=$bdd->prepare($req);
-    $result->execute([$IdAdherant,3,'Requete enregistrée pour le livre '.$IdLivre]);
+    $result->execute([$IdAdherant,2,'Requete enregistrée pour le livre '.$IdLivre]);
 
 }
 
@@ -358,13 +358,18 @@ function SupprimeReservation($IdReservation){
 }
 
 
-function RenouvEmprun($IdEmprun){
+function RenouvEmprun($IdEmprun,$IdAdherant){
     global $bdd;
     $req1 = "INSERT INTO Renouvelement(FkEmprun,DateDemande)
     Values(?,STR_TO_DATE(?, '%d-%m-%Y'));";
 
     $result=$bdd->prepare($req1);
     $result->execute([$IdEmprun,date('d-m-Y')]);
+
+    $req = 'INSERT INTO Notif(FkAdherant,FkTypeNotif,Commentaire)
+    Values(?,?,?)';
+    $result=$bdd->prepare($req);
+    $result->execute([$IdAdherant,10,'Requete de renouvelement enregistrée pour l emprun '.$IdEmprun]);
 
 
 }
