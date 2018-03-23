@@ -346,7 +346,7 @@ function SupprimeRequete($IdRequete){
     $result=$bdd->prepare($req);
     $result->execute([$IdRequete]);
 
-    echo '<br> La requète a bien été suprimmé';
+    //echo '<br> La requète a bien été suprimmé';
 }
 
 function SupprimeReservation($IdReservation){
