@@ -20,8 +20,8 @@ VALUES ('ad@min.bg','ad', 'bg','min','46 rue de la boustifialle');
 
 
 /*Ajout Ouevre */
-INSERT INTO Oeuvre(Titre, Cote, Publication)
-VALUES ('Le sorceleur','LAS1996','1996');
+INSERT INTO Oeuvre(Titre, Cote, Publication,Description)
+VALUES ('Germinal','GEZ1885','1885','description de germinal');
 
 INSERT INTO Oeuvre(Titre, Cote, Publication, Description)
 VALUES ('Boris au brésil','Bor2018','2018', 'Mmmm sympa');

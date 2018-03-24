@@ -10,7 +10,7 @@
         <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/css/bootstrap-select.min.css">
-        <link rel="icon" type="image/png" href="../../../../L3%20INFO/Dev_Web/Test_Symfony/test_project/web/favicon.ico" >
+        <link rel="icon" type="image/png" href="/image/favicon.ico" >
         <link rel="stylesheet" href="/css/style.css">
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

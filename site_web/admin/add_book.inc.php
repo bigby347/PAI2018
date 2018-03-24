@@ -24,10 +24,10 @@
                         </div>
                         <div class="form-group">
                             <label>Description</label>
-                            <textarea placeholder="Entrer une description ici" name="adresse" rows="3"  class="form-control" required=""></textarea>
+                            <textarea placeholder="Entrer une description ici" name="description" rows="3"  class="form-control" required=""></textarea>
                         </div>
                         <div class="row">
-                            <input type="hidden" id="nbAuteur" name="nbAuteur" value="1">
+                            <input type="hidden" id="nbAuteur" name="nbAuteur" value="0">
                             <div class="col-sm-4 form-group">
                                 <label>Auteur(s)</label>
                                 <select class="selectpicker" name="select_auteur[]" title="Selectionner Auteur(s)"
@@ -70,11 +70,11 @@
                         <label>Prenom auteur</label>
                         <input type="text" name="prenomAuteur1" placeholder="Prénom Auteur 1" class="form-control">
                     </div>
-                    <div class="col-sm-4">
+                    <!--<div class="col-sm-4">
                         <br>
                         <button type="button" name="add" onclick="addRow()" class="btn btn-success"><span class="glyphicon glyphicon-plus-sign"></button>
                         <button type="button" name="remove" onclick="removeRow()" class="btn btn-danger"><span class="glyphicon glyphicon-minus-sign" </button>
-                    </div>
+                    </div>-->
                 </div>
                 <div id="auteurDiv"></div>
                 <button type="submit" name="addAutor" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> Ajouter</button>
