@@ -1,43 +1,63 @@
-<?php session_start();?>
 
-<div class="portal-page-column column-1 col-md-12     col-md-100 container">
-  <h3>Bonjour <?= $_SESSION['Nom'];?>,</h3><br>
-  <div class="row">
-    <div class="col-sm-4" name="table">
-        <span>Vos pret en Cours :</span>
-        <table class="table table-sm">
-            <thead>
-            <tr>
-                <th scope="col"></th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td colspan="2">Larry the Bird</td>
-                <td>@twitter</td>
-            </tr>
-            </tbody>
-        </table>
+<?php include '../fonctions/user.php'; ?>
+
+<div class="container">
+
+    <h3>Bonjour <?= $_SESSION['Nom'];?> </h3><br>
+    <div class="row">
+        <div class="col-sm-8" >
+            <?php
+            if (isset($_POST['SupprimeRequete'])){
+                SupprimeRequete($_POST['SupprimeRequete']);
+            }
+            printRequete($_SESSION['IdAdherant']);
+            ?>
+        </div>
+        <div class="col-sm-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Les Requètes</div>
+                <div class="panel-body"> Lorsque vous demander un livre sur le catalogue, vous créer une requète.</div>
+            </div>
+        </div>
     </div>
-    <div class="col-sm-4">
+
+    <div class="row">
+        <div class="col-sm-8" >
+            <?php
+            if (isset($_POST['SupprimeReservation'])){
+            SupprimeReservation($_POST['SupprimeReservation']);
+            }
+            printReservation($_SESSION['IdAdherant']);
+            ?>
+        </div>
+        <div class="col-sm-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Les Réservations</div>
+                <div class="panel-body">Le Livre de votre requète est disponible, cela devient donc une reservation, vous avez une semaine pour le recupérer</div>
+            </div>
+        </div>
     </div>
-    <div class="col-sm-4">
+
+    <div class="row">
+        <div class="col-sm-8" >
+            <?php
+            if (isset($_POST['RenouvEmprun'])){
+                RenouvEmprun($_POST['RenouvEmprun'],$_SESSION['IdAdherant']);
+            }
+            printEmprun($_SESSION['IdAdherant']);
+            ?>
+        </div>
+        <div class="col-sm-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Les Empruns</div>
+                <div class="panel-body">Il s'agit des Livres que vous avez emprumter. Vous pouvez en profiter pendant un mois, ou deux si renouvellements</div>
+            </div>
+        </div>
+
     </div>
-  </div>
 </div>
+
+
+<br>
+<br>
+<br>

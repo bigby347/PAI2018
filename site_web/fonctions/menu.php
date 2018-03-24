@@ -8,10 +8,6 @@ $pagesUser = array(
         'title'=>'Catalogue',
         'include'=> 'catalogue.inc.php',
         'printMenu' => TRUE),
-    'contact' => array(
-        'title'=>'Contact',
-        'include'=> 'contact.inc.php',
-        'printMenu' => TRUE),
     'compte' => array(
         'title'=>'Mon compte',
         'include'=> 'compte.inc.php',
@@ -23,9 +19,26 @@ $pagesUser = array(
     'renouvelement' => array(
         'title' => 'Demande de Renouvelement',
         'include' => 'renouvelement.inc.php',
-        'printMenu' => TRUE)
-);
+        'printMenu' => FALSE),
+    'historique' => array(
+        'title' => 'Historique',
+        'include' => 'historique.inc.php',
+        'printMenu' => TRUE),
+    'contact' => array(
+        'title'=>'Contact',
+        'include'=> 'contact.inc.php',
+        'printMenu' => TRUE),
+    'auteur' => array(
+        'title'=>'Auteur',
+        'include'=> 'auteur.inc.php',
+        'printMenu' => FALSE),
+    'motClef' => array(
+        'title'=>'Recherche par mot clef',
+        'include'=> 'motClef.inc.php',
+        'printMenu' => FALSE)
 
+
+);
 $pagesAd = array(
     'acceuil' => array(
         'title'=>'Accueil',

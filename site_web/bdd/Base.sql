@@ -90,7 +90,6 @@ Create table Admin (
 	NOT NULL
 );
 
-
 Create table TypeNotif (
 	IdTypeNotif integer
 	PRIMARY KEY
@@ -157,15 +156,60 @@ Create table Reservation (
 	AUTO_INCREMENT,
 	FkAdherant integer
 	NOT NULL,
-	FkLivre integer
+	FkExemplaire integer
 	NOT NULL,
 	DateRequete date NOT NULL,
 	DateAcceptation date,
 	FOREIGN KEY (FkAdherant) REFERENCES Adherant(IdAdherant) ON UPDATE CASCADE,
-	FOREIGN KEY (FkLivre) REFERENCES Oeuvre(IdLivre) ON UPDATE CASCADE
+	FOREIGN KEY (FkExemplaire) REFERENCES Exemplaire(IdExemplaire) ON UPDATE CASCADE
 );
-
+ALTER TABLE biblio.Reservation DROP DateRequete;
 
 
  
+INSERT INTO TypeNotif(Nom)
+VALUES ('Message Admin'),
+	('Requète enregistrée'),
+	('Requète Suprimmée'),
+	('Requète acceptée'),
+	('Reservation anulée'),
+	('Limite temps reservation dépassée'),
+	('Renouvelement du pret accepter'),
+	('Date de fin de pret atteinte'),
+	('Renouvelement de pret refuser'),
+	('Renouvelement de pret enregistrée');
 
+
+INSERT INTO MotClef(Nom)
+		VALUES ('Bande dessinée'),
+			('Cuisine'),
+			('Dictionaire'),
+			('Essais'),
+			('Histoire'),
+			('Guide Pratique'),
+			('Humour'),
+			('Informatique internet'),
+			('Jeunesse'),
+			('Littérature'),
+			('Policier et suspence'),
+			('Religions et spiritualité'),
+			('Romance'),
+			('Sciences humaine'),
+			('Sciences technique et medecine'),
+			('Scolaire'),
+			('Science fiction, fantasie'),
+			('Sport'),
+			('Loisir'),
+			('Théatre'),
+			('Tourisme et voyage'),
+			('Jeux'),
+			('Architecture'),
+			('Art'),
+			('Géographie'),
+			('Jardinage'),
+			('Maison et travaux'),
+			('Musique'),
+			('Animaux'),
+			('Dévellopement personnel'),
+			('Philosophie'),
+			('Éducation et formation');
