@@ -34,7 +34,7 @@ if(isset($_POST['connexion'])) { // si le bouton "Connexion" est appuyé
                 $_SESSION['MDP'] = $data['MDP'];
                 $_SESSION['Adresse'] = $data['Adresse'];
                 $_SESSION['connect']=1;
-                header('Location: /user/portail_user.php');
+                header('Location: /user/portail_user.php?page=acceuil');
             }
             else{
                 session_destroy();

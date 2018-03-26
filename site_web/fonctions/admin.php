@@ -1,49 +1,91 @@
 <?php
-include 'config_bdd.php';
-
-function register(){
+include '../fonctions/user.php';
+function register()
+{
     global $bdd;
-    if(isset($_POST['inscription'])){
+    if (isset($_POST['inscription'])) {
 
-        $mail = strtolower(htmlentities($_POST['mail'], ENT_QUOTES, "ISO-8859-1"));
-        $nom = strtolower(htmlentities($_POST['nom'], ENT_QUOTES, "ISO-8859-1"));
-        $prenom = strtolower(htmlentities($_POST['prenom'], ENT_QUOTES, "ISO-8859-1"));
-        $mdp = strtolower($nom.$prenom);
-        $adresse = htmlentities($_POST['adresse'], ENT_QUOTES, "ISO-8859-1");
+        $mail = strtolower($_POST['mail']);
+        $nom = strtolower($_POST['nom']);
+        $prenom = strtolower($_POST['prenom']);
+        $mdp = strtolower($nom . $prenom);
+        $adresse = $_POST['adresse'];
         $adhesion = date("d-m-Y");
-        $cotisation = (isset($_POST['cotisation'])) ? htmlentities($_POST['cotisation'], ENT_QUOTES, "ISO-8859-1") : NULL ;
-        $req='INSERT INTO Adherant(Mail,Nom,Prenom,MDP,Adresse,adhesion,cotisation) VALUES(?,?,?,?,?,STR_TO_DATE(?, \'%d-%m-%Y\'),STR_TO_DATE(?, \'%d-%m-%Y\'))';
-        $result=$bdd->prepare($req);
-        if($cotisation == '' || $cotisation == NULL){
-            $result->execute([$mail,$nom,$prenom,$mdp,$adresse,$adhesion,NULL]);
-        }
-        else{
-            $result->execute([$mail,$nom,$prenom,$mdp,$adresse,$adhesion,$cotisation]);
+        $cotisation = (isset($_POST['cotisation'])) ? $_POST['cotisation'] : NULL;
+        $req = 'INSERT INTO Adherant(Mail,Nom,Prenom,MDP,Adresse,adhesion,cotisation) VALUES(?,?,?,?,?,STR_TO_DATE(?, \'%d-%m-%Y\'),STR_TO_DATE(?, \'%d-%m-%Y\'))';
+        $result = $bdd->prepare($req);
+        if ($cotisation == '' || $cotisation == NULL) {
+            $result->execute([$mail, $nom, $prenom, $mdp, $adresse, $adhesion, NULL]);
+        } else {
+            $result->execute([$mail, $nom, $prenom, $mdp, $adresse, $adhesion, $cotisation]);
         }
     }
 }
 
-function listUser(){
+function listUser()
+{
     global $bdd;
-    $find='';
-    if(isset($_POST['rechercher']) && !empty($_POST['nom']) && !empty($_POST['prenom']) ){
-        $find="WHERE Nom = '".$_POST['nom']."' AND Prenom ='".$_POST['prenom']."'";
+    $find = '';
+    if (isset($_POST['rechercher']) && !empty($_POST['nom']) && !empty($_POST['prenom'])) {
+        $find = "WHERE Nom = '" . $_POST['nom'] . "' AND Prenom ='" . $_POST['prenom'] . "'";
     }
-    $req = 'SELECT IdAdherant,Nom,Prenom,Mail,Adresse,adhesion,cotisation FROM Adherant '. $find;
-    $result=$bdd->prepare($req);
+    $req = 'SELECT IdAdherant,Nom,Prenom,Mail,Adresse,adhesion,cotisation FROM Adherant ' . $find;
+    $result = $bdd->prepare($req);
     $result->execute();
-    $data=$result->fetchAll();
-    foreach ($data as $catalogue){
+    $data = $result->fetchAll();
+    foreach ($data as $user) {
         echo '<tr>
-                    <td>'.$catalogue['IdAdherant'].'</td>
-                    <td>'.$catalogue['Nom'].'</td>
-                    <td>'.$catalogue['Prenom'].'</td>
-                    <td>'.$catalogue['Mail'].'</td>
-                    <td>'.$catalogue['Adresse'].'</td>
-                    <td>'.$catalogue['adhesion'].'</td>
-                    <td>'.$catalogue['cotisation'].'</td>
+                    <td>' . $user['IdAdherant'] . '</td>
+                    <td>' . $user['Nom'] . '</td>
+                    <td>' . $user['Prenom'] . '</td>
+                    <td>' . $user['Mail'] . '</td>
+                    <td>' . $user['Adresse'] . '</td>
+                    <td>' . $user['adhesion'] . '</td>
+                    <td>' . $user['cotisation'] . '</td>
+                    <td>
+                        <form action = "" method="post">
+                            <button type="submit" class="btn btn-primary" name="profile" value=' . $user['IdAdherant'] . ' >Voir Profil</button>
+                        </form>
+                    </td>
                  </tr>';
     }
+}
+
+function printProfile($idUser)
+{
+    global $bdd;
+    $req = 'SELECT IdAdherant,Nom,Prenom,Mail,Adresse,adhesion,cotisation FROM Adherant WHERE IdAdherant =' . $idUser;
+    $result = $bdd->prepare($req);
+    $result->execute();
+    $dataUser = $result->fetch();
+    echo '
+            <div class="col-sm-9 col-sm-offset-3 col-md-8 col-md-offset-3 main panel panel-primary">
+                <h2 class="page-header text-primary text-center">Profil utilisateur</h2>
+                <div class="container-fluid col-lg-6 col-lg-offset-3 text-center">
+                     <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3>' . $dataUser['Nom'] . ' ' . $dataUser['Prenom'] . '</h3>
+                    </div>
+                <div class="panel-body">
+                        <h5>ID Utilisateurs: ' . $dataUser['IdAdherant'] . '</h5>
+                        <h5>Email: ' . $dataUser['Mail'] . '</h5>
+                        <h5>Adresse : ' . $dataUser['Adresse'] . '</h5>
+                        <h5>Adhesion : ' . $dataUser['adhesion'] . '</h5>
+                        <h5>Cotisation : ' . $dataUser['cotisation'] . '</h5>
+                </div>
+            </div>
+                </div>
+                <div class="container-fluid col-lg-12">';
+
+    echo '<h4 class="page-header text-info">Historique Emprunt</h4>';
+    printHistorique($idUser);
+    echo '<h4 class="page-header text-info">Demande de Réservation</h4>';
+    printReservation($idUser);
+    echo '<h4 class="page-header text-info">Requête</h4>';
+    printRequete($idUser);
+    echo '<h4 class="page-header text-info">Emprunt en Cours</h4>';
+    printEmprun($idUser);
+    echo '</div></div>';
 }
 
 function listAutor()
@@ -56,33 +98,64 @@ function listAutor()
 
     $data = $result->fetchAll();
     foreach ($data as $list) {
-        echo '<option data-subtext="'. $list['Prenom'] .'" value="'.$list['IdAuteur'].'">' . $list['Nom'] . '</option>';
+        echo '<option data-subtext="' . $list['Prenom'] . '" value="' . $list['IdAuteur'] . '">' . $list['Nom'] . '</option>';
     }
 
 }
 
-function addBook(){
+function addBook()
+{
     global $bdd;
-    $listAuteur ='';
-
-    if(isset($_POST['addBook'])){
-        $titre = strtolower(htmlentities($_POST['titre'], ENT_QUOTES, "ISO-8859-1"));
-        $datePub = htmlentities($_POST['datePub'], ENT_QUOTES, "ISO-8859-1");
-        $cote = htmlentities($_POST['cote'], ENT_QUOTES, "ISO-8859-1");
-        for($i=1;$i=$_POST['nbAuteur'];$i++){
-            if($i==1){
-                $listAuteur .= $_POST['nomAuteur'.$i].' '.$_POST['nomAuteur'.$i];
-            }
-            else{
-                $listAuteur .= ','.$_POST['nomAuteur'.$i].' '.$_POST['nomAuteur'.$i];
-            }
+    if (isset($_POST['addBook'])) {
+        $titre = $_POST['titre'];
+        $datePub = $_POST['datePub'];
+        $cote = $_POST['cote'];
+        $description = $_POST['description'];
+        $list_autor = $_POST['select_auteur'];
+        $req = 'INSERT INTO Oeuvre(Titre, Cote, Publication,Description)
+            VALUES (?,?,?,?)';
+        $result = $bdd->prepare($req);
+        $result->execute([$titre, $cote, $datePub, $description]);
+        $id_livre = $bdd->lastInsertId();
+        foreach ($list_autor as $autor) {
+            $req = 'INSERT INTO Ecrit(FkAuteur,FkLivre)
+            VALUES (?,?)';
+            $result = $bdd->prepare($req);
+            $result->execute([$autor, $id_livre]);
         }
-        $req = 'INSERT INTO Oeuvre(Titre, Cote, Publication)
-            VALUES (?,?,?)';
-        $result=$bdd->prepare($req);
-        $result->execute([$titre,$cote,$datePub]);
     }
 
+}
+
+function listBook()
+{
+    global $bdd;
+    $req = "SELECT IdLivre,Titre FROM Oeuvre";
+
+    $result = $bdd->prepare($req);
+    $result->execute();
+
+    $data = $result->fetchAll();
+    foreach ($data as $list) {
+        echo '<option data-subtext="' . $list['IdLivre'] . '" value="' . $list['IdLivre'] . '">' . $list['Titre'] . '</option>';
+    }
+}
+
+function addExemplaire()
+{
+    global $bdd;
+
+    if (isset($_POST['addExemplaire'])) {
+        $date = $_POST['dateAchat'];
+        $nbExem = $_POST['nbExemp'];
+        $idLivre = $_POST['select_livre'];
+        $req = 'INSERT INTO Exemplaire(Achat,FkLivre) VALUES(?,?)';
+        $result = $bdd->prepare($req);
+        for ($i = 0; $i < $nbExem; $i++) {
+            $result->execute([$date, $idLivre]);
+        }
+
+    }
 }
 
 function addAutor()
@@ -90,22 +163,63 @@ function addAutor()
     global $bdd;
 
     if (isset($_POST['addAutor'])) {
-        $cmp = $_POST['nbAuteur'];
         $req = 'INSERT INTO Auteur(Nom,Prenom) VALUES(?,?)';
         $result = $bdd->prepare($req);
-        if ($cmp > 1) {
-            for ($i = 1; $i < $cmp+1; $i++) {
-                $nom = $_POST['nomAuteur' . $i];
-                $prenom = $_POST['prenomAuteur' . $i];
-                $result->execute([$nom, $prenom]);
-            }
-            var_dump($cmp);
+        $nom = $_POST['nomAuteur1'];
+        $prenom = $_POST['prenomAuteur1'];
+        $result->execute([$nom, $prenom]);
+    }
+}
 
-        } else {
-            $nom = $_POST['nomAuteur1'];
-            $prenom = $_POST['prenomAuteur1'];
-            $result->execute([$nom, $prenom]);
-        }
-        header("location : portail_admin.php?page=addbook");
+function printDemandeReservation()
+{ //TODO
+    global $bdd;
+
+
+    $req = 'SELECT Nom,Prenom,Titre,IdAdherant,Requete
+          FROM Adherant,Requete,Oeuvre
+          WHERE Requete.FkAdherant = Adherant.IdAdherant
+          AND Requete.FkLivre = Oeuvre.IdLivre';
+    $result = $bdd->prepare($req);
+    $result->execute();
+    $data = $result->fetchAll();
+    foreach ($data as $requete) {
+        echo '<tr>
+                    <td>' . $requete['IdAdherant'] . '</td>
+                    <td>' . $requete['Nom'] . '</td>
+                    <td>' . $requete['Prenom'] . '</td>
+                    <td>' . $requete['Titre'] . '</td>
+                    <td>' . $requete['Requete'] . '</td>
+                    <td>
+                        <form action ="" method="post">
+                            <button type="submit" class="btn btn-primary" name="accepter" value=' . $requete['IdAdherant'] . ' >Voir Profil</button>
+                        </form>
+                    </td>
+                 </tr>';
+    }
+}
+
+function printDemandeRenouvelement()
+{   //TODO
+    global $bdd;
+    $req = '';
+    $result = $bdd->prepare($req);
+    $result->execute();
+    $data = $result->fetchAll();
+    foreach ($data as $user) {
+        echo '<tr>
+                    <td>' . $user['IdAdherant'] . '</td>
+                    <td>' . $user['Nom'] . '</td>
+                    <td>' . $user['Prenom'] . '</td>
+                    <td>' . $user['Mail'] . '</td>
+                    <td>' . $user['Adresse'] . '</td>
+                    <td>' . $user['adhesion'] . '</td>
+                    <td>' . $user['cotisation'] . '</td>
+                    <td>
+                        <form action = "" method="post">
+                            <button type="submit" class="btn btn-primary" name="profile" value=' . $user['IdAdherant'] . ' >Voir Profil</button>
+                        </form>
+                    </td>
+                 </tr>';
     }
 }

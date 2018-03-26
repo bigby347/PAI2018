@@ -1,7 +1,12 @@
 <?php include '../fonctions/admin.php'; ?>
+    <?php if (isset($_POST['profile'])) {
+        printProfile($_POST['profile']);
+    } else{
+        echo '<h4>Aucun profil selectionné</h4>';
+    } ?>
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <h2 class="page-header">Utilisateurs</h2>
-    <div class="col-lg-6">
+    <div class="col-lg-7">
         <div class="row well">
             <h4>Recherche Utilisateur</h4>
             <form class="form-inline" method="post">
@@ -19,7 +24,7 @@
                             <button type="submit" name="rechercher" class="btn btn-default btn-primary center-block">Rechercher</button>
                         </div>
                         <div class="form-group">
-                            <button type="submit" name="liste" class="btn btn-default btn-primary center-block">Afficher Liste</button>
+                            <button type="submit" name="liste" class="btn btn-default btn-primary center-block">Afficher Liste Complète</button>
                         </div>
                     </div>
                 </div>

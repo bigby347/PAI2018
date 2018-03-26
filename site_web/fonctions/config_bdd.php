@@ -10,6 +10,7 @@ try {
 	$bdd = new PDO('mysql:host=' .DB_HOST. ';port=' .DB_PORT. ';dbname=' .DB_DATABASE, DB_USERNAME , DB_PASSWORD);
 	$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	$bdd->exec("SET NAMES 'utf8'");
+    $bdd->exec("SET CHARACTER SET utf8");
 
 } catch(Exception $e) {
 

@@ -75,6 +75,10 @@ $pagesAd = array(
     'notification' => array(
         'title' => 'Notification',
         'include' => 'add_notif.inc.php',
+        'printMenu' => TRUE),
+    'user_profile'=> array(
+        'title' => 'Profile Utilisateurs',
+        'include' => 'user_profile.inc.php',
         'printMenu' => TRUE)
 );
 
