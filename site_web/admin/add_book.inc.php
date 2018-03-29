@@ -1,5 +1,4 @@
 <?php
-include '../fonctions/admin.php';
 if (isset($_POST['addBook'])) {
     addBook($_POST['titre'],
         $_POST['datePub'],

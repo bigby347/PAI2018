@@ -1,8 +1,10 @@
-<?php include '../fonctions/admin.php'; ?>
+
 <!-- **************************
     Partie ajout Exemplaire
 **************************** -->
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+
     <h2 class="page-header">Gestions des Exemplaires </h2>
     <h4>Ajout d'exemplaire</h4>
     <?php
