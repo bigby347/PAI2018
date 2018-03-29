@@ -8,7 +8,7 @@
         /*echo $_POST['IdRequete'];
         echo $_POST['IdAdherant'];
         echo $_POST['IdExemplaire'];*/
-        ValidationRequete($_POST['IdRequete'],$_POST['IdAdherant'], $_POST['IdExemplaire']);
+        ValidationRequete($_POST['IdRequete'],$_POST['IdAdherant'], $_POST['IdExemplaire'], $premiereRequete['Titre']);
     }
     ?>
 
@@ -64,6 +64,7 @@
             <form action = "" method="post">
                 <input type="hidden" name="IdRequete" value= '.$premiereRequete['IdRequete'].'>
                 <input type="hidden" name="IdAdherant" value= '.$premiereRequete['IdAdherant'].'>
+                <input type="hidden" name="IdLivre" value= '.$premiereRequete['IdLivre'].'>
                 <input type="hidden" name="IdExemplaire" value= '.$Ex['IdExemplaire'].'>
                 <button type="submit" class="btn btn-primary" name="ValidationRequete" value="T" >Choisir</button>
             </form>

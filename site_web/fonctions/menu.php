@@ -72,6 +72,10 @@ $pagesAd = array(
         'title' => 'Gestions des requètes',
         'include' => 'GestionRequete.inc.php',
         'printMenu' => TRUE),
+    'reservation' => array(
+        'title' => 'Gestions des reservation',
+        'include' => 'GestionReservation.inc.php',
+        'printMenu' => TRUE),
     'renouv' => array(
         'title' => 'Gestion des renouvelements',
         'include' => 'GestionRenouvelement.inc.php',
@@ -84,6 +88,10 @@ $pagesAd = array(
     'user_profile'=> array(
         'title' => 'Profile Utilisateurs',
         'include' => 'user_profile.inc.php',
+        'printMenu' => TRUE),
+    'contisation'=> array(
+        'title' => 'Gestion des cotisations',
+        'include' => 'cotisation.inc.php',
         'printMenu' => TRUE)
 );
 

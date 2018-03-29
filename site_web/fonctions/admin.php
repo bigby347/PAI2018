@@ -78,10 +78,31 @@ function printProfile($idUser)
                 <div class="container-fluid col-lg-12">';
 
     echo '<h4 class="page-header text-info">Historique Emprunt</h4>';
-    printHistorique($idUser);
+    echo '<table class="table table-bordered">
+            <tr>
+                <th>IdEmprun</th>
+                <th>IdExemplaire</th>
+                <th>Oeuvres</th>
+                <th>Date Debut</th>
+                <th>Date Fin</th>
+            </tr>';
+
+        $Historiques = Historique($idUser);
+
+        foreach ($Historiques as $Historique) {
+            echo '<tr>
+                    <td>' . $Historique['IdEmprun'] . '</td>
+                    <td>' . $Historique['IdExemplaire'] . '</td>
+                    <td>' . $Historique['Titre'] . '</td>
+                    <td>' . $Historique['DatePret'] . '</td>
+                    <td>' . $Historique['date_Retour'] . '</td>
+              </tr>';
+        }
+
+    echo '</table>';
 
 
-    echo '<h4 class="page-header text-info">Demande de Réservation</h4>';
+    echo '<h4 class="page-header text-info">Réservation</h4>';
     echo '<table class="table table-bordered">
                 <tr>
                     <th>IdReservation</th>
@@ -377,6 +398,22 @@ function ExemplaireDispo($Idlivre){
     return $data;
 }
 
-function ValidationRequete($IdRequete, $IdAdherant, $IdExempalire){
+function ValidationRequete($IdRequete, $IdAdherant, $IdExemplaire, $Titre){
+    global $bdd;
+/* Création Reservation */
+    $req = 'INSERT INTO Reservation(FkAdherant,FkExemplaire,DateAcceptation)
+    VALUES(?,?,STR_TO_DATE(?, \'%d-%m-%Y\'))';
+    $result = $bdd->prepare($req);
+    $result->execute([$IdAdherant, $IdExemplaire, date("d-m-Y")]);
+/* Création notif */
+    $req = 'INSERT INTO Notif(FkAdherant,FkTypeNotif,Commentaire)
+    VALUES(?,?,?)';
+    $result = $bdd->prepare($req);
+    $result->execute([$IdAdherant,4,'Demande accepter, Vous avez donc une semaine pour récupérer l\'exemplaire '.$IdExemplaire.' du livre '.$Titre]);
+
+/* supretion requete*/
+    $req = 'DELETE FROM Requete WHERE IdRequete = ?';
+    $result = $bdd->prepare($req);
+    $result->execute([$IdRequete]);
 
 }
