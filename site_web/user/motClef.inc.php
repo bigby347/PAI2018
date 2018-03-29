@@ -5,8 +5,13 @@
     <div class="row">
         <div class="col-sm-8" >
             <form action="?page=catalogue" method="post">
-                <?php printMotsClef();?>
-
+                <select multiple size="10" class="form-control" name="MC[]">
+                <?php $MotsClefs = MotsClef();
+                foreach ($MotsClefs as $MotClef) {
+                    echo '<option value=' . $MotClef['IdMotClef'] . ' >' . $MotClef['Nom'] . '</option>';
+                }
+                ?>
+                </select>
                 <br>Rechercher :
                 <button type="submit" class="btn btn-primary" name="RechMCOu" value=0 >Rechercher</button>
 

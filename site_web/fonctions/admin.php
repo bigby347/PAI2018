@@ -79,12 +79,91 @@ function printProfile($idUser)
 
     echo '<h4 class="page-header text-info">Historique Emprunt</h4>';
     printHistorique($idUser);
+
+
     echo '<h4 class="page-header text-info">Demande de Réservation</h4>';
-    printReservation($idUser);
+    echo '<table class="table table-bordered">
+                <tr>
+                    <th>IdReservation</th>
+                    <th>Oeuvre</th>
+                    <th>IdExemplaire</th>
+                    <th>Date Reservation</th>
+                    <th>Annuler</th>
+                </tr>';
+    $Reservations = Reservation($idUser);
+    foreach ($Reservations as $Reservation) {
+        echo '<tr>
+                    <td>' . $Reservation['IdReservation'] . '</td>
+                    <td>' . $Reservation['Titre'] . '</td>
+                    <td>' . $Reservation['Titre'] . '</td>
+                    <td>' . $Reservation['IdExemplaire'] . '</td>
+                    
+                    <td>
+                        <form action = "" method="post">
+                        <button type="submit" class="btn btn-primary" name="SupprimeReservation" value=' . $Reservation['IdReservation'] . ' >Suprimmer</button>
+                        </form>
+                    </td>
+              </tr>';
+    }
+    echo '</table>';
+
+
     echo '<h4 class="page-header text-info">Requête</h4>';
-    printRequete($idUser);
+    echo '<table class="table table-bordered">
+            <tr>
+                <th>IdRequete</th>
+                <th>Oeuvres</th>
+                <th>Date de demande</th>
+                <th>Annuler</th>
+            </tr>';
+    $data = Requete($idUser);
+    foreach ($data as $Requete) {
+        echo '<tr>
+                    <td>' . $Requete['IdRequete'] . '</td>
+                    <td>' . $Requete['Titre'] . '</td>
+                    <td>' . $Requete['Requete'] . '</td>
+                    <td>
+                        <form action = "" method="post">
+                        <button type="submit" class="btn btn-primary" name="SupprimeRequete" value=' . $Requete['IdRequete'] . ' >Suprimmer</button>
+                        </form>
+                    </td>
+              </tr>';
+    }
+    echo '</table>';
+
     echo '<h4 class="page-header text-info">Emprunt en Cours</h4>';
-    printEmprun($idUser);
+    echo '<table class="table table-bordered">
+                <tr>
+                    <th>IdEmprun</th>
+                    <th>IdExemplaire</th>
+                    <th>Oeuvres</th>
+                    <th>Date Debut</th>
+                    <th>Date Fin</th>
+                    <th>Renouveller</th>
+                </tr>';
+
+            $Empruns = Emprun($idUser);
+            foreach ($Empruns as $Emprun) {
+
+                $form = '<form action = "" method="post">
+                    <button type="submit" class="btn btn-primary" name="RenouvEmprun" value=' . $Emprun['IdEmprun'] . ' >Renouveller</button>
+                </form>';
+                if ($Emprun['Renouvelement'] == 2){
+                    $form = ' ';
+                }
+                echo '<tr>
+                    <td>' . $Emprun['IdEmprun'] . '</td>
+                    <td>' . $Emprun['IdExemplaire'] . '</td>
+                    <td>' . $Emprun['Titre'] . '</td>
+                    <td>' . $Emprun['DatePret'] . '</td>
+                    <td>' . $Emprun['date_Retour'] . '</td>
+                    <td>
+                        '.$form.'
+                    </td>
+              </tr>';
+            }
+
+    echo '</table>';
     echo '</div></div>';
 }
 
@@ -97,6 +176,7 @@ function listAutor()
     $result->execute();
 
     $data = $result->fetchAll();
+
     foreach ($data as $list) {
         echo '<option data-subtext="' . $list['Prenom'] . '" value="' . $list['IdAuteur'] . '">' . $list['Nom'] . '</option>';
     }

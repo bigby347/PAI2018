@@ -15,7 +15,23 @@
     </div>
 
     <h3>Liste des auteurs </h3><br>
+    <table class="table table-bordered">
+        <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th></th>
+        </tr>
     <?php
-    printAuteur($recherche);
+    $Auteurs = Auteur($recherche);
+    foreach ($Auteurs as $Auteur) {
+        echo '<tr>
+                    <td>' . $Auteur['Nom'] . '</td>
+                    <td>' . $Auteur['Prenom'] . '</td>
+                    <td>' . '<form action = "?page=catalogue" method="post">
+                        <button type="submit" class="btn btn-primary" name="RechAvAuteur" value=' . $Auteur['IdAuteur'] . ' >Voir ses oeuvres</button>
+                        </form>' . '</td></tr>';
+    }
     ?>
+    </table>
+
 </div>
