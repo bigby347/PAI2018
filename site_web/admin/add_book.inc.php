@@ -34,7 +34,10 @@ addBook();
                                 <label>Auteur(s)</label>
                                 <select class="selectpicker" name="select_auteur[]" title="Selectionner Auteur(s)"
                                         data-style="btn-default" multiple data-live-search="true">
-                                    <?php listAutor(); ?>
+                                    <?php $listAutor=listAutor();
+                                    foreach ($listAutor as $list) {
+                                        echo '<option data-subtext="' . $list['Prenom'] . '" value="' . $list['IdAuteur'] . '">' . $list['Nom'] . '</option>';
+                                    }?>
                                 </select>
 
                             </div>
@@ -73,7 +76,10 @@ addBook();
                             <label>Œeuvre</label>
                             <select class="selectpicker" name="select_livre" title="Selectionner œuvre"
                                     data-style="btn-default" data-live-search="true">
-                                <?php listBook(); ?>
+                                <?php $listBook=listBook();
+                                foreach ($listBook as $list) {
+                                    echo '<option data-subtext="' . $list['IdLivre'] . '" value="' . $list['IdLivre'] . '">' . $list['Titre'] . '</option>';
+                                }?>
                             </select>
                         </div>
                         <div class="col-sm-4 form-group">
