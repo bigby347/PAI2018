@@ -1,5 +1,4 @@
 <?php
-include '../fonctions/admin.php';
 if(isset($_POST['addExemplaire'])){
     $exemplaire = $_POST['select_exemplaire'];
     $user=$_POST['select_user'];
@@ -34,11 +33,6 @@ if(isset($_POST['addExemplaire'])){
                                 }
                                 ?>
                             </select>
-                        </div>
-                        <div class="col-sm-4 form-group">
-                            <label>Date d'achat</label>
-                            <input type="date" name="dateAchat" placeholder="Date d'achat" class="form-control"
-                                   required="">
                         </div>
                         <div class="col-sm-4 form-group">
                             <br>
