@@ -1,5 +1,4 @@
 
-<?php include '../fonctions/user.php'; ?>
 
 <div class="container">
 
@@ -43,8 +42,10 @@
             <?php
             if (isset($_POST['RenouvEmprun'])){
                 RenouvEmprun($_POST['RenouvEmprun'],$_SESSION['IdAdherant']);
+                echo '<script>alert("Votre demande de renouvelement à bien été enregistrée") </script>';
             }
             printEmprun($_SESSION['IdAdherant']);
+
             ?>
         </div>
         <div class="col-sm-4">

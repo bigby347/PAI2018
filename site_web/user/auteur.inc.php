@@ -15,7 +15,7 @@
     </div>
 
     <h3>Liste des auteurs </h3><br>
-    <?php require '../fonctions/user.php';
+    <?php
     printAuteur($recherche);
     ?>
 </div>

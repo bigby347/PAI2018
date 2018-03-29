@@ -50,23 +50,12 @@ function printMotsClef()
 }
 
 
-function printCatalogue($where, $whereMC)
+function Catalogue($where, $whereMC)
 {
-
-    echo '<table class="table table-bordered">
-            <tr>
-                <th>Oeuvres</th>
-                <th>Auteur</th>
-                <th>Mots-clef</th>
-                <th>Description</th>
-                <th>Publication</th>
-                <th>Id Livre</th>
-                <th>Côte</th>
-                <th>Emprunter</th>
-            </tr>';
     global $bdd;
 
-    $req = "SELECT IdLivre,Titre,Cote,Publication,Auteurs,group_concat(MotClef.Nom, ' ') AS MotClefs,Description
+    $req = "SELECT DISTINCT IdLivre,Titre,Cote,Publication,Auteurs, MotClefs, Description FROM(
+SELECT IdLivre,Titre,Cote,Publication,Auteurs,group_concat(MotClef.Nom, ' ') AS MotClefs,Description
 FROM (SELECT Oeuvre.IdLivre,
 Oeuvre.Titre,
 Oeuvre.Cote,
@@ -81,29 +70,13 @@ GROUP BY Oeuvre.IdLivre) AS TMP
 LEFT JOIN Definition ON TMP.IdLivre = Definition.FkLivre
 LEFT JOIN MotClef ON Definition.FkMotClef = MotClef.IdMotClef 
 " . $whereMC . "
-GROUP BY TMP.IdLivre";
+GROUP BY TMP.IdLivre) as T, Exemplaire
+Where FkLivre=IdLivre";
     $result = $bdd->prepare($req);
     $result->execute();
 
     $data = $result->fetchAll();
-    foreach ($data as $catalogue) {
-        echo '<tr>
-                    <td>' . $catalogue['Titre'] . '</td>
-                    <td>' . $catalogue['Auteurs'] . '</td>
-                    <td>' . $catalogue['MotClefs'] . '</td>
-                    <td>' . $catalogue['Description'] . '</td>
-                    <td>' . $catalogue['Publication'] . '</td>
-                    <td>' . $catalogue['IdLivre'] . '</td>
-                    <td>' . $catalogue['Cote'] . '</td>
-                    <td>
-                        <form action = "" method="post">
-                        <button type="submit" class="btn btn-primary" name="AjoutRequete" value=' . $catalogue['IdLivre'] . ' >Demande de prét</button>
-                        </form>
-                    </td>
-                 </tr>';
-
-    }
-    echo '</table>';
+    return $data;
 }
 
 function printRequete($IdAdherant)
@@ -197,19 +170,26 @@ function printEmprun($IdAdherant)
                 <th>Date Fin</th>
                 <th>Renouveller</th>
             </tr>';
-    $req = "SELECT IdEmprun, IdExemplaire, Titre, DatePret,DATE_ADD(DatePret, INTERVAL 1 MONTH) AS date_Retour
+    $req = "SELECT IdEmprun, IdExemplaire, Titre, DatePret,Renouvelement ,IF(Renouvelement=2,DATE_ADD(DatePret, INTERVAL (2) MONTH),DATE_ADD(DatePret, INTERVAL (1) MONTH))AS date_Retour
     FROM Emprun, Exemplaire, Oeuvre, Adherant 
     WHERE Oeuvre.IdLivre = Exemplaire.FkLivre
     AND Exemplaire.IdExemplaire = Emprun.FkExemplaire
     AND Emprun.FkAdherant = Adherant.IdAdherant
     AND Adherant.IdAdherant = ?
-    AND Emprun.DateRetour IS NULL;";
+    AND Emprun.DateRetour IS NULL";
 
     $result = $bdd->prepare($req);
     $result->execute([$IdAdherant]);
 
     $data = $result->fetchAll();
     foreach ($data as $Emprun) {
+
+        $form = '<form action = "" method="post">
+                    <button type="submit" class="btn btn-primary" name="RenouvEmprun" value=' . $Emprun['IdEmprun'] . ' >Renouveller</button>
+                </form>';
+        if ($Emprun['Renouvelement'] == 2){
+            $form = ' ';
+        }
         echo '<tr>
                     <td>' . $Emprun['IdEmprun'] . '</td>
                     <td>' . $Emprun['IdExemplaire'] . '</td>
@@ -217,9 +197,7 @@ function printEmprun($IdAdherant)
                     <td>' . $Emprun['DatePret'] . '</td>
                     <td>' . $Emprun['date_Retour'] . '</td>
                     <td>
-                        <form action = "" method="post">
-                        <button type="submit" class="btn btn-primary" name="RenouvEmprun" value=' . $Emprun['IdEmprun'] . ' >Renouveller</button>
-                        </form>
+                        '.$form.'
                     </td>
               </tr>';
     }

@@ -1,4 +1,4 @@
-<?php require '../fonctions/user.php'; ?>
+
 <div class="container">
 
     <h3>Recherche pas mots clés </h3><br>

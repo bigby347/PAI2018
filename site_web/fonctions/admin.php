@@ -171,55 +171,132 @@ function addAutor()
     }
 }
 
-function printDemandeReservation()
-{ //TODO
+function premiereRenouv(){
     global $bdd;
+    $req = "SELECT Nom, Prenom, IdAdherant, IdEmprun, DateDemande, DatePret, IdExemplaire, IdLivre, Titre, Cote 
+from Renouvelement, Emprun, Exemplaire, Oeuvre, Adherant
+where Renouvelement.FkEmprun = Emprun.IdEmprun
+And Emprun.FkExemplaire = Exemplaire.IdExemplaire
+And Exemplaire.FkLivre = Oeuvre.IdLivre
+And Adherant.IdAdherant = Emprun.FkAdherant
+And DateRetour IS NULL
+And Renouvelement = 1
+ORDER BY DateDemande";
 
-
-    $req = 'SELECT Nom,Prenom,Titre,IdAdherant,Requete
-          FROM Adherant,Requete,Oeuvre
-          WHERE Requete.FkAdherant = Adherant.IdAdherant
-          AND Requete.FkLivre = Oeuvre.IdLivre';
     $result = $bdd->prepare($req);
     $result->execute();
-    $data = $result->fetchAll();
-    foreach ($data as $requete) {
-        echo '<tr>
-                    <td>' . $requete['IdAdherant'] . '</td>
-                    <td>' . $requete['Nom'] . '</td>
-                    <td>' . $requete['Prenom'] . '</td>
-                    <td>' . $requete['Titre'] . '</td>
-                    <td>' . $requete['Requete'] . '</td>
-                    <td>
-                        <form action ="" method="post">
-                            <button type="submit" class="btn btn-primary" name="accepter" value=' . $requete['IdAdherant'] . ' >Voir Profil</button>
-                        </form>
-                    </td>
-                 </tr>';
-    }
+
+    $data = $result->fetch();
+    return $data;
 }
 
-function printDemandeRenouvelement()
-{   //TODO
+function NbreExemplaire($IdLivre){
     global $bdd;
-    $req = '';
+    $req = "Select count(*) as total
+        From Exemplaire
+        where FkLivre =  ?";
+
     $result = $bdd->prepare($req);
-    $result->execute();
+    $result->execute([$IdLivre]);
+
+    $total = $result->fetch();
+
+    $req = "Select count(*) as dispo
+    From Exemplaire
+    LEFT JOIN Emprun On Exemplaire.IdExemplaire = Emprun.FkExemplaire
+    Left JOIN Reservation ON Exemplaire.IdExemplaire = Reservation.FkExemplaire
+    where FkLivre = ?
+    And DateRetour IS NULL
+    And IdEmprun IS NULL
+    AND IdReservation IS NULL";
+
+    $result = $bdd->prepare($req);
+    $result->execute([$IdLivre]);
+
+    $dispo = $result->fetch();
+
+    $req = "Select count(*) AS demande
+    FROM Requete
+    Where FkLivre = ?";
+
+    $result = $bdd->prepare($req);
+    $result->execute([$IdLivre]);
+
+    $demande = $result->fetch();
+
+    return array('total' =>$total['total'],
+        'dispo' => $dispo['dispo'],
+        'demande' => $demande['demande']);
+}
+
+function RenouvelementAccepter($IdEmprun, $IdAdherant){
+    global $bdd;
+/* Modification de la table emprunt*/
+    $req = 'UPDATE Emprun SET Renouvelement = 2 WHERE IdEmprun = ?';
+    $result = $bdd->prepare($req);
+    $result->execute([$IdEmprun]);
+/* Suppression dans la table emprunt*/
+    $req = 'DELETE FROM Renouvelement WHERE FkEmprun = ?';
+    $result = $bdd->prepare($req);
+    $result->execute([$IdEmprun]);
+/* Envoie d'une notification*/
+    $req = 'INSERT INTO Notif(FkAdherant,FkTypeNotif,Commentaire)
+    VALUES(?,?,?)';
+    $result = $bdd->prepare($req);
+    $result->execute([$IdAdherant,11,'Revouvelement pour le pret '.$IdEmprun.' ']);
+
+}
+
+function RenouvelementRefuser($IdEmprun, $IdAdherant){
+    global $bdd;
+    /* Suppression dans la table emprunt*/
+    $req = 'DELETE FROM Renouvelement WHERE FkEmprun = ?';
+    $result = $bdd->prepare($req);
+    $result->execute([$IdEmprun]);
+    /* Envoie d'une notification*/
+    $req = 'INSERT INTO Notif(FkAdherant,FkTypeNotif,Commentaire)
+    VALUES(?,?,?)';
+    $result = $bdd->prepare($req);
+    $result->execute([$IdAdherant,9,'Revouvelement pour le pret '.$IdEmprun.' ']);
+
+}
+
+function premiereRequete(){
+    global $bdd;
+    $req = 'SELECT DISTINCT IdRequete,Titre,Cote,IdAdherant,IdLivre,Nom,Prenom
+    from Requete
+    INNER JOIN Oeuvre ON Requete.FkLivre = Oeuvre.IdLivre
+    INNER JOIN Adherant ON Requete.FkAdherant = Adherant.IdAdherant
+    INNER JOIN Exemplaire oN Oeuvre.IdLivre = Exemplaire.FkLivre
+    LEFT JOIN Emprun ON Exemplaire.IdExemplaire = Emprun.FkExemplaire
+    LEFT JOIN Reservation ON Exemplaire.IdExemplaire = Reservation.FkExemplaire
+    WHERE DateRetour IS NULL
+    AND IdEmprun IS NULL
+    AND IdReservation IS NULL';
+    $result = $bdd->prepare($req);
+    $result->execute([]);
+
+    $data = $result->fetch();
+    return $data;
+}
+
+function ExemplaireDispo($Idlivre){
+    global $bdd;
+    $req = 'Select IdExemplaire,Achat
+    From Exemplaire
+    LEFT JOIN Emprun On Exemplaire.IdExemplaire = Emprun.FkExemplaire
+    Left JOIN Reservation ON Exemplaire.IdExemplaire = Reservation.FkExemplaire
+    where FkLivre = ?
+    And DateRetour IS NULL
+    And IdEmprun IS NULL
+    AND IdReservation IS NULL';
+    $result = $bdd->prepare($req);
+    $result->execute([$Idlivre]);
+
     $data = $result->fetchAll();
-    foreach ($data as $user) {
-        echo '<tr>
-                    <td>' . $user['IdAdherant'] . '</td>
-                    <td>' . $user['Nom'] . '</td>
-                    <td>' . $user['Prenom'] . '</td>
-                    <td>' . $user['Mail'] . '</td>
-                    <td>' . $user['Adresse'] . '</td>
-                    <td>' . $user['adhesion'] . '</td>
-                    <td>' . $user['cotisation'] . '</td>
-                    <td>
-                        <form action = "" method="post">
-                            <button type="submit" class="btn btn-primary" name="profile" value=' . $user['IdAdherant'] . ' >Voir Profil</button>
-                        </form>
-                    </td>
-                 </tr>';
-    }
+    return $data;
+}
+
+function ValidationRequete($IdRequete, $IdAdherant, $IdExempalire){
+
 }

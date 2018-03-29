@@ -1,5 +1,4 @@
 <div class="container" >
-    <?php require '../fonctions/user.php'; ?>
 
     <?php
 
@@ -35,7 +34,7 @@
     <?php
     if (isset($_POST['AjoutRequete'])){
         AjoutRequete($_POST['AjoutRequete'],$_SESSION['IdAdherant']);
-        echo '<script>alert("Votre requéte à bien était enregistrée") </script>';
+        echo '<script>alert("Votre requéte à bien été enregistrée") </script>';
     }
 
     ?>
@@ -69,8 +68,38 @@
     <h2 class="page-header">Catalogue :</h2>
 
     <div class="row">
+        <table class="table table-bordered">
+            <tr>
+                <th>Oeuvres</th>
+                <th>Auteur</th>
+                <th>Mots-clef</th>
+                <th>Description</th>
+                <th>Publication</th>
+                <th>Id Livre</th>
+                <th>Côte</th>
+                <th>Emprunter</th>
+            </tr>
+            <?php
+            $catalogues = Catalogue($recherche,$rechercheMC);
 
-            <?php printCatalogue($recherche,$rechercheMC); ?>
+            foreach ($catalogues as $catalogue) {
+                echo '<tr>
+                    <td>' . $catalogue['Titre'] . '</td>
+                    <td>' . $catalogue['Auteurs'] . '</td>
+                    <td>' . $catalogue['MotClefs'] . '</td>
+                    <td>' . $catalogue['Description'] . '</td>
+                    <td>' . $catalogue['Publication'] . '</td>
+                    <td>' . $catalogue['IdLivre'] . '</td>
+                    <td>' . $catalogue['Cote'] . '</td>
+                    <td>
+                        <form action = "" method="post">
+                        <button type="submit" class="btn btn-primary" name="AjoutRequete" value=' . $catalogue['IdLivre'] . ' >Demande de prét</button>
+                        </form>
+                    </td>
+                 </tr>';
+
+            }?>
+        </table>
 
     </div>
 

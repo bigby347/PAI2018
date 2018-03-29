@@ -6,7 +6,7 @@
             session_start();
             include '../fonctions/menu.php';
             getPages('user');
-
+            require '../fonctions/user.php';
         ?>
         <title><?php printTitle(); ?></title>
 

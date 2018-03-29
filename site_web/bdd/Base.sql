@@ -178,7 +178,9 @@ VALUES ('Message Admin'),
 	('Date de fin de pret atteinte'),
 	('Renouvelement de pret refuser'),
 	('Renouvelement de pret enregistrée');
-
+	
+INSERT INTO TypeNotif(Nom)
+VALUES ('Renouvelement de pret accepter');
 
 INSERT INTO MotClef(Nom)
 		VALUES ('Bande dessinée'),

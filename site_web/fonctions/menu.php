@@ -69,9 +69,14 @@ $pagesAd = array(
         'include' => 'add_pret.inc.php',
         'printMenu' => TRUE),
     'demande' => array(
-        'title' => 'Demandes Prêt/Réservation',
-        'include' => 'demande.inc.php',
+        'title' => 'Gestions des requètes',
+        'include' => 'GestionRequete.inc.php',
         'printMenu' => TRUE),
+    'renouv' => array(
+        'title' => 'Gestion des renouvelements',
+        'include' => 'GestionRenouvelement.inc.php',
+        'printMenu' => TRUE
+    ),
     'notification' => array(
         'title' => 'Notification',
         'include' => 'add_notif.inc.php',
