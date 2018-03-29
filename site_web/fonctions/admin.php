@@ -33,22 +33,7 @@ function listUser()
     $result = $bdd->prepare($req);
     $result->execute();
     $data = $result->fetchAll();
-    foreach ($data as $user) {
-        echo '<tr>
-                    <td>' . $user['IdAdherant'] . '</td>
-                    <td>' . $user['Nom'] . '</td>
-                    <td>' . $user['Prenom'] . '</td>
-                    <td>' . $user['Mail'] . '</td>
-                    <td>' . $user['Adresse'] . '</td>
-                    <td>' . $user['adhesion'] . '</td>
-                    <td>' . $user['cotisation'] . '</td>
-                    <td>
-                        <form action = "" method="post">
-                            <button type="submit" class="btn btn-primary" name="profile" value=' . $user['IdAdherant'] . ' >Voir Profil</button>
-                        </form>
-                    </td>
-                 </tr>';
-    }
+    return $data;
 }
 
 function printProfile($idUser)
@@ -142,26 +127,26 @@ function printProfile($idUser)
                     <th>Renouveller</th>
                 </tr>';
 
-            $Empruns = Emprun($idUser);
-            foreach ($Empruns as $Emprun) {
+    $Empruns = Emprun($idUser);
+    foreach ($Empruns as $Emprun) {
 
-                $form = '<form action = "" method="post">
+        $form = '<form action = "" method="post">
                     <button type="submit" class="btn btn-primary" name="RenouvEmprun" value=' . $Emprun['IdEmprun'] . ' >Renouveller</button>
                 </form>';
-                if ($Emprun['Renouvelement'] == 2){
-                    $form = ' ';
-                }
-                echo '<tr>
+        if ($Emprun['Renouvelement'] == 2) {
+            $form = ' ';
+        }
+        echo '<tr>
                     <td>' . $Emprun['IdEmprun'] . '</td>
                     <td>' . $Emprun['IdExemplaire'] . '</td>
                     <td>' . $Emprun['Titre'] . '</td>
                     <td>' . $Emprun['DatePret'] . '</td>
                     <td>' . $Emprun['date_Retour'] . '</td>
                     <td>
-                        '.$form.'
+                        ' . $form . '
                     </td>
               </tr>';
-            }
+    }
 
     echo '</table>';
     echo '</div></div>';
@@ -177,9 +162,7 @@ function listAutor()
 
     $data = $result->fetchAll();
 
-    foreach ($data as $list) {
-        echo '<option data-subtext="' . $list['Prenom'] . '" value="' . $list['IdAuteur'] . '">' . $list['Nom'] . '</option>';
-    }
+    return $data;
 
 }
 
@@ -216,9 +199,7 @@ function listBook()
     $result->execute();
 
     $data = $result->fetchAll();
-    foreach ($data as $list) {
-        echo '<option data-subtext="' . $list['IdLivre'] . '" value="' . $list['IdLivre'] . '">' . $list['Titre'] . '</option>';
-    }
+    return $data;
 }
 
 function addExemplaire()
@@ -251,16 +232,17 @@ function addAutor()
     }
 }
 
-function premiereRenouv(){
+function premiereRenouv()
+{
     global $bdd;
     $req = "SELECT Nom, Prenom, IdAdherant, IdEmprun, DateDemande, DatePret, IdExemplaire, IdLivre, Titre, Cote 
-from Renouvelement, Emprun, Exemplaire, Oeuvre, Adherant
-where Renouvelement.FkEmprun = Emprun.IdEmprun
-And Emprun.FkExemplaire = Exemplaire.IdExemplaire
-And Exemplaire.FkLivre = Oeuvre.IdLivre
-And Adherant.IdAdherant = Emprun.FkAdherant
-And DateRetour IS NULL
-And Renouvelement = 1
+FROM Renouvelement, Emprun, Exemplaire, Oeuvre, Adherant
+WHERE Renouvelement.FkEmprun = Emprun.IdEmprun
+AND Emprun.FkExemplaire = Exemplaire.IdExemplaire
+AND Exemplaire.FkLivre = Oeuvre.IdLivre
+AND Adherant.IdAdherant = Emprun.FkAdherant
+AND DateRetour IS NULL
+AND Renouvelement = 1
 ORDER BY DateDemande";
 
     $result = $bdd->prepare($req);
@@ -270,24 +252,25 @@ ORDER BY DateDemande";
     return $data;
 }
 
-function NbreExemplaire($IdLivre){
+function NbreExemplaire($IdLivre)
+{
     global $bdd;
-    $req = "Select count(*) as total
-        From Exemplaire
-        where FkLivre =  ?";
+    $req = "SELECT count(*) AS total
+        FROM Exemplaire
+        WHERE FkLivre =  ?";
 
     $result = $bdd->prepare($req);
     $result->execute([$IdLivre]);
 
     $total = $result->fetch();
 
-    $req = "Select count(*) as dispo
-    From Exemplaire
-    LEFT JOIN Emprun On Exemplaire.IdExemplaire = Emprun.FkExemplaire
-    Left JOIN Reservation ON Exemplaire.IdExemplaire = Reservation.FkExemplaire
-    where FkLivre = ?
-    And DateRetour IS NULL
-    And IdEmprun IS NULL
+    $req = "SELECT count(*) AS dispo
+    FROM Exemplaire
+    LEFT JOIN Emprun ON Exemplaire.IdExemplaire = Emprun.FkExemplaire
+    LEFT JOIN Reservation ON Exemplaire.IdExemplaire = Reservation.FkExemplaire
+    WHERE FkLivre = ?
+    AND DateRetour IS NULL
+    AND IdEmprun IS NULL
     AND IdReservation IS NULL";
 
     $result = $bdd->prepare($req);
@@ -295,39 +278,41 @@ function NbreExemplaire($IdLivre){
 
     $dispo = $result->fetch();
 
-    $req = "Select count(*) AS demande
+    $req = "SELECT count(*) AS demande
     FROM Requete
-    Where FkLivre = ?";
+    WHERE FkLivre = ?";
 
     $result = $bdd->prepare($req);
     $result->execute([$IdLivre]);
 
     $demande = $result->fetch();
 
-    return array('total' =>$total['total'],
+    return array('total' => $total['total'],
         'dispo' => $dispo['dispo'],
         'demande' => $demande['demande']);
 }
 
-function RenouvelementAccepter($IdEmprun, $IdAdherant){
+function RenouvelementAccepter($IdEmprun, $IdAdherant)
+{
     global $bdd;
-/* Modification de la table emprunt*/
+    /* Modification de la table emprunt*/
     $req = 'UPDATE Emprun SET Renouvelement = 2 WHERE IdEmprun = ?';
     $result = $bdd->prepare($req);
     $result->execute([$IdEmprun]);
-/* Suppression dans la table emprunt*/
+    /* Suppression dans la table emprunt*/
     $req = 'DELETE FROM Renouvelement WHERE FkEmprun = ?';
     $result = $bdd->prepare($req);
     $result->execute([$IdEmprun]);
-/* Envoie d'une notification*/
+    /* Envoie d'une notification*/
     $req = 'INSERT INTO Notif(FkAdherant,FkTypeNotif,Commentaire)
     VALUES(?,?,?)';
     $result = $bdd->prepare($req);
-    $result->execute([$IdAdherant,11,'Revouvelement pour le pret '.$IdEmprun.' ']);
+    $result->execute([$IdAdherant, 11, 'Revouvelement pour le pret ' . $IdEmprun . ' ']);
 
 }
 
-function RenouvelementRefuser($IdEmprun, $IdAdherant){
+function RenouvelementRefuser($IdEmprun, $IdAdherant)
+{
     global $bdd;
     /* Suppression dans la table emprunt*/
     $req = 'DELETE FROM Renouvelement WHERE FkEmprun = ?';
@@ -337,17 +322,18 @@ function RenouvelementRefuser($IdEmprun, $IdAdherant){
     $req = 'INSERT INTO Notif(FkAdherant,FkTypeNotif,Commentaire)
     VALUES(?,?,?)';
     $result = $bdd->prepare($req);
-    $result->execute([$IdAdherant,9,'Revouvelement pour le pret '.$IdEmprun.' ']);
+    $result->execute([$IdAdherant, 9, 'Revouvelement pour le pret ' . $IdEmprun . ' ']);
 
 }
 
-function premiereRequete(){
+function premiereRequete()
+{
     global $bdd;
     $req = 'SELECT DISTINCT IdRequete,Titre,Cote,IdAdherant,IdLivre,Nom,Prenom
-    from Requete
+    FROM Requete
     INNER JOIN Oeuvre ON Requete.FkLivre = Oeuvre.IdLivre
     INNER JOIN Adherant ON Requete.FkAdherant = Adherant.IdAdherant
-    INNER JOIN Exemplaire oN Oeuvre.IdLivre = Exemplaire.FkLivre
+    INNER JOIN Exemplaire ON Oeuvre.IdLivre = Exemplaire.FkLivre
     LEFT JOIN Emprun ON Exemplaire.IdExemplaire = Emprun.FkExemplaire
     LEFT JOIN Reservation ON Exemplaire.IdExemplaire = Reservation.FkExemplaire
     WHERE DateRetour IS NULL
@@ -360,15 +346,16 @@ function premiereRequete(){
     return $data;
 }
 
-function ExemplaireDispo($Idlivre){
+function ExemplaireDispo($Idlivre)
+{
     global $bdd;
-    $req = 'Select IdExemplaire,Achat
-    From Exemplaire
-    LEFT JOIN Emprun On Exemplaire.IdExemplaire = Emprun.FkExemplaire
-    Left JOIN Reservation ON Exemplaire.IdExemplaire = Reservation.FkExemplaire
-    where FkLivre = ?
-    And DateRetour IS NULL
-    And IdEmprun IS NULL
+    $req = 'SELECT IdExemplaire,Achat
+    FROM Exemplaire
+    LEFT JOIN Emprun ON Exemplaire.IdExemplaire = Emprun.FkExemplaire
+    LEFT JOIN Reservation ON Exemplaire.IdExemplaire = Reservation.FkExemplaire
+    WHERE FkLivre = ?
+    AND DateRetour IS NULL
+    AND IdEmprun IS NULL
     AND IdReservation IS NULL';
     $result = $bdd->prepare($req);
     $result->execute([$Idlivre]);
@@ -377,6 +364,7 @@ function ExemplaireDispo($Idlivre){
     return $data;
 }
 
-function ValidationRequete($IdRequete, $IdAdherant, $IdExempalire){
+function ValidationRequete($IdRequete, $IdAdherant, $IdExempalire)
+{
 
 }
