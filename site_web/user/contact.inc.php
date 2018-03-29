@@ -4,8 +4,24 @@
     <h2 class="page-header">Contact :</h2>
     <div class="row">
         <div class="col-sm-8" >
+            <table class="table table-bordered">
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Mail</th>
+                </tr>
             <?php
-            printAdmin();?>
+            $Admins = Admin();
+            foreach ($Admins as $Admin) {
+                echo '<tr>
+                    <td>' . $Admin['Nom'] . '</td>
+                    <td>' . $Admin['Prenom'] . '</td>
+                    <td>' . $Admin['Mail'] . '</td>
+              </tr>';
+            }
+            ?>
+
+            </table>
         </div>
         <div class="col-sm-4">
             <div class="panel panel-primary">

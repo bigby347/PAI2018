@@ -9,8 +9,34 @@
             if (isset($_POST['SupprimeRequete'])){
                 SupprimeRequete($_POST['SupprimeRequete']);
             }
-            printRequete($_SESSION['IdAdherant']);
             ?>
+
+            <table class="table table-bordered">
+            <tr>
+                <th>IdRequete</th>
+                <th>Oeuvres</th>
+                <th>Date de demande</th>
+                <th>Annuler</th>
+            </tr>
+
+            <?php
+            $Requetes = Requete($_SESSION['IdAdherant']);
+
+            foreach ($Requetes as $Requete) {
+                echo '<tr>
+                    <td>' . $Requete['IdRequete'] . '</td>
+                    <td>' . $Requete['Titre'] . '</td>
+                    <td>' . $Requete['Requete'] . '</td>
+                    <td>
+                        <form action = "" method="post">
+                        <button type="submit" class="btn btn-primary" name="SupprimeRequete" value=' . $Requete['IdRequete'] . ' >Suprimmer</button>
+                        </form>
+                    </td>
+              </tr>';
+            }
+
+            ?>
+            </table>
         </div>
         <div class="col-sm-4">
             <div class="panel panel-primary">
@@ -26,8 +52,33 @@
             if (isset($_POST['SupprimeReservation'])){
             SupprimeReservation($_POST['SupprimeReservation']);
             }
-            printReservation($_SESSION['IdAdherant']);
             ?>
+            <table class="table table-bordered">
+                <tr>
+                    <th>IdReservation</th>
+                    <th>Oeuvre</th>
+                    <th>IdExemplaire</th>
+                    <th>Date Reservation</th>
+                    <th>Annuler</th>
+                </tr>
+            <?php
+            $Reservations = Reservation($_SESSION['IdAdherant']);
+            foreach ($Reservations as $Reservation) {
+                echo '<tr>
+                    <td>' . $Reservation['IdReservation'] . '</td>
+                    <td>' . $Reservation['Titre'] . '</td>
+                    <td>' . $Reservation['IdExemplaire'] . '</td>
+                    <td>' . $Reservation['DateAcceptation'] . '</td>
+                    
+                    <td>
+                        <form action = "" method="post">
+                        <button type="submit" class="btn btn-primary" name="SupprimeReservation" value=' . $Reservation['IdReservation'] . ' >Suprimmer</button>
+                        </form>
+                    </td>
+              </tr>';
+            }
+            ?>
+            </table>
         </div>
         <div class="col-sm-4">
             <div class="panel panel-primary">
@@ -44,9 +95,39 @@
                 RenouvEmprun($_POST['RenouvEmprun'],$_SESSION['IdAdherant']);
                 echo '<script>alert("Votre demande de renouvelement à bien été enregistrée") </script>';
             }
-            printEmprun($_SESSION['IdAdherant']);
-
             ?>
+            <table class="table table-bordered">
+                <tr>
+                    <th>IdEmprun</th>
+                    <th>IdExemplaire</th>
+                    <th>Oeuvres</th>
+                    <th>Date Debut</th>
+                    <th>Date Fin</th>
+                    <th>Renouveller</th>
+                </tr>
+            <?php
+            $Empruns = Emprun($_SESSION['IdAdherant']);
+            foreach ($Empruns as $Emprun) {
+
+                $form = '<form action = "" method="post">
+                    <button type="submit" class="btn btn-primary" name="RenouvEmprun" value=' . $Emprun['IdEmprun'] . ' >Renouveller</button>
+                </form>';
+                if ($Emprun['Renouvelement'] == 2){
+                    $form = ' ';
+                }
+                echo '<tr>
+                    <td>' . $Emprun['IdEmprun'] . '</td>
+                    <td>' . $Emprun['IdExemplaire'] . '</td>
+                    <td>' . $Emprun['Titre'] . '</td>
+                    <td>' . $Emprun['DatePret'] . '</td>
+                    <td>' . $Emprun['date_Retour'] . '</td>
+                    <td>
+                        '.$form.'
+                    </td>
+              </tr>';
+            }
+            ?>
+            </table>
         </div>
         <div class="col-sm-4">
             <div class="panel panel-primary">

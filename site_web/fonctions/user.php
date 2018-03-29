@@ -1,15 +1,10 @@
 <?php
 include 'config_bdd.php';
-function printAuteur($recherche)
+function Auteur($recherche)
 {
     global $bdd;
 
-    echo '<table class="table table-bordered">
-            <tr>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th></th>
-            </tr>';
+    echo '';
     $req = "SELECT IdAuteur, Nom, Prenom, CONCAT(Nom,' ',Prenom) AS R1, CONCAT(Prenom,' ',Nom) AS R2
     FROM Auteur " . $recherche;
 
@@ -17,24 +12,14 @@ function printAuteur($recherche)
     $result->execute();
 
     $data = $result->fetchAll();
-    foreach ($data as $Auteur) {
-        echo '<tr>
-                    <td>' . $Auteur['Nom'] . '</td>
-                    <td>' . $Auteur['Prenom'] . '</td>
-                    <td>' . '<form action = "?page=catalogue" method="post">
-                        <button type="submit" class="btn btn-primary" name="RechAvAuteur" value=' . $Auteur['IdAuteur'] . ' >Voir ses oeuvres</button>
-                        </form>' . '</td></tr>';
-    }
+    return $data;
 
-    echo '</table>';
 }
 
-function printMotsClef()
+function MotsClef()
 {
     global $bdd;
 
-    echo '
-            <select multiple size="10" class="form-control" name="MC[]">';
 
     $req = "SELECT * FROM MotClef";
 
@@ -42,11 +27,9 @@ function printMotsClef()
     $result->execute();
 
     $data = $result->fetchAll();
-    foreach ($data as $MotClef) {
-        echo '<option value=' . $MotClef['IdMotClef'] . ' >' . $MotClef['Nom'] . '</option>';
-    }
+    return $data;
 
-    echo '</select>';
+
 }
 
 
@@ -79,17 +62,10 @@ Where FkLivre=IdLivre";
     return $data;
 }
 
-function printRequete($IdAdherant)
+function Requete($IdAdherant)
 {
     global $bdd;
 
-    echo '<table class="table table-bordered">
-            <tr>
-                <th>IdRequete</th>
-                <th>Oeuvres</th>
-                <th>Date de demande</th>
-                <th>Annuler</th>
-            </tr>';
     $req = "SELECT IdRequete, Titre, Requete, IdLivre
     FROM Requete, Oeuvre, Adherant 
     WHERE Oeuvre.IdLivre = Requete.FkLivre
@@ -100,34 +76,15 @@ function printRequete($IdAdherant)
     $result->execute([$IdAdherant]);
 
     $data = $result->fetchAll();
-    foreach ($data as $Requete) {
-        echo '<tr>
-                    <td>' . $Requete['IdRequete'] . '</td>
-                    <td>' . $Requete['Titre'] . '</td>
-                    <td>' . $Requete['Requete'] . '</td>
-                    <td>
-                        <form action = "" method="post">
-                        <button type="submit" class="btn btn-primary" name="SupprimeRequete" value=' . $Requete['IdRequete'] . ' >Suprimmer</button>
-                        </form>
-                    </td>
-              </tr>';
-    }
+    return $data;
 
-    echo '</table>';
 }
 
-function printReservation($IdAdherant)
+function Reservation($IdAdherant)
 {
     global $bdd;
 
-    echo '<table class="table table-bordered">
-            <tr>
-                <th>IdReservation</th>
-                <th>Oeuvre</th>
-                <th>IdExemplaire</th>
-                <th>Date Reservation</th>
-                <th>Annuler</th>
-            </tr>';
+
     $req = "SELECT Titre, DateAcceptation, IdExemplaire, IdReservation
     FROM Reservation, Oeuvre, Adherant, Exemplaire
     WHERE Oeuvre.IdLivre = Exemplaire.FkLivre
@@ -139,37 +96,17 @@ function printReservation($IdAdherant)
     $result->execute([$IdAdherant]);
 
     $data = $result->fetchAll();
-    foreach ($data as $Reservation) {
-        echo '<tr>
-                    <td>' . $Reservation['IdReservation'] . '</td>
-                    <td>' . $Reservation['Titre'] . '</td>
-                    <td>' . $Reservation['Titre'] . '</td>
-                    <td>' . $Reservation['IdExemplaire'] . '</td>
-                    
-                    <td>
-                        <form action = "" method="post">
-                        <button type="submit" class="btn btn-primary" name="SupprimeReservation" value=' . $Reservation['IdReservation'] . ' >Suprimmer</button>
-                        </form>
-                    </td>
-              </tr>';
-    }
+    return $data;
+
 
     echo '</table>';
 }
 
-function printEmprun($IdAdherant)
+function Emprun($IdAdherant)
 {
     global $bdd;
 
-    echo '<table class="table table-bordered">
-            <tr>
-                <th>IdEmprun</th>
-                <th>IdExemplaire</th>
-                <th>Oeuvres</th>
-                <th>Date Debut</th>
-                <th>Date Fin</th>
-                <th>Renouveller</th>
-            </tr>';
+
     $req = "SELECT IdEmprun, IdExemplaire, Titre, DatePret,Renouvelement ,IF(Renouvelement=2,DATE_ADD(DatePret, INTERVAL (2) MONTH),DATE_ADD(DatePret, INTERVAL (1) MONTH))AS date_Retour
     FROM Emprun, Exemplaire, Oeuvre, Adherant 
     WHERE Oeuvre.IdLivre = Exemplaire.FkLivre
@@ -182,41 +119,15 @@ function printEmprun($IdAdherant)
     $result->execute([$IdAdherant]);
 
     $data = $result->fetchAll();
-    foreach ($data as $Emprun) {
+    return $data;
 
-        $form = '<form action = "" method="post">
-                    <button type="submit" class="btn btn-primary" name="RenouvEmprun" value=' . $Emprun['IdEmprun'] . ' >Renouveller</button>
-                </form>';
-        if ($Emprun['Renouvelement'] == 2){
-            $form = ' ';
-        }
-        echo '<tr>
-                    <td>' . $Emprun['IdEmprun'] . '</td>
-                    <td>' . $Emprun['IdExemplaire'] . '</td>
-                    <td>' . $Emprun['Titre'] . '</td>
-                    <td>' . $Emprun['DatePret'] . '</td>
-                    <td>' . $Emprun['date_Retour'] . '</td>
-                    <td>
-                        '.$form.'
-                    </td>
-              </tr>';
-    }
 
-    echo '</table>';
 }
 
-function printHistorique($IdAdherant)
+function Historique($IdAdherant)
 {
     global $bdd;
 
-    echo '<table class="table table-bordered">
-            <tr>
-                <th>IdEmprun</th>
-                <th>IdExemplaire</th>
-                <th>Oeuvres</th>
-                <th>Date Debut</th>
-                <th>Date Fin</th>
-            </tr>';
     $req = "SELECT IdEmprun, IdExemplaire, Titre, DatePret,DATE_ADD(DatePret, INTERVAL 1 MONTH) AS date_Retour
     FROM Emprun, Exemplaire, Oeuvre, Adherant 
     WHERE Oeuvre.IdLivre = Exemplaire.FkLivre
@@ -229,30 +140,16 @@ function printHistorique($IdAdherant)
     $result->execute([$IdAdherant]);
 
     $data = $result->fetchAll();
-    foreach ($data as $Emprun) {
-        echo '<tr>
-                    <td>' . $Emprun['IdEmprun'] . '</td>
-                    <td>' . $Emprun['IdExemplaire'] . '</td>
-                    <td>' . $Emprun['Titre'] . '</td>
-                    <td>' . $Emprun['DatePret'] . '</td>
-                    <td>' . $Emprun['date_Retour'] . '</td>
-              </tr>';
-    }
+    return $data;
 
-    echo '</table>';
+
 }
 
-function printNotif($IdAdherant)
+function Notif($IdAdherant)
 {
     global $bdd;
 
-    echo '<table class="table">
-            <tr>
-                <th>IdNotif</th>
-                <th>Type</th>
-                <th>Commentaire</th>
-                <th>Suprimmer</th>
-            </tr>';
+    echo '';
     $req = "SELECT IdNotif, TypeNotif.Nom AS Type, Commentaire
 FROM Notif, TypeNotif , Adherant 
 WHERE IdAdherant = ?
@@ -263,47 +160,22 @@ AND IdTypeNotif = Notif.FkTypeNotif; ";
     $result->execute([$IdAdherant]);
 
     $data = $result->fetchAll();
-    foreach ($data as $Notif) {
-        echo '<tr>
-                    <td>' . $Notif['IdNotif'] . '</td>
-                    <td>' . $Notif['Type'] . '</td>
-                    <td>' . $Notif['Commentaire'] . '</td>
-                    <td>
-                        <form action = "" method="post">
-                        <button type="submit" class="btn btn-primary" name="SupprimeNotif" value=' . $Notif['IdNotif'] . ' >Suprimmer</button>
-                        </form>
-                    </td>
-              </tr>';
-    }
-
-    echo '</table>';
+    return $data;
 }
 
-function printAdmin()
+function Admin()
 {
     global $bdd;
 
-    echo '<table class="table table-bordered">
-            <tr>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Mail</th>
-            </tr>';
+    echo '';
     $req = "SELECT Nom, Prenom, Mail FROM Admin";
 
     $result = $bdd->prepare($req);
     $result->execute();
 
     $data = $result->fetchAll();
-    foreach ($data as $Notif) {
-        echo '<tr>
-                    <td>' . $Notif['Nom'] . '</td>
-                    <td>' . $Notif['Prenom'] . '</td>
-                    <td>' . $Notif['Mail'] . '</td>
-              </tr>';
-    }
+    return $data;
 
-    echo '</table>';
 }
 
 

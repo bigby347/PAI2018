@@ -7,8 +7,30 @@
             if (isset($_POST['SupprimeNotif'])){
                 SupprimeNotif($_POST['SupprimeNotif']);
             }
-            printNotif($_SESSION['IdAdherant']); ?>
-
+            ?>
+            <table class="table">
+                <tr>
+                    <th>IdNotif</th>
+                    <th>Type</th>
+                    <th>Commentaire</th>
+                    <th>Suprimmer</th>
+                </tr>
+            <?php
+                $Notifs = Notif($_SESSION['IdAdherant']);
+            foreach ($Notifs as $Notif) {
+                echo '<tr>
+                    <td>' . $Notif['IdNotif'] . '</td>
+                    <td>' . $Notif['Type'] . '</td>
+                    <td>' . $Notif['Commentaire'] . '</td>
+                    <td>
+                        <form action = "" method="post">
+                        <button type="submit" class="btn btn-primary" name="SupprimeNotif" value=' . $Notif['IdNotif'] . ' >Suprimmer</button>
+                        </form>
+                    </td>
+              </tr>';
+            }
+            ?>
+            </table>
         </div>
         <div class="col-sm-4">
             <div class="panel panel-primary">
