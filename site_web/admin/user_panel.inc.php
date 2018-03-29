@@ -1,11 +1,10 @@
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 <?php include '../fonctions/admin.php'; ?>
     <?php if (isset($_POST['profile'])) {
-        printProfile($_POST['profile']);
-    } else{
-        echo '<h4>Aucun profil selectionné</h4>';
-    } ?>
-<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-    <h2 class="page-header">Utilisateurs</h2>
+        include 'user_profile.inc.php';
+    }  ?>
+
+    <h2 class="page-header">Utilisateurs </h2>
     <div class="col-lg-7">
         <div class="row well">
             <h4>Recherche Utilisateur</h4>
