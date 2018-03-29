@@ -163,10 +163,7 @@ Create table Reservation (
 	FOREIGN KEY (FkAdherant) REFERENCES Adherant(IdAdherant) ON UPDATE CASCADE,
 	FOREIGN KEY (FkExemplaire) REFERENCES Exemplaire(IdExemplaire) ON UPDATE CASCADE
 );
-ALTER TABLE biblio.Reservation DROP DateRequete;
 
-
- 
 INSERT INTO TypeNotif(Nom)
 VALUES ('Message Admin'),
 	('Requète enregistrée'),
@@ -177,10 +174,8 @@ VALUES ('Message Admin'),
 	('Renouvelement du pret accepter'),
 	('Date de fin de pret atteinte'),
 	('Renouvelement de pret refuser'),
-	('Renouvelement de pret enregistrée');
-	
-INSERT INTO TypeNotif(Nom)
-VALUES ('Renouvelement de pret accepter');
+	('Renouvelement de pret enregistrée')
+	('Enregistrement de pret');
 
 INSERT INTO MotClef(Nom)
 		VALUES ('Bande dessinée'),

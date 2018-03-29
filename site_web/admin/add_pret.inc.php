@@ -1,6 +1,10 @@
 <?php
 include '../fonctions/admin.php';
-//addPret();
+if(isset($_POST['addExemplaire'])){
+    $exemplaire = $_POST['select_exemplaire'];
+    $user=$_POST['select_user'];
+    addEmprun($exemplaire,$user);
+}
 ?>
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <h2 class="page-header">Enregistement de prêt</h2>
@@ -11,12 +15,13 @@ include '../fonctions/admin.php';
                     <div class="row">
                         <div class="col-sm-4 form-group">
                             <label>Œeuvre</label>
-                            <select class="selectpicker" name="select_livre" title="Selectionner œuvre"
+                            <select class="selectpicker" name="select_exemplaire[]" title="Selectionner œuvre"
                                     data-style="btn-default" multiple data-live-search="true">
-                                <?php $listBook = listBook();
-                                foreach ($listBook as $list) {
-                                    echo '<option data-subtext="' . $list['IdLivre'] . '" value="' . $list['IdLivre'] . '">' . $list['Titre'] . '</option>';
-                                } ?>
+                                <?php $listExemplaire = listExemplaire();
+                                foreach ($listExemplaire as $list) {
+                                    echo '<option data-subtext=" ID_EX :' . $list['IdExemplaire'] . '" value="' . $list['IdExemplaire'] . '">' . $list['Titre'] . '</option>';
+                                }
+                                ?>
                             </select>
                         </div>
                         <div class="col-sm-4 form-group">
@@ -26,12 +31,14 @@ include '../fonctions/admin.php';
                                 <?php $listUser = listUser();
                                 foreach ($listUser as $list) {
                                     echo '<option data-subtext="' . $list['IdAdherant'] . '" value="' . $list['IdAdherant'] . '">' . $list['Nom'] . ' ' . $list['Prenom'] . '</option>';
-                                } ?>
+                                }
+                                ?>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label>ID Exemplaire</label>
-                            <input type="number" placeholder="Entre Id exemplaire" name="IdExemp" class="form-control">
+                        <div class="col-sm-4 form-group">
+                            <label>Date d'achat</label>
+                            <input type="date" name="dateAchat" placeholder="Date d'achat" class="form-control"
+                                   required="">
                         </div>
                         <div class="col-sm-4 form-group">
                             <br>

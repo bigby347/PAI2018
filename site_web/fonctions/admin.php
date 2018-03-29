@@ -222,6 +222,25 @@ function listBook()
     $data = $result->fetchAll();
     return $data;
 }
+function listExemplaire(){
+    global $bdd;
+    $req = "SELECT IdLivre,Titre,IdExemplaire 
+            FROM Oeuvre,Exemplaire 
+            WHERE Exemplaire.FkLivre= Oeuvre.IdLivre
+            AND Exemplaire.IdExemplaire IN (SELECT IdExemplaire
+    FROM Exemplaire
+    LEFT JOIN Emprun ON Exemplaire.IdExemplaire = Emprun.FkExemplaire
+    LEFT JOIN Reservation ON Exemplaire.IdExemplaire = Reservation.FkExemplaire
+    WHERE DateRetour IS NULL
+    AND IdEmprun IS NULL
+    AND IdReservation IS NULL)";
+
+    $result = $bdd->prepare($req);
+    $result->execute();
+
+    $data = $result->fetchAll();
+    return $data;
+}
 
 function addExemplaire()
 {
@@ -403,4 +422,28 @@ function ValidationRequete($IdRequete, $IdAdherant, $IdExemplaire, $Titre){
     $result = $bdd->prepare($req);
     $result->execute([$IdRequete]);
 
+}
+
+function addEmprun($Exemplaire,$IdAdherant){
+    global $bdd;
+    foreach ($Exemplaire as $IdExemplaire){
+        $datePret= date('Y-m-d');
+        /* Création Emprun */
+        $req = 'INSERT INTO Emprun(FkAdherant,FkExemplaire,DatePret,Renouvelement)
+    VALUES(?,?,?,?)';
+
+        $result = $bdd->prepare($req);
+        $result->execute([$IdAdherant,$IdExemplaire,$datePret,1]);
+        /*Recupération titre livre*/
+        $req='SELECT Titre FROM Oeuvre,Exemplaire WHERE Oeuvre.IdLivre = Exemplaire.FkLivre AND Exemplaire.IdExemplaire = ?';
+        $result=$bdd->prepare($req);
+        $result->execute([$IdExemplaire]);
+        $oeuvre=$result->fetch();
+        /* Création notif */
+        $req = 'INSERT INTO Notif(FkAdherant,FkTypeNotif,Commentaire)
+    VALUES(?,?,?)';
+        $result = $bdd->prepare($req);
+        $result->execute([$IdAdherant,11,'Enregistrement du Pret, Vous avez recupérer l\'exemplaire n° '.$IdExemplaire.' du livre '. $oeuvre['Titre']]);
+
+    }
 }

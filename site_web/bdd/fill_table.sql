@@ -18,6 +18,10 @@ VALUES ('admin@master.com','Admin', 'god','azerty123','1 rue du test 00000 Testv
 INSERT INTO Admin(Mail,Nom,Prenom,MDP,Adresse)
 VALUES ('ad@min.bg','ad', 'bg','min','46 rue de la boustifialle');
 
+INSERT INTO TypeNotif(Nom)
+VALUES ('Enregistrement de pret');
+
+ALTER TABLE biblio.Reservation DROP DateRequete;
 
 /*Ajout Ouevre */
 INSERT INTO Oeuvre(Titre, Cote, Publication,Description)
