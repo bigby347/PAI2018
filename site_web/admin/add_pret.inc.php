@@ -24,7 +24,7 @@ if(isset($_POST['addExemplaire'])){
                             </select>
                         </div>
                         <div class="col-sm-4 form-group">
-                            <label>Œeuvre</label>
+                            <label>Adhérant</label>
                             <select class="selectpicker" name="select_user" title="Selectionner Utilisateur"
                                     data-style="btn-default" data-live-search="true">
                                 <?php $listUser = listUser();
@@ -34,15 +34,12 @@ if(isset($_POST['addExemplaire'])){
                                 ?>
                             </select>
                         </div>
-                        <div class="col-sm-4 form-group">
-                            <br>
-                            <button type="submit" name="addExemplaire" class="btn btn-lg btn-success"><span
-                                        class="glyphicon glyphicon-ok"></span> Ajouter
-                            </button>
-                            <button type="reset" class="btn btn-lg btn-danger"><span
-                                        class="glyphicon glyphicon-remove"></span> Réinitialiser
-                            </button>
-                        </div>
+                        <button type="submit" name="addExemplaire" class="btn btn-lg btn-success"><span
+                                    class="glyphicon glyphicon-ok"></span> Ajouter
+                        </button>
+                        <button type="reset" class="btn btn-lg btn-danger"><span
+                                    class="glyphicon glyphicon-remove"></span> Réinitialiser
+                        </button>
                     </div>
                 </div>
             </form>
