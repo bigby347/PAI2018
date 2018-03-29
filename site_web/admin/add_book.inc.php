@@ -1,6 +1,11 @@
 <?php
-include '../fonctions/admin.php';
-addBook();
+if (isset($_POST['addBook'])) {
+    addBook($_POST['titre'],
+        $_POST['datePub'],
+        $_POST['cote'],
+        $_POST['description'],
+        $_POST['select_auteur']);
+}
 ?>
 
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -61,56 +66,17 @@ addBook();
             </div>
         </div>
 
-        <!-- **************************
-            Partie ajout Exemplaire
-        **************************** -->
-        <?php addExemplaire(); ?>
 
-        <div class="col-lg-12 well">
-            <h3>Exemplaire(s) <span class="label label-primary">Ajout</span></h3>
-            <br>
-            <div class="row">
-                <form class="form-inline" id="form-exemp" method="post">
-                    <div class="col-sm-12">
-                        <div class="col-sm-4 form-group">
-                            <label>Œeuvre</label>
-                            <select class="selectpicker" name="select_livre" title="Selectionner œuvre"
-                                    data-style="btn-default" data-live-search="true">
-                                <?php $listBook=listBook();
-                                foreach ($listBook as $list) {
-                                    echo '<option data-subtext="' . $list['IdLivre'] . '" value="' . $list['IdLivre'] . '">' . $list['Titre'] . '</option>';
-                                }?>
-                            </select>
-                        </div>
-                        <div class="col-sm-4 form-group">
-                            <label>Nombre</label>
-                            <input type="number" name="nbExemp" placeholder="Nombre d'exemplaire" class="form-control"
-                                   required="">
-                        </div>
-                        <div class="col-sm-4 form-group">
-                            <label>Date d'achat</label>
-                            <input type="date" name="dateAchat" placeholder="Date d'achat" class="form-control"
-                                   required="">
-                        </div>
-                        <div class="col-sm-4 form-group">
-                            <br>
-                            <button type="submit" name="addExemplaire" class="btn btn-lg btn-success"><span
-                                        class="glyphicon glyphicon-ok"></span> Ajouter
-                            </button>
-                            <button type="reset" class="btn btn-lg btn-danger"><span
-                                        class="glyphicon glyphicon-remove"></span> Réinitialiser
-                            </button>
-                        </div>
-
-                    </div>
-                </form>
-            </div>
     </div>
 
 
     <!-- Modal -->
     <div id="myModal" class="modal">
-        <?php addAutor(); ?>
+        <?php
+        if (isset($_POST['addAutor'])) {
+            addAutor($_POST['nomAuteur1'], $_POST['prenomAuteur1']);
+        }
+        ?>
         <!-- Modal content -->
         <div class="modal-content">
             <span onclick="closeModal()" class="close">&times;</span>

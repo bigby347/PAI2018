@@ -24,8 +24,8 @@ $pagesUser = array(
         'title' => 'Historique',
         'include' => 'historique.inc.php',
         'printMenu' => TRUE),
-    'contact' => array(
-        'title'=>'Contact',
+    'A propo' => array(
+        'title'=>'A propo :',
         'include'=> 'contact.inc.php',
         'printMenu' => TRUE),
     'auteur' => array(
@@ -36,6 +36,7 @@ $pagesUser = array(
         'title'=>'Recherche par mot clef',
         'include'=> 'motClef.inc.php',
         'printMenu' => FALSE)
+
 
 
 );
@@ -64,6 +65,10 @@ $pagesAd = array(
         'title' => 'Ajout Livre',
         'include' => 'add_book.inc.php',
         'printMenu' => TRUE),
+    'GesEx' => array(
+        'title' => 'Gestion exemplaire',
+        'include' => 'GestionExemplaire.inc.php',
+        'printMenu' => TRUE),
     'addpret' => array(
         'title' => 'Enregistrement pret',
         'include' => 'add_pret.inc.php',
@@ -79,15 +84,10 @@ $pagesAd = array(
     'renouv' => array(
         'title' => 'Gestion des renouvelements',
         'include' => 'GestionRenouvelement.inc.php',
-        'printMenu' => TRUE
-    ),
+        'printMenu' => TRUE),
     'notification' => array(
         'title' => 'Notification',
         'include' => 'add_notif.inc.php',
-        'printMenu' => TRUE),
-    'user_profile'=> array(
-        'title' => 'Profile Utilisateurs',
-        'include' => 'user_profile.inc.php',
         'printMenu' => TRUE),
     'contisation'=> array(
         'title' => 'Gestion des cotisations',

@@ -1,13 +1,10 @@
-<?php include '../fonctions/admin.php'; ?>
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <h2 class="page-header">Gestions des requètes </h2>
     <?php
-    //TODO : gestion requete
+
     /* Gestion de l'acceptation de la requete*/
     if (isset($_POST['ValidationRequete'])){
-        /*echo $_POST['IdRequete'];
-        echo $_POST['IdAdherant'];
-        echo $_POST['IdExemplaire'];*/
+
         ValidationRequete($_POST['IdRequete'],$_POST['IdAdherant'], $_POST['IdExemplaire'], $premiereRequete['Titre']);
     }
     ?>

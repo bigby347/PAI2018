@@ -19,4 +19,5 @@
         <script src="/js/script.js"></script>
     </head>
     <body>
+    <?php include '../fonctions/admin.php'; ?>
 

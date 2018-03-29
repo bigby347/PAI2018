@@ -45,4 +45,3 @@ if(isset($_POST['connexion'])) { // si le bouton "Connexion" est appuyé
 }
 ?>
 
-<!--TODO: affichage d'un message d'erreur en cas de mot de passe incorrect ou login -->
