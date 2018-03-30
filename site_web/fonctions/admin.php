@@ -311,3 +311,12 @@ function addEmprun($Exemplaire,$IdAdherant){
 
     }
 }
+
+function addNotif($IdAdherant,$type ,$message){
+    global  $bdd;
+    $req = 'INSERT INTO Notif(FkAdherant,FkTypeNotif,Commentaire)
+    VALUES(?,?,?)';
+    $result = $bdd->prepare($req);
+    $result->execute([$IdAdherant,$type,$message]);
+
+}

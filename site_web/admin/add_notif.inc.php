@@ -5,24 +5,33 @@
         <div class="text-center">
             <div class="col-sm-4"></div>
             <div class="col-sm-4">
+                <?php
+                if (isset($_POST['addNotif'])){
+                    addNotif($_POST['selectAd'],1,$_POST['Message']);
+                }
+                ?>
                 <div class="panel panel-primary">
                     <div class="panel-heading">Envoie de notification</div>
                     <div class="panel-body">
-                        <select class="selectpicker" name="selectAd" title="Selectionner Adherant"
-                                data-style="btn-default" data-live-search="true">
-                            <?php
-                            $listUser=listUser();
-                            foreach ($listUser as $user) {
-                                echo '<option data-subtext="' . $user['IdAdherant'] . '" value="' . $user['IdAdherant'] . '">'.$user['Nom'].' '.$user['Prenom'].'</option>';
-                            }
+                        <form action = "" method="post">
+                            <select class="selectpicker" name="selectAd" title="Selectionner Adherant"
+                                    data-style="btn-default" data-live-search="true">
+                                <?php
+                                $listUser=listUser();
+                                foreach ($listUser as $user) {
+                                    echo '<option data-subtext="' . $user['IdAdherant'] . '" value="' . $user['IdAdherant'] . '">'.$user['Nom'].' '.$user['Prenom'].'</option>';
+                                }
 
-                            ?>
-                        </select>
-                        <br>
-                        <label>Message:</label>
-                        <textarea class="form-control" rows="3" id="Message">
-
-                        </textarea>
+                                ?>
+                            </select>
+                            <br>
+                            <label>Message:</label>
+                            <textarea class="form-control" rows="3" name="Message"></textarea>
+                            <br>
+                            <button type="submit" class="btn btn-primary" name="addNotif" value="1">
+                                Envoyer
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
