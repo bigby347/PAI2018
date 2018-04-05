@@ -18,21 +18,36 @@ VALUES ('admin@master.com','Admin', 'god','azerty123','1 rue du test 00000 Testv
 INSERT INTO Admin(Mail,Nom,Prenom,MDP,Adresse)
 VALUES ('ad@min.bg','ad', 'bg','min','46 rue de la boustifialle');
 
-INSERT INTO TypeNotif(Nom)
-VALUES ('Enregistrement de pret');
-
-ALTER TABLE biblio.Reservation DROP DateRequete;
-
 /*Ajout Ouevre */
 INSERT INTO Oeuvre(Titre, Cote, Publication,Description)
-VALUES ('Germinal','GEZ1885','1885','description de germinal');
+VALUES ('Germinal','GEZ1885','1885','Fils de Gervaise Macquart et de son amant Auguste Lantier,
+                                    le jeune Étienne Lantier s''est fait renvoyer de son travail pour avoir donné une gifle à son employeur.
+                                    Chômeur, il part dans le Nord de la France à la recherche d’un nouvel emploi.
+                                    Il se fait embaucher aux mines de Montsou et connaît des conditions de travail effroyables
+                                    (pour écrire ce roman, Émile Zola s''est beaucoup documenté sur le travail dans les mines).');
+INSERT INTO Oeuvre(Titre, Cote, Publication,Description)
+VALUES ('Germinal','GEZ1885','1885','Fils de Gervaise Macquart et de son amant Auguste Lantier,
+                                    le jeune Étienne Lantier s''est fait renvoyer de son travail pour avoir donné une gifle à son employeur.
+                                    Chômeur, il part dans le Nord de la France à la recherche d’un nouvel emploi.
+                                    Il se fait embaucher aux mines de Montsou et connaît des conditions de travail effroyables
+                                    (pour écrire ce roman, Émile Zola s''est beaucoup documenté sur le travail dans les mines).');
+INSERT INTO Oeuvre(Titre, Cote, Publication,Description)
+VALUES ('Germinal','GEZ1885','1885','Fils de Gervaise Macquart et de son amant Auguste Lantier,
+                                    le jeune Étienne Lantier s''est fait renvoyer de son travail pour avoir donné une gifle à son employeur.
+                                    Chômeur, il part dans le Nord de la France à la recherche d’un nouvel emploi.
+                                    Il se fait embaucher aux mines de Montsou et connaît des conditions de travail effroyables
+                                    (pour écrire ce roman, Émile Zola s''est beaucoup documenté sur le travail dans les mines).');
+INSERT INTO Oeuvre(Titre, Cote, Publication,Description)
+VALUES ('Germinal','GEZ1885','1885','Fils de Gervaise Macquart et de son amant Auguste Lantier,
+                                    le jeune Étienne Lantier s''est fait renvoyer de son travail pour avoir donné une gifle à son employeur.
+                                    Chômeur, il part dans le Nord de la France à la recherche d’un nouvel emploi.
+                                    Il se fait embaucher aux mines de Montsou et connaît des conditions de travail effroyables
+                                    (pour écrire ce roman, Émile Zola s''est beaucoup documenté sur le travail dans les mines).');
 
-INSERT INTO Oeuvre(Titre, Cote, Publication, Description)
-VALUES ('Boris au brésil','Bor2018','2018', 'Mmmm sympa');
 
 /*Ajout auteur */
 INSERT INTO Auteur(Nom, Prenom)
-    Values('Putzu','alex');
+    Values('Zola','Emile');
 INSERT INTO Auteur(Nom,Prenom)
     VALUES('auteur1','test');
 

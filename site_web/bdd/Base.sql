@@ -157,7 +157,7 @@ Create table Reservation (
 	FkAdherant integer
 	NOT NULL,
 	FkExemplaire integer
-	NOT NULL
+	NOT NULL,
 	DateAcceptation date,
 	FOREIGN KEY (FkAdherant) REFERENCES Adherant(IdAdherant) ON UPDATE CASCADE,
 	FOREIGN KEY (FkExemplaire) REFERENCES Exemplaire(IdExemplaire) ON UPDATE CASCADE
@@ -173,7 +173,7 @@ VALUES ('Message Admin'),
 	('Renouvelement du pret accepter'),
 	('Date de fin de pret atteinte'),
 	('Renouvelement de pret refuser'),
-	('Renouvelement de pret enregistrée')
+	('Renouvelement de pret enregistrée'),
 	('Enregistrement de pret');
 
 INSERT INTO MotClef(Nom)

@@ -32,7 +32,7 @@
                         <div class="col-sm-4 form-group">
                             <label>Nombre</label>
                             <input type="number" name="nbExemp" placeholder="Nombre d'exemplaire" class="form-control"
-                                   required="">
+                                   required="" min="1">
                         </div>
                         <div class="col-sm-4 form-group">
                             <label>Date d'achat</label>

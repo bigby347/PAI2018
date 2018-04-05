@@ -61,7 +61,16 @@ function listAutor()
 
 }
 
-function addBook($titre,$datePub,$cote,$description,$list_autor)
+function addAutor($nom,$prenom)
+{
+    global $bdd;
+    $req = 'INSERT INTO Auteur(Nom,Prenom) VALUES(?,?)';
+    $result = $bdd->prepare($req);
+    $result->execute([$nom, $prenom]);
+
+}
+
+function addBook($titre,$datePub,$cote,$description,$list_autor,$list_MotClef)
 {
     global $bdd;
 
@@ -77,10 +86,14 @@ function addBook($titre,$datePub,$cote,$description,$list_autor)
         $result = $bdd->prepare($req);
         $result->execute([$autor, $id_livre]);
     }
-
+    foreach ($list_MotClef as $mot) {
+        $req = 'INSERT INTO Definition(FkMotClef,FkLivre)
+            VALUES (?,?)';
+        $result = $bdd->prepare($req);
+        $result->execute([$mot, $id_livre]);
+    }
 
 }
-
 function listBook()
 {
     global $bdd;
@@ -92,6 +105,7 @@ function listBook()
     $data = $result->fetchAll();
     return $data;
 }
+
 function listExemplaire(){
     global $bdd;
     $req = "SELECT IdLivre,Titre,IdExemplaire 
@@ -124,16 +138,16 @@ function addExemplaire($idLivre,$nbExem,$date)
         $result->execute([$date, $idLivre]);
     }
 
-
 }
-
-function addAutor($nom,$prenom)
-{
+function listMot_clef(){
     global $bdd;
-    $req = 'INSERT INTO Auteur(Nom,Prenom) VALUES(?,?)';
-    $result = $bdd->prepare($req);
-    $result->execute([$nom, $prenom]);
+    $req = "SELECT IdMotClef,Nom FROM MotClef";
 
+    $result = $bdd->prepare($req);
+    $result->execute();
+
+    $data = $result->fetchAll();
+    return $data;
 }
 
 function premiereRenouv()

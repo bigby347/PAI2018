@@ -4,7 +4,8 @@ if (isset($_POST['addBook'])) {
         $_POST['datePub'],
         $_POST['cote'],
         $_POST['description'],
-        $_POST['select_auteur']);
+        $_POST['select_auteur'],
+        $_POST['select_motclef']);
 }
 ?>
 
@@ -38,17 +39,30 @@ if (isset($_POST['addBook'])) {
                             <div class="col-sm-4 form-group">
                                 <label>Auteur(s)</label>
                                 <select class="selectpicker" name="select_auteur[]" title="Selectionner Auteur(s)"
-                                        data-style="btn-default" multiple data-live-search="true">
-                                    <?php $listAutor=listAutor();
+                                        data-style="btn-default" multiple data-live-search="true" data-size="6" data-actions-box="true">
+                                    <?php $listAutor = listAutor();
                                     foreach ($listAutor as $list) {
                                         echo '<option data-subtext="' . $list['Prenom'] . '" value="' . $list['IdAuteur'] . '">' . $list['Nom'] . '</option>';
-                                    }?>
+                                    } ?>
                                 </select>
 
                             </div>
                             <div class="col-sm-4 form-group" id="nouveau">
                                 <label>Nouvel Auteur ?</label>
                                 <input type="button" class="btn btn-warning" value="Ajouter" onclick="openModal()">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4 form-group">
+                                <label>Mot-clef(s)</label>
+                                <select class="selectpicker dropdown" name="select_motclef[]" title="Selectionner Mot-Clef(s)"
+                                        data-style="btn-default" multiple data-live-search="true" data-actions-box="true" data-size="6">
+                                    <?php $list_MotClef = listMot_clef();
+                                    foreach ($list_MotClef as $list) {
+                                        echo '<option value="' . $list['IdMotClef'] . '">' . $list['Nom'] . '</option>';
+                                    } ?>
+                                </select>
+
                             </div>
                         </div>
                         <div class="form-group">
