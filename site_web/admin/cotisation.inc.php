@@ -5,7 +5,7 @@
     <div class="text-center">
         <?php
         if (isset($_POST['Cotisation'])){
-            //cotisation($_POST['Cotisation']);
+            cotisation($_POST['userCot']);
         }
         ?>
         <table class="table table-bordered">
@@ -31,7 +31,7 @@
                     <td>' . $user['cotisation'] . '</td>
                     <td>
                         <form action = "" method="post">
-                            <input type="hidden" value="'.$user['cotisation'].'">
+                            <input type="hidden" name="userCot" value="'.$user['IdAdherant'].'">
                             <button type="submit" class="btn btn-primary" name="Cotisation" value=' . $user['IdAdherant'] . ' >Cotise</button>
                         </form>
                     </td>
