@@ -67,7 +67,7 @@ function addAutor($nom,$prenom)
     $req = 'INSERT INTO Auteur(Nom,Prenom) VALUES(?,?)';
     $result = $bdd->prepare($req);
     $result->execute([$nom, $prenom]);
-
+    header('Location : ?page=addbook');
 }
 
 function addBook($titre,$datePub,$cote,$description,$list_autor,$list_MotClef)

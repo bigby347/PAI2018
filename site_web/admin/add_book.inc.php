@@ -7,7 +7,12 @@ if (isset($_POST['addBook'])) {
         $_POST['select_auteur'],
         $_POST['select_motclef']);
 }
+
+if (isset($_POST['addAutor'])) {
+    addAutor($_POST['nomAuteur1'], $_POST['prenomAuteur1']);
+}
 ?>
+
 
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <h2 class="page-header">Gestion des Livres</h2>
@@ -39,7 +44,8 @@ if (isset($_POST['addBook'])) {
                             <div class="col-sm-4 form-group">
                                 <label>Auteur(s)</label>
                                 <select class="selectpicker" name="select_auteur[]" title="Selectionner Auteur(s)"
-                                        data-style="btn-default" multiple data-live-search="true" data-size="6" data-actions-box="true">
+                                        data-style="btn-default" multiple data-live-search="true" data-size="6"
+                                        data-actions-box="true">
                                     <?php $listAutor = listAutor();
                                     foreach ($listAutor as $list) {
                                         echo '<option data-subtext="' . $list['Prenom'] . '" value="' . $list['IdAuteur'] . '">' . $list['Nom'] . '</option>';
@@ -55,8 +61,10 @@ if (isset($_POST['addBook'])) {
                         <div class="row">
                             <div class="col-sm-4 form-group">
                                 <label>Mot-clef(s)</label>
-                                <select class="selectpicker dropdown" name="select_motclef[]" title="Selectionner Mot-Clef(s)"
-                                        data-style="btn-default" multiple data-live-search="true" data-actions-box="true" data-size="6">
+                                <select class="selectpicker dropdown" name="select_motclef[]"
+                                        title="Selectionner Mot-Clef(s)"
+                                        data-style="btn-default" multiple data-live-search="true"
+                                        data-actions-box="true" data-size="6">
                                     <?php $list_MotClef = listMot_clef();
                                     foreach ($list_MotClef as $list) {
                                         echo '<option value="' . $list['IdMotClef'] . '">' . $list['Nom'] . '</option>';
@@ -86,11 +94,6 @@ if (isset($_POST['addBook'])) {
 
     <!-- Modal -->
     <div id="myModal" class="modal">
-        <?php
-        if (isset($_POST['addAutor'])) {
-            addAutor($_POST['nomAuteur1'], $_POST['prenomAuteur1']);
-        }
-        ?>
         <!-- Modal content -->
         <div class="modal-content">
             <span onclick="closeModal()" class="close">&times;</span>
@@ -123,5 +126,4 @@ if (isset($_POST['addBook'])) {
             </form>
         </div>
     </div>
-</div>
 </div>
