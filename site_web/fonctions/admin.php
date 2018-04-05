@@ -320,3 +320,108 @@ function addNotif($IdAdherant,$type ,$message){
     $result->execute([$IdAdherant,$type,$message]);
 
 }
+
+function Empruns(){
+    global $bdd;
+
+
+    $req = "SELECT IdEmprun,IdAdherant , IdExemplaire, Titre, DatePret,Renouvelement ,IF(Renouvelement=2,DATE_ADD(DatePret, INTERVAL (2) MONTH),DATE_ADD(DatePret, INTERVAL (1) MONTH))AS date_Retour
+    FROM Emprun, Exemplaire, Oeuvre, Adherant 
+    WHERE Oeuvre.IdLivre = Exemplaire.FkLivre
+    AND Exemplaire.IdExemplaire = Emprun.FkExemplaire
+    AND Emprun.FkAdherant = Adherant.IdAdherant
+    AND Emprun.DateRetour IS NULL";
+
+    $result = $bdd->prepare($req);
+    $result->execute();
+
+    $data = $result->fetchAll();
+    return $data;
+
+}
+
+function Reservations(){
+
+    global $bdd;
+
+
+    $req = "SELECT Titre, IdAdherant, DateAcceptation, IdExemplaire, IdReservation, DATE_ADD(DateAcceptation, INTERVAL 7 DAY)as dateFin
+    FROM Reservation, Oeuvre, Adherant, Exemplaire
+    WHERE Oeuvre.IdLivre = Exemplaire.FkLivre
+    AND Exemplaire.IdExemplaire = Reservation.FkExemplaire
+    AND Reservation.FkAdherant = Adherant.IdAdherant";
+
+    $result = $bdd->prepare($req);
+    $result->execute();
+
+    $data = $result->fetchAll();
+    return $data;
+
+
+}
+
+function Relance(){
+    global $bdd;
+    $req = "SELECT Date_ADD(Relance, INTERVAL 7 DAY) as Relance From Relance";
+
+    $result = $bdd->prepare($req);
+    $result->execute();
+
+    $data = $result->fetch();
+    return $data['Relance'];
+}
+function UpdateRelance(){
+    global $bdd;
+    $req = "UPDATE Relance SET Relance= STR_TO_DATE(?, '%d-%m-%Y')";
+
+    $result = $bdd->prepare($req);
+    $result->execute([date('d-m-Y')]);
+
+}
+
+function Maintenance(){
+    global $bdd;
+    $req = "SELECT  Maintenance From Maintenance;";
+
+    $result = $bdd->prepare($req);
+    $result->execute();
+
+    $data = $result->fetch();
+    return $data['Maintenance'];
+}
+function UpdateMaintenance(){
+    global $bdd;
+    $req = "UPDATE Maintenance SET Maintenance= STR_TO_DATE(?, '%d-%m-%Y')";
+
+    $result = $bdd->prepare($req);
+    $result->execute([date('d-m-Y')]);
+
+}
+
+function DeleteOldReservation(){
+    global $bdd;
+    // Supression
+    $req = "";
+
+    $result = $bdd->prepare($req);
+    $result->execute();
+
+
+}
+
+function RetourEmprun($IdEmprun){
+    global $bdd;
+    /* Modification de la table emprunt*/
+    $req = 'UPDATE Emprun SET DateRetour = STR_TO_DATE(?, \'%d-%m-%Y\') WHERE IdEmprun = ?';
+    $result = $bdd->prepare($req);
+    $result->execute([date('d-m-Y'),$IdEmprun]);
+}
+
+function cotisation($IdAdherant){
+    global $bdd;
+    /* Modification de la table emprunt*/
+    $req = 'UPDATE Adherant SET cotisation = DATE_ADD(cotisation, INTERVAL 1 YEAR )  WHERE $IdAdherant = ?';
+    $result = $bdd->prepare($req);
+    $result->execute([$IdAdherant]);
+
+}

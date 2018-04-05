@@ -98,8 +98,6 @@ function Reservation($IdAdherant)
     $data = $result->fetchAll();
     return $data;
 
-
-    echo '</table>';
 }
 
 function Emprun($IdAdherant)

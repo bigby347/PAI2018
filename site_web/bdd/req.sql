@@ -243,3 +243,17 @@ SELECT DISTINCT IdRequete,Titre,Cote,IdLivre,Nom,Prenom
 
 select * from Requete;
 SELECT * from Reservation;
+
+SELECT Titre, DateAcceptation, IdExemplaire, IdReservation, DATE_ADD(DateAcceptation, INTERVAL 7 DAY)as dateFin
+    FROM Reservation, Oeuvre, Adherant, Exemplaire
+    WHERE Oeuvre.IdLivre = Exemplaire.FkLivre
+    AND Exemplaire.IdExemplaire = Reservation.FkExemplaire
+    AND Reservation.FkAdherant = Adherant.IdAdherant;
+
+
+SELECT Date_ADD(Maintenance, INTERVAL 7 DAY) as Maintenance From Maintenance;
+
+SELECT * FROM Reservation
+WHERE DATEADD(DateAcceptation, INTERVAL 7 DAY )< NOW();
+
+SELECT NOW();

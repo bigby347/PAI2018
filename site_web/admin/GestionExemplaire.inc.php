@@ -54,22 +54,4 @@
             </div>
         </div>
     </div>
-
-    <h4>Supression d'explaire : perte ou destruction</h4>
-    <div class="row">
-        <div class="col-sm-8 well">
-
-<!-- TODO: supression d'exemplaire ! -->
-
-        Il se passe beauoup de chose ici
-        </div>
-        <div class="col-sm-4 ">
-            <div class="panel panel-primary">
-                <div class="panel-heading">Les exemplaires</div>
-                <div class="panel-body">
-                    En cas de perte ou de déstruction d'un livre par un des utilisateurs, ce derniers doit le racheter
-                </div>
-            </div>
-        </div>
-    </div>
 </div>

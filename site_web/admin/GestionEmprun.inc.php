@@ -1,36 +1,45 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-    <h2 class="page-header">Gestions des reservation </h2>
+    <h2 class="page-header">Gestions des Emprunts </h2>
     <?php
-    if (isset($_POST['ReservationAccepter'])){
-        addEmprun($_POST['IdExemplaire'],$_POST['selectAd']);
-        SupprimeReservation($_POST['ReservationAccepter']);
+    if (isset($_POST['RetourEmprun'])){
+        RetourEmprun($_POST['RetourEmprun']);
     }
 
-
+    if (isset($_POST['Destruction'])){
+        echo $_POST['IdExemplaire'];
+        echo $_POST['selectAd'];
+    }
 
     if (isset($_POST['selectAd'])) {
         echo '<table class="table table-bordered">
                 <tr>
-                    <th>IdReservation</th>
+                    <th>IdEmprun</th>
                     <th>Oeuvre</th>
                     <th>IdExemplaire</th>
-                    <th>Date Reservation</th>
+                    <th>Date Pret</th>
+                    <th>Date maximum de retour</th>
+                    <th> </th>
                     <th> </th>
                 </tr>';
-        $Reservations = Reservation($_POST['selectAd']);
-        foreach ($Reservations as $Reservation) {
+        $Empruns = Emprun($_POST['selectAd']);
+        foreach ($Empruns as $Emprun) {
             echo '<tr>
-                    <td>' . $Reservation['IdReservation'] . '</td>
-                    <td>' . $Reservation['Titre'] . '</td>
-                    <td>' . $Reservation['IdExemplaire'] . '</td>
-                    <td>' . $Reservation['DateAcceptation'] . '</td>
-                    
+                    <td>' . $Emprun['IdEmprun'] . '</td>
+                    <td>' . $Emprun['Titre'] . '</td>
+                    <td>' . $Emprun['IdExemplaire'] . '</td>
+                    <td>' . $Emprun['DatePret'] . '</td>
+                    <td>'.$Emprun['date_Retour'].'</td>
                     <td>
                         <form action = "" method="post">
                         <input type="hidden" name="selectAd" value= ' . $_POST['selectAd'] . '>
-                        <input type="hidden" name="IdExemplaire" value= ' .$Reservation['IdExemplaire']. '>
-                       
-                        <button type="submit" class="btn btn-primary" name="ReservationAccepter" value=' . $Reservation['IdReservation'] . ' >Donner</button>
+                        <button type="submit" class="btn btn-success" name="RetourEmprun" value=' . $Emprun['IdEmprun'] . ' >Enregistrer le retour</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action = "" method="post">
+                        <input type="hidden" name="selectAd" value= ' . $_POST['selectAd'] . '>
+                        <input type="hidden" name="IdExemplaire" value= ' .$Emprun['IdExemplaire']. '>
+                        <button type="submit" class="btn btn-danger" name="Destruction" value=' . $Emprun['IdEmprun'] . ' >Enregistrer la perte/destruction</button>
                         </form>
                     </td>
               </tr>';
@@ -68,7 +77,7 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">Le choix de adhérant :</div>
                 <div class="panel-body">
-                    Choisir un adhérant pour voir ses réservations !
+                    Choisir un adhérant pour voir ses Empruns en cours !
                 </div>
             </div>
         </div>

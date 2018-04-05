@@ -210,3 +210,21 @@ INSERT INTO MotClef(Nom)
 			('Dévellopement personnel'),
 			('Philosophie'),
 			('Éducation et formation');
+
+
+CREATE TABLE Relance (
+  Id INTEGER ,
+  Relance date
+);
+
+INSERT INTO Relance(Id,Relance)
+VALUES (1,STR_TO_DATE('1-1-2010', '%d-%m-%Y'));
+
+CREATE TABLE Maintenance (
+  Id INTEGER ,
+  Maintenance date
+);
+INSERT INTO Maintenance(Id,Maintenance)
+VALUES (1,STR_TO_DATE('1-1-2010', '%d-%m-%Y'));
+
+
