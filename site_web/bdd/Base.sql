@@ -157,8 +157,7 @@ Create table Reservation (
 	FkAdherant integer
 	NOT NULL,
 	FkExemplaire integer
-	NOT NULL,
-	DateRequete date NOT NULL,
+	NOT NULL
 	DateAcceptation date,
 	FOREIGN KEY (FkAdherant) REFERENCES Adherant(IdAdherant) ON UPDATE CASCADE,
 	FOREIGN KEY (FkExemplaire) REFERENCES Exemplaire(IdExemplaire) ON UPDATE CASCADE
