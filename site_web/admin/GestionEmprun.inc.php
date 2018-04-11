@@ -8,6 +8,7 @@
     if (isset($_POST['Destruction'])){
         echo $_POST['IdExemplaire'];
         echo $_POST['selectAd'];
+        //TODO : destruction
     }
 
     if (isset($_POST['selectAd'])) {
