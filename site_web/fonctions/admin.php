@@ -434,7 +434,7 @@ function RetourEmprun($IdEmprun){
 function cotisation($IdAdherant){
     global $bdd;
     /* Modification de la table emprunt*/
-    $req = 'UPDATE Adherant SET cotisation = DATE_ADD(cotisation, INTERVAL 1 YEAR )  WHERE $IdAdherant = ?';
+    $req = 'UPDATE Adherant SET cotisation = DATE_ADD(cotisation, INTERVAL 1 YEAR )  WHERE IdAdherant = ?';
     $result = $bdd->prepare($req);
     $result->execute([$IdAdherant]);
 
