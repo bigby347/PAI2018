@@ -66,9 +66,9 @@
         </div>
         <div class="col-sm-8" >
             <div class="panel panel-primary">
-                <div class="panel-heading">Le choix de adhérant :</div>
+                <div class="panel-heading">Le choix de adhérent :</div>
                 <div class="panel-body">
-                    Choisir un adhérant pour voir ses réservations !
+                    Choisir un adhérent pour voir ses réservations !
                 </div>
             </div>
         </div>

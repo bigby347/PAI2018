@@ -2,7 +2,7 @@
     <h2 class="page-header">Portail</h2>
     <div class="row">
         <div class="col-sm-8 well">
-            <h4 >Relance des adhérants retardataire</h4>
+            <h4 >Relance des adhérents retardataire</h4>
             <!-- Faire un petit diag avec pret/pretretard -->
             <?php
             $NbRelance = 0;
@@ -17,7 +17,7 @@
 
                 UpdateRelance();
 
-                echo '<script> alert("Il y a eu '.$NbRelance.' relances d\'adhérant négligeant") </script>';
+                echo '<script> alert("Il y a eu '.$NbRelance.' relances d\'adhérent négligeant") </script>';
             }
 
             if (Relance() <  date('Y-m-d')){
@@ -32,7 +32,7 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">La relance</div>
                 <div class="panel-body">
-                    La relances des adhérants négligeants doit avoir lieu toutes les semaines. La prochaine relance sera a partir du <?= Relance(); ?>
+                    La relances des adhérents négligeants doit avoir lieu toutes les semaines. La prochaine relance sera a partir du <?= Relance(); ?>
                 </div>
             </div>
         </div>
@@ -71,7 +71,7 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">Les reservations</div>
                 <div class="panel-body">
-                    La supression des reservations non récupérer doit avoir lieu tout les jours. La dernière maintence a eu lieu le <?= Maintenance(); ?>
+                    La supression des reservations non récupérées doit avoir lieu tout les jours. La dernière maintence a eu lieu le <?= Maintenance(); ?>
                 </div>
             </div>
         </div>
