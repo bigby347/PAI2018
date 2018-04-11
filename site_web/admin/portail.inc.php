@@ -54,7 +54,6 @@
                     }
                 }
 
-                // TODO: livre a retiré des reservation
                 //DeleteOldReservation();
                 UpdateMaintenance();
                 echo '<script> alert("Il y a eu '.$NbOld.' Reservation suprimé") </script>';

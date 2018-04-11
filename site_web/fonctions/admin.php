@@ -439,3 +439,14 @@ function cotisation($IdAdherant){
     $result->execute([$IdAdherant]);
 
 }
+
+
+function SupExemplaire($IdEx)
+{
+    global $bdd;
+    /* Suppression dans la table emprunt*/
+    $req = 'DELETE FROM Exemplaire WHERE IdExemplaire = ?';
+    $result = $bdd->prepare($req);
+    $result->execute([$IdEx]);
+
+}

@@ -6,9 +6,10 @@
     }
 
     if (isset($_POST['Destruction'])){
-        echo $_POST['IdExemplaire'];
-        echo $_POST['selectAd'];
-        //TODO : destruction
+        //echo $_POST['IdExemplaire'];
+        //echo $_POST['selectAd'];
+        RetourEmprun($_POST['Destruction']);
+        //SupExemplaire($_POST['IdExemplaire']);
     }
 
     if (isset($_POST['selectAd'])) {
