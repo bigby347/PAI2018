@@ -12,7 +12,7 @@
         <?php $listUser=listUser();
         foreach ($listUser as $user) {
             echo '<tr>
-                    <td>' . $user['IdAdherant'] . '</td>
+                    <td>' . $user['IdAdherent'] . '</td>
                     <td>' . $user['Nom'] . '</td>
                     <td>' . $user['Prenom'] . '</td>
                     <td>' . $user['Mail'] . '</td>
@@ -21,7 +21,7 @@
                     <td>' . $user['cotisation'] . '</td>
                     <td>
                         <form action = "" method="post">
-                            <button type="submit" class="btn btn-primary" name="profile" value=' . $user['IdAdherant'] . ' >Voir Profil</button>
+                            <button type="submit" class="btn btn-primary" name="profile" value=' . $user['IdAdherent'] . ' >Voir Profil</button>
                         </form>
                     </td>
                  </tr>';

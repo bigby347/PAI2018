@@ -29,7 +29,7 @@ if(isset($_POST['addExemplaire'])){
                                     data-style="btn-default" data-live-search="true">
                                 <?php $listUser = listUser();
                                 foreach ($listUser as $list) {
-                                    echo '<option data-subtext="' . $list['IdAdherant'] . '" value="' . $list['IdAdherant'] . '">' . $list['Nom'] . ' ' . $list['Prenom'] . '</option>';
+                                    echo '<option data-subtext="' . $list['IdAdherent'] . '" value="' . $list['IdAdherent'] . '">' . $list['Nom'] . ' ' . $list['Prenom'] . '</option>';
                                 }
                                 ?>
                             </select>

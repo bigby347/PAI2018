@@ -3,11 +3,11 @@
     <?php
     /* Gestion des acceptations*/
     if (isset($_POST['RenouvelementAccepter'])){
-        RenouvelementAccepter($_POST['RenouvelementAccepter'],$_POST['IdAdherant']);
+        RenouvelementAccepter($_POST['RenouvelementAccepter'],$_POST['IdAdherent']);
 
     }
     if (isset($_POST['RenouvelementRefuser'])){
-        RenouvelementRefuser($_POST['RenouvelementRefuser'],$_POST['IdAdherant']);
+        RenouvelementRefuser($_POST['RenouvelementRefuser'],$_POST['IdAdherent']);
 
     }
 
@@ -49,7 +49,7 @@
     </table>
     <div class="row">
         <form action = "" method="post">
-            <input type='hidden' name='IdAdherant' value=<?= $renouv['IdAdherant']; ?>>
+            <input type='hidden' name='IdAdherent' value=<?= $renouv['IdAdherent']; ?>>
             <div class="text-center">
                 <div class="col-sm-6">
                     <button type="submit" class="btn btn-success btn-block" name="RenouvelementAccepter" value=<?= $renouv['IdEmprun'];?> >Accepter</button>

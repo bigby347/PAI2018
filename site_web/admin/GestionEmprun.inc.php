@@ -57,12 +57,12 @@
                 <div class="panel-heading">Choisir un adhérant :</div>
                 <div class="panel-body">
                     <form action = "" method="post">
-                        <select class="selectpicker" name="selectAd" title="Selectionner Adherant"
+                        <select class="selectpicker" name="selectAd" title="Selectionner Adhérent"
                                 data-style="btn-default" data-live-search="true">
                             <?php
                             $listUser=listUser();
                             foreach ($listUser as $user) {
-                                echo '<option data-subtext="' . $user['IdAdherant'] . '" value="' . $user['IdAdherant'] . '">'.$user['Nom'].' '.$user['Prenom'].'</option>';
+                                echo '<option data-subtext="' . $user['IdAdherent'] . '" value="' . $user['IdAdherent'] . '">'.$user['Nom'].' '.$user['Prenom'].'</option>';
                             }
 
                             ?>

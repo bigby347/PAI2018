@@ -58,8 +58,8 @@ Create table Exemplaire (
 );
 
 
-Create table Adherant (
-	IdAdherant integer
+Create table Adherent (
+	IdAdherent integer
 	PRIMARY KEY
 	AUTO_INCREMENT,
 	Mail VARCHAR(320) Unique,
@@ -102,27 +102,27 @@ Create table Notif (
 	IdNotif integer
 	PRIMARY KEY
 	AUTO_INCREMENT,
-	FkAdherant integer
+	FkAdherent integer
 	NOT NULL,
 	FkTypeNotif integer
 	NOT NULL,
 	Commentaire TEXT,
 	FOREIGN KEY (FkTypeNotif) REFERENCES TypeNotif(IdTypeNotif) ON UPDATE CASCADE,
-	FOREIGN KEY (FkAdherant) REFERENCES Adherant(IdAdherant) ON UPDATE CASCADE
+	FOREIGN KEY (FkAdherent) REFERENCES Adherent(IdAdherent) ON UPDATE CASCADE
 );
 
 Create table Emprun (
 	IdEmprun integer
 	PRIMARY KEY
 	AUTO_INCREMENT,
-	FkAdherant integer
+	FkAdherent integer
 	NOT NULL,
 	FkExemplaire integer
 	NOT NULL,
 	DatePret date NOT NULL,
 	DateRetour date,
 	Renouvelement integer,
-	FOREIGN KEY (FkAdherant) REFERENCES Adherant(IdAdherant) ON UPDATE CASCADE,
+	FOREIGN KEY (FkAdherent) REFERENCES Adherent(IdAdherent) ON UPDATE CASCADE,
 	FOREIGN KEY (FkExemplaire) REFERENCES Exemplaire(IdExemplaire) ON UPDATE CASCADE
 );
 
@@ -140,12 +140,12 @@ Create table Requete (
 	IdRequete integer
 	PRIMARY KEY
 	AUTO_INCREMENT,
-	FkAdherant integer
+	FkAdherent integer
 	NOT NULL,
 	FkLivre integer
 	NOT NULL,
 	Requete date NOT NULL,
-	FOREIGN KEY (FkAdherant) REFERENCES Adherant(IdAdherant) ON UPDATE CASCADE,
+	FOREIGN KEY (FkAdherent) REFERENCES Adherent(IdAdherent) ON UPDATE CASCADE,
 	FOREIGN KEY (FkLivre) REFERENCES Oeuvre(IdLivre) ON UPDATE CASCADE
 );
 
@@ -154,12 +154,12 @@ Create table Reservation (
 	IdReservation integer
 	PRIMARY KEY
 	AUTO_INCREMENT,
-	FkAdherant integer
+	FkAdherent integer
 	NOT NULL,
 	FkExemplaire integer
 	NOT NULL,
 	DateAcceptation date,
-	FOREIGN KEY (FkAdherant) REFERENCES Adherant(IdAdherant) ON UPDATE CASCADE,
+	FOREIGN KEY (FkAdherent) REFERENCES Adherent(IdAdherent) ON UPDATE CASCADE,
 	FOREIGN KEY (FkExemplaire) REFERENCES Exemplaire(IdExemplaire) ON UPDATE CASCADE
 );
 

@@ -20,7 +20,7 @@
             </tr>
 
             <?php
-            $Requetes = Requete($_SESSION['IdAdherant']);
+            $Requetes = Requete($_SESSION['IdAdherent']);
 
             foreach ($Requetes as $Requete) {
                 echo '<tr>
@@ -62,7 +62,7 @@
                     <th>Annuler</th>
                 </tr>
             <?php
-            $Reservations = Reservation($_SESSION['IdAdherant']);
+            $Reservations = Reservation($_SESSION['IdAdherent']);
             foreach ($Reservations as $Reservation) {
                 echo '<tr>
                     <td>' . $Reservation['IdReservation'] . '</td>
@@ -92,7 +92,7 @@
         <div class="col-sm-8" >
             <?php
             if (isset($_POST['RenouvEmprun'])){
-                RenouvEmprun($_POST['RenouvEmprun'],$_SESSION['IdAdherant']);
+                RenouvEmprun($_POST['RenouvEmprun'],$_SESSION['IdAdherent']);
                 echo '<script>alert("Votre demande de renouvelement à bien été enregistrée") </script>';
             }
             ?>
@@ -106,7 +106,7 @@
                     <th>Renouveller</th>
                 </tr>
             <?php
-            $Empruns = Emprun($_SESSION['IdAdherant']);
+            $Empruns = Emprun($_SESSION['IdAdherent']);
             foreach ($Empruns as $Emprun) {
 
                 $form = '<form action = "" method="post">

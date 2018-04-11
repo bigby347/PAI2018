@@ -62,59 +62,59 @@ Where FkLivre=IdLivre";
     return $data;
 }
 
-function Requete($IdAdherant)
+function Requete($IdAdherent)
 {
     global $bdd;
 
     $req = "SELECT IdRequete, Titre, Requete, IdLivre
-    FROM Requete, Oeuvre, Adherant 
+    FROM Requete, Oeuvre, Adherent 
     WHERE Oeuvre.IdLivre = Requete.FkLivre
-    AND Requete.FkAdherant = Adherant.IdAdherant
-    AND Adherant.IdAdherant = ?";
+    AND Requete.FkAdherent = Adherent.IdAdherent
+    AND Adherent.IdAdherent = ?";
 
     $result = $bdd->prepare($req);
-    $result->execute([$IdAdherant]);
+    $result->execute([$IdAdherent]);
 
     $data = $result->fetchAll();
     return $data;
 
 }
 
-function Reservation($IdAdherant)
+function Reservation($IdAdherent)
 {
     global $bdd;
 
 
     $req = "SELECT Titre, DateAcceptation, IdExemplaire, IdReservation
-    FROM Reservation, Oeuvre, Adherant, Exemplaire
+    FROM Reservation, Oeuvre, Adherent, Exemplaire
     WHERE Oeuvre.IdLivre = Exemplaire.FkLivre
     AND Exemplaire.IdExemplaire = Reservation.FkExemplaire
-    AND Reservation.FkAdherant = Adherant.IdAdherant
-    AND Adherant.IdAdherant = ?";
+    AND Reservation.FkAdherent = Adherent.IdAdherent
+    AND Adherent.IdAdherent = ?";
 
     $result = $bdd->prepare($req);
-    $result->execute([$IdAdherant]);
+    $result->execute([$IdAdherent]);
 
     $data = $result->fetchAll();
     return $data;
 
 }
 
-function Emprun($IdAdherant)
+function Emprun($IdAdherent)
 {
     global $bdd;
 
 
     $req = "SELECT IdEmprun, IdExemplaire, Titre, DatePret,Renouvelement ,IF(Renouvelement=2,DATE_ADD(DatePret, INTERVAL (2) MONTH),DATE_ADD(DatePret, INTERVAL (1) MONTH))AS date_Retour
-    FROM Emprun, Exemplaire, Oeuvre, Adherant 
+    FROM Emprun, Exemplaire, Oeuvre, Adherent 
     WHERE Oeuvre.IdLivre = Exemplaire.FkLivre
     AND Exemplaire.IdExemplaire = Emprun.FkExemplaire
-    AND Emprun.FkAdherant = Adherant.IdAdherant
-    AND Adherant.IdAdherant = ?
+    AND Emprun.FkAdherent = Adherent.IdAdherent
+    AND Adherent.IdAdherent = ?
     AND Emprun.DateRetour IS NULL";
 
     $result = $bdd->prepare($req);
-    $result->execute([$IdAdherant]);
+    $result->execute([$IdAdherent]);
 
     $data = $result->fetchAll();
     return $data;
@@ -122,20 +122,20 @@ function Emprun($IdAdherant)
 
 }
 
-function Historique($IdAdherant)
+function Historique($IdAdherent)
 {
     global $bdd;
 
     $req = "SELECT IdEmprun, IdExemplaire, Titre, DatePret,DATE_ADD(DatePret, INTERVAL 1 MONTH) AS date_Retour
-    FROM Emprun, Exemplaire, Oeuvre, Adherant 
+    FROM Emprun, Exemplaire, Oeuvre, Adherent 
     WHERE Oeuvre.IdLivre = Exemplaire.FkLivre
     AND Exemplaire.IdExemplaire = Emprun.FkExemplaire
-    AND Emprun.FkAdherant = Adherant.IdAdherant
-    AND Adherant.IdAdherant = ?
+    AND Emprun.FkAdherent = Adherent.IdAdherent
+    AND Adherent.IdAdherent = ?
     AND Emprun.DateRetour IS NOT NULL;";
 
     $result = $bdd->prepare($req);
-    $result->execute([$IdAdherant]);
+    $result->execute([$IdAdherent]);
 
     $data = $result->fetchAll();
     return $data;
@@ -143,19 +143,19 @@ function Historique($IdAdherant)
 
 }
 
-function Notif($IdAdherant)
+function Notif($IdAdherent)
 {
     global $bdd;
 
     echo '';
     $req = "SELECT IdNotif, TypeNotif.Nom AS Type, Commentaire
-FROM Notif, TypeNotif , Adherant 
-WHERE IdAdherant = ?
-AND IdAdherant = Notif.FkAdherant
+FROM Notif, TypeNotif , Adherent 
+WHERE IdAdherent = ?
+AND IdAdherent = Notif.FkAdherent
 AND IdTypeNotif = Notif.FkTypeNotif; ";
 
     $result = $bdd->prepare($req);
-    $result->execute([$IdAdherant]);
+    $result->execute([$IdAdherent]);
 
     $data = $result->fetchAll();
     return $data;
@@ -177,19 +177,19 @@ function Admin()
 }
 
 
-function AjoutRequete($IdLivre, $IdAdherant)
+function AjoutRequete($IdLivre, $IdAdherent)
 {
     global $bdd;
-    $req1 = "INSERT INTO Requete(FkLivre,FkAdherant,Requete)
+    $req1 = "INSERT INTO Requete(FkLivre,FkAdherent,Requete)
     VALUES(?,?,STR_TO_DATE(?, '%d-%m-%Y'));";
 
     $result = $bdd->prepare($req1);
-    $result->execute([$IdLivre, $IdAdherant, date('d-m-Y')]);
+    $result->execute([$IdLivre, $IdAdherent, date('d-m-Y')]);
 
-    $req = 'INSERT INTO Notif(FkAdherant,FkTypeNotif,Commentaire)
+    $req = 'INSERT INTO Notif(FkAdherent,FkTypeNotif,Commentaire)
     VALUES(?,?,?)';
     $result = $bdd->prepare($req);
-    $result->execute([$IdAdherant, 2, 'Requete enregistrée pour le livre ' . $IdLivre]);
+    $result->execute([$IdAdherent, 2, 'Requete enregistrée pour le livre ' . $IdLivre]);
 
 }
 
@@ -217,7 +217,7 @@ function SupprimeReservation($IdReservation)
 }
 
 
-function RenouvEmprun($IdEmprun, $IdAdherant)
+function RenouvEmprun($IdEmprun, $IdAdherent)
 {
     global $bdd;
     $req1 = "INSERT INTO Renouvelement(FkEmprun,DateDemande)
@@ -226,10 +226,10 @@ function RenouvEmprun($IdEmprun, $IdAdherant)
     $result = $bdd->prepare($req1);
     $result->execute([$IdEmprun, date('d-m-Y')]);
 
-    $req = 'INSERT INTO Notif(FkAdherant,FkTypeNotif,Commentaire)
+    $req = 'INSERT INTO Notif(FkAdherent,FkTypeNotif,Commentaire)
     VALUES(?,?,?)';
     $result = $bdd->prepare($req);
-    $result->execute([$IdAdherant, 10, 'Requete de renouvelement enregistrée pour l emprun ' . $IdEmprun]);
+    $result->execute([$IdAdherent, 10, 'Requete de renouvelement enregistrée pour l emprun ' . $IdEmprun]);
 
 
 }

@@ -5,7 +5,7 @@
     <div class="text-center">
         <?php
         if (isset($_POST['Cotisation'])){
-            //cotisation($_POST['Cotisation']);
+            cotisation($_POST['userCot']);
         }
         ?>
         <table class="table table-bordered">
@@ -22,7 +22,7 @@
             asort($listUser, 'cotisation');
             foreach ($listUser as $user) {
                 echo '<tr>
-                    <td>' . $user['IdAdherant'] . '</td>
+                    <td>' . $user['IdAdherent'] . '</td>
                     <td>' . $user['Nom'] . '</td>
                     <td>' . $user['Prenom'] . '</td>
                     <td>' . $user['Mail'] . '</td>
@@ -31,8 +31,8 @@
                     <td>' . $user['cotisation'] . '</td>
                     <td>
                         <form action = "" method="post">
-                            <input type="hidden" value="'.$user['cotisation'].'">
-                            <button type="submit" class="btn btn-primary" name="Cotisation" value=' . $user['IdAdherant'] . ' >Cotise</button>
+                            <input type="hidden" name="userCot" value="'.$user['IdAdherent'].'">
+                            <button type="submit" class="btn btn-primary" name="Cotisation" value=' . $user['IdAdherent'] . ' >Cotise</button>
                         </form>
                     </td>
                  </tr>';

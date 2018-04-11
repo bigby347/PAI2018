@@ -10,7 +10,7 @@
                 $empruns = Empruns();
                 foreach ($empruns as $emprun){
                     if ($emprun['date_Retour'] > date('Y-m-d')){
-                        addNotif($emprun['IdAdherant'],8 ,'Vous devez ramener l\'exemplaire d\'identifiant '.$emprun['IdExemplaire'].' du livre '.$emprun['Titre']);
+                        addNotif($emprun['IdAdherent'],8 ,'Vous devez ramener l\'exemplaire d\'identifiant '.$emprun['IdExemplaire'].' du livre '.$emprun['Titre']);
                         $NbRelance ++;
                     }
                 }
@@ -47,9 +47,9 @@
                 foreach ($reservations as $reservation){
                     if ($reservation['dateFin'] < date('Y-m-d')){
                         //echo $reservation['DateAcceptation'].' - '.$reservation['dateFin'];
-                        //echo 'Ad :'.$reservation['IdAdherant'];
+                        //echo 'Ad :'.$reservation['IdAdherent'];
                         SupprimeReservation($reservation['IdReservation']);
-                        addNotif($reservation['IdAdherant'],8 ,'Votre reservations est arrivé a expriration');
+                        addNotif($reservation['IdAdherent'],8 ,'Votre reservations est arrivé a expriration');
                         $NbOld ++;
                     }
                 }

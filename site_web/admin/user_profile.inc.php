@@ -9,7 +9,7 @@
                 <h3><?= $dataUser['Nom'];?>  <?= $dataUser['Prenom'];?></h3>
             </div>
             <div class="panel-body">
-                <h5>ID Utilisateurs: <?= $dataUser['IdAdherant']; ?></h5>
+                <h5>ID Utilisateurs: <?= $dataUser['IdAdherent']; ?></h5>
                 <h5>Email: <?= $dataUser['Mail']; ?></h5>
                 <h5>Adresse : <?= $dataUser['Adresse'];?></h5>
                 <h5>Adhesion : <?= $dataUser['adhesion']; ?></h5>

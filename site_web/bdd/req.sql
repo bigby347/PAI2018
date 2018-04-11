@@ -1,4 +1,4 @@
-/* Adherant */
+/* Adherent */
 
 /* Catalogue */
 SELECT Oeuvre.IdLivre,
@@ -23,42 +23,42 @@ LIMIT 20 OFSET '???' ;*/
 
 /* Notif */ 
 Select IdNotif, TypeNotif.Nom as Type, Notif.Commentaire
-From Notif, TypeNotif , Adherant 
-where IdAdherant = 2
-AND IdAdherant = Notif.FkAdherant
+From Notif, TypeNotif , Adherent 
+where IdAdherent = 2
+AND IdAdherent = Notif.FkAdherent
 AND IdTypeNotif = Notif.FkTypeNotif; 
 /*	*/
 
 
 /* Historique */ 
 Select * 
-From Emprun, Exemplaire, Oeuvre, Adherant 
+From Emprun, Exemplaire, Oeuvre, Adherent 
 Where Oeuvre.IdLivre = Exemplaire.FkLivre
 And Livre.IdExemplaire = Emprun.FkExemplaire
-And Emprun.FkAdherant = Adherant.IdAdherant
-And Adherant.IdAdherant = '???'
+And Emprun.FkAdherent = Adherent.IdAdherent
+And Adherent.IdAdherent = '???'
 And Emprun.DateRetour IS NOT NULL;
 /*	*/
 
 
 /* Pret en cour */
 Select * 
-From Emprun, Exemplaire, Oeuvre, Adherant 
+From Emprun, Exemplaire, Oeuvre, Adherent 
 Where Oeuvre.IdLivre = Exemplaire.FkLivre
 And Exemplaire.IdExemplaire = Emprun.FkExemplaire
-And Emprun.FkAdherant = Adherant.IdAdherant
-And Adherant.IdAdherant = 2
+And Emprun.FkAdherent = Adherent.IdAdherent
+And Adherent.IdAdherent = 2
 And Emprun.DateRetour IS NULL;
 /*	*/
 
  
 /* reservation */
 Select Titre, DateAcceptation, IdExemplaire, IdReservation
-From Reservation, Oeuvre, Adherant, Exemplaire
+From Reservation, Oeuvre, Adherent, Exemplaire
 Where Oeuvre.IdLivre = Exemplaire.FkLivre
 And Exemplaire.IdExemplaire = Reservation.FkExemplaire
-And Reservation.FkAdherant = Adherant.IdAdherant
-And Adherant.IdAdherant = 2;
+And Reservation.FkAdherent = Adherent.IdAdherent
+And Adherent.IdAdherent = 2;
 
 
 
@@ -86,12 +86,12 @@ Select IdAuteur, Nom, Prenom, CONCAT(Nom,' ',Prenom) as R1, CONCAT(Prenom,' ',No
 /* Requete/demande */
 /* Visualisation */
 Select Titre, Requete
-From Requete, Oeuvre, Adherant 
+From Requete, Oeuvre, Adherent 
 Where Oeuvre.IdLivre = Requete.FkLivre
-And Requete.FkAdherant = Adherant.IdAdherant
-And Adherant.IdAdherant = 2;
+And Requete.FkAdherent = Adherent.IdAdherent
+And Adherent.IdAdherent = 2;
 /* Demande */ 
-INSERT INTO Renouvelement(FkAdherant, FkLivre, Requete)
+INSERT INTO Renouvelement(FkAdherent, FkLivre, Requete)
 VALUES ('???', '???', '???');
 /*	*/
 
@@ -133,12 +133,12 @@ INSERT INTO Ecrit(FkAuteur,FkLivre)
 
 /*	*/
 
-SELECT Nom, Prenom, IdAdherant, FkEmprun, DateDemande, DatePret, IdExemplaire, IdLivre, Titre, Cote
-from Renouvelement, Emprun, Exemplaire, Oeuvre, Adherant
+SELECT Nom, Prenom, IdAdherent, FkEmprun, DateDemande, DatePret, IdExemplaire, IdLivre, Titre, Cote
+from Renouvelement, Emprun, Exemplaire, Oeuvre, Adherent
 where Renouvelement.FkEmprun = Emprun.IdEmprun
 And Emprun.FkExemplaire = Exemplaire.IdExemplaire
 And Exemplaire.FkLivre = Oeuvre.IdLivre
-And Adherant.IdAdherant = Emprun.FkAdherant
+And Adherent.IdAdherent = Emprun.FkAdherent
 And DateRetour IS NULL
 And Renouvelement = 1;
 
@@ -146,11 +146,11 @@ And Renouvelement = 1;
 
 /*	*/
 SELECT *
-from Renouvelement, Emprun, Exemplaire, Oeuvre, Adherant
+from Renouvelement, Emprun, Exemplaire, Oeuvre, Adherent
 where Renouvelement.FkEmprun = Emprun.IdEmprun
 And Emprun.FkExemplaire = Exemplaire.IdExemplaire
 And Exemplaire.FkLivre = Oeuvre.IdLivre
-And Adherant.IdAdherant = Emprun.FkAdherant
+And Adherent.IdAdherent = Emprun.FkAdherent
 And DateRetour IS NULL
 And Renouvelement = 1
 ORDER BY DateDemande;
@@ -186,7 +186,7 @@ Where FkLivre=IdLivre
 SELECT DISTINCT IdRequete,Titre,Cote,IdLivre,Nom,Prenom
 from Requete
 INNER JOIN Oeuvre ON Requete.FkLivre = Oeuvre.IdLivre
-INNER JOIN Adherant ON Requete.FkAdherant = Adherant.IdAdherant
+INNER JOIN Adherent ON Requete.FkAdherent = Adherent.IdAdherent
 INNER JOIN Exemplaire oN Oeuvre.IdLivre = Exemplaire.FkLivre
 LEFT JOIN Emprun ON Exemplaire.IdExemplaire = Emprun.FkExemplaire
 LEFT JOIN Reservation ON Exemplaire.IdExemplaire = Reservation.FkExemplaire
@@ -206,10 +206,10 @@ where FkLivre = 1;
 
 
 SELECT IdEmprun, IdExemplaire, Titre, DatePret,Renouvelement ,IF(Renouvelement=2,DATE_ADD(DatePret, INTERVAL (2) MONTH),DATE_ADD(DatePret, INTERVAL (1) MONTH))AS date_Retour
-    FROM Emprun, Exemplaire, Oeuvre, Adherant
+    FROM Emprun, Exemplaire, Oeuvre, Adherent
     WHERE Oeuvre.IdLivre = Exemplaire.FkLivre
     AND Exemplaire.IdExemplaire = Emprun.FkExemplaire
-    AND Emprun.FkAdherant = Adherant.IdAdherant
+    AND Emprun.FkAdherent = Adherent.IdAdherent
     AND Emprun.DateRetour IS NULL;
 
 Select *
@@ -233,7 +233,7 @@ Select IdExemplaire,Achat
 SELECT DISTINCT IdRequete,Titre,Cote,IdLivre,Nom,Prenom
     from Requete
     INNER JOIN Oeuvre ON Requete.FkLivre = Oeuvre.IdLivre
-    INNER JOIN Adherant ON Requete.FkAdherant = Adherant.IdAdherant
+    INNER JOIN Adherent ON Requete.FkAdherent = Adherent.IdAdherent
     INNER JOIN Exemplaire oN Oeuvre.IdLivre = Exemplaire.FkLivre
     LEFT JOIN Emprun ON Exemplaire.IdExemplaire = Emprun.FkExemplaire
     LEFT JOIN Reservation ON Exemplaire.IdExemplaire = Reservation.FkExemplaire
@@ -245,10 +245,10 @@ select * from Requete;
 SELECT * from Reservation;
 
 SELECT Titre, DateAcceptation, IdExemplaire, IdReservation, DATE_ADD(DateAcceptation, INTERVAL 7 DAY)as dateFin
-    FROM Reservation, Oeuvre, Adherant, Exemplaire
+    FROM Reservation, Oeuvre, Adherent, Exemplaire
     WHERE Oeuvre.IdLivre = Exemplaire.FkLivre
     AND Exemplaire.IdExemplaire = Reservation.FkExemplaire
-    AND Reservation.FkAdherant = Adherant.IdAdherant;
+    AND Reservation.FkAdherent = Adherent.IdAdherent;
 
 
 SELECT Date_ADD(Maintenance, INTERVAL 7 DAY) as Maintenance From Maintenance;

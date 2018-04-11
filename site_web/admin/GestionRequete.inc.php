@@ -5,7 +5,7 @@
     /* Gestion de l'acceptation de la requete*/
     if (isset($_POST['ValidationRequete'])){
 
-        ValidationRequete($_POST['IdRequete'],$_POST['IdAdherant'], $_POST['IdExemplaire'], $premiereRequete['Titre']);
+        ValidationRequete($_POST['IdRequete'],$_POST['IdAdherent'], $_POST['IdExemplaire'], $premiereRequete['Titre']);
     }
     ?>
 
@@ -24,7 +24,7 @@
         </tr>
         <tr>
             <th>Id Adhérent : </th>
-            <td><?= $premiereRequete['IdAdherant']; ?></td>
+            <td><?= $premiereRequete['IdAdherent']; ?></td>
         </tr>
         <tr>
             <th>Id Requete : </th>
@@ -60,7 +60,7 @@
         <td>
             <form action = "" method="post">
                 <input type="hidden" name="IdRequete" value= '.$premiereRequete['IdRequete'].'>
-                <input type="hidden" name="IdAdherant" value= '.$premiereRequete['IdAdherant'].'>
+                <input type="hidden" name="IdAdherent" value= '.$premiereRequete['IdAdherent'].'>
                 <input type="hidden" name="IdLivre" value= '.$premiereRequete['IdLivre'].'>
                 <input type="hidden" name="IdExemplaire" value= '.$Ex['IdExemplaire'].'>
                 <button type="submit" class="btn btn-primary" name="ValidationRequete" value="T" >Choisir</button>

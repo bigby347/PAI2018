@@ -1,12 +1,12 @@
-/* Ajout d'adherants */
+/* Ajout d'Adherents */
 
-INSERT INTO Adherant(Mail,Nom,Prenom,MDP,Adresse,adhesion,cotisation)
+INSERT INTO Adherent(Mail,Nom,Prenom,MDP,Adresse,adhesion,cotisation)
 VALUES ('test@domain.com', 'Name', 'Firstname','test123','1 rue du test 00000 Testville',STR_TO_DATE('01-01-2018', '%d-%m-%Y'),STR_TO_DATE('01-01-2018', '%d-%m-%Y'));
-INSERT INTO Adherant(Mail,Nom,Prenom,MDP,Adresse,adhesion,cotisation)
+INSERT INTO Adherent(Mail,Nom,Prenom,MDP,Adresse,adhesion,cotisation)
 VALUES ('putzu@gmail.com', 'Putzu', 'Alex','putzualex','258 rue de luminy 13009 Marseille',STR_TO_DATE('01-01-2017', '%d-%m-%Y'),STR_TO_DATE('01-01-2018', '%d-%m-%Y'));
-INSERT INTO Adherant(Mail,Nom,Prenom,MDP,Adresse,adhesion,cotisation)
+INSERT INTO Adherent(Mail,Nom,Prenom,MDP,Adresse,adhesion,cotisation)
 VALUES ('falques@outlook.com', 'Falquès', 'Théo','falquèsthéo','2 Avenue de la repasse 04001 Manosque',STR_TO_DATE('16-02-2016', '%d-%m-%Y'),STR_TO_DATE('01-03-2018', '%d-%m-%Y'));
-INSERT INTO Adherant(Mail,Nom,Prenom,MDP,Adresse,adhesion,cotisation)
+INSERT INTO Adherent(Mail,Nom,Prenom,MDP,Adresse,adhesion,cotisation)
 VALUES ('finch@machin.com', 'Finch', 'Harold','samaritan','East 30th St and Lexington Ave.',STR_TO_DATE('24-02-2005', '%d-%m-%Y'),STR_TO_DATE('17-11-2015', '%d-%m-%Y'));
 
 /* Ajout d'Admin */
@@ -59,18 +59,18 @@ Values(2,1);
 
 /*Ajout requete*/
 
-INSERT INTO Requete(FkLivre,FkAdherant,Requete)
+INSERT INTO Requete(FkLivre,FkAdherent,Requete)
 Values(1,2,STR_TO_DATE('24-02-2018', '%d-%m-%Y'));
 
 /*Ajout requete*/
 
-INSERT INTO Reservation(FkAdherant,FkLivre,DateRequete,DateAcceptation)
+INSERT INTO Reservation(FkAdherent,FkLivre,DateRequete,DateAcceptation)
 Values(2,5,STR_TO_DATE('24-02-2018', '%d-%m-%Y'),NULL );
 
-INSERT INTO Reservation(FkAdherant,FkLivre,DateRequete,DateAcceptation)
+INSERT INTO Reservation(FkAdherent,FkLivre,DateRequete,DateAcceptation)
 Values(3,5,STR_TO_DATE('24-02-2018', '%d-%m-%Y'),NULL );
 
-INSERT INTO Reservation(FkAdherant,FkLivre,DateRequete,DateAcceptation)
+INSERT INTO Reservation(FkAdherent,FkLivre,DateRequete,DateAcceptation)
 Values(2,5,STR_TO_DATE('24-02-2018', '%d-%m-%Y'),STR_TO_DATE('24-03-2018', '%d-%m-%Y') );
 
 
@@ -78,10 +78,10 @@ Values(2,5,STR_TO_DATE('24-02-2018', '%d-%m-%Y'),STR_TO_DATE('24-03-2018', '%d-%
 INSERT INTO  Exemplaire(FkLivre,Achat)
 Values(1,STR_TO_DATE('24-02-2018', '%d-%m-%Y'));
 
-INSERT INTO  Emprun(FkAdherant,FkExemplaire,DatePret)
+INSERT INTO  Emprun(FkAdherent,FkExemplaire,DatePret)
 Values(2,1,STR_TO_DATE('24-02-2018', '%d-%m-%Y'));
 
-INSERT INTO  Emprun(FkAdherant,FkExemplaire,DatePret)
+INSERT INTO  Emprun(FkAdherent,FkExemplaire,DatePret)
 Values(2,1,STR_TO_DATE('24-02-2018', '%d-%m-%Y'));
 
 INSERT INTO TypeNotif(Nom)
@@ -90,5 +90,5 @@ VALUES ('Requete acceptée');
 INSERT INTO TypeNotif(Nom)
 VALUES ('Message Admin');
 
-INSERT INTO Notif(FkAdherant,FkTypeNotif, Commentaire)
+INSERT INTO Notif(FkAdherent,FkTypeNotif, Commentaire)
 VALUES (2,2,'Salut mon ami')
